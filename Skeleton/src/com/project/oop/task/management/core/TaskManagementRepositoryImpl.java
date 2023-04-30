@@ -1,4 +1,7 @@
 package com.project.oop.task.management.core;
 
-public class TaskManagementRepositoryImpl {
+import com.project.oop.task.management.core.contracts.TaskManagementRepository;
+
+public class TaskManagementRepositoryImpl implements TaskManagementRepository {
+
 }

@@ -1,4 +1,14 @@
 package com.project.oop.task.management.commands.creation;
 
-public class CreateNewBugCommand {
+import com.project.oop.task.management.commands.contracts.Command;
+
+import java.util.List;
+
+public class CreateNewBugCommand implements Command {
+
+
+    @Override
+    public String execute(List<String> parameters) {
+        return null;
+    }
 }

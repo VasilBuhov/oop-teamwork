@@ -1,4 +1,11 @@
 package com.project.oop.task.management.models.contracts;
 
-public interface Member {
+import java.util.List;
+
+public interface Member extends Loggable{
+    String getName();
+    List<Task> getTasks();
+    void addTask(Task task);
+    void removeTask(Task task);
+
 }

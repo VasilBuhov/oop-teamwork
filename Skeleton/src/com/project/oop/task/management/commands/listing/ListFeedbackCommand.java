@@ -1,4 +1,12 @@
 package com.project.oop.task.management.commands.listing;
 
-public class ListFeedbackCommand {
+import com.project.oop.task.management.commands.contracts.Command;
+
+import java.util.List;
+
+public class ListFeedbackCommand implements Command {
+    @Override
+    public String execute(List<String> parameters) {
+        return null;
+    }
 }

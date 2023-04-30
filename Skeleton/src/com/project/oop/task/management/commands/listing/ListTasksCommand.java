@@ -1,4 +1,12 @@
 package com.project.oop.task.management.commands.listing;
 
-public class ListTasksCommand {
+import com.project.oop.task.management.commands.contracts.Command;
+
+import java.util.List;
+
+public class ListTasksCommand implements Command {
+    @Override
+    public String execute(List<String> parameters) {
+        return null;
+    }
 }

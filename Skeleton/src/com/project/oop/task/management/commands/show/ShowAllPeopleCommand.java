@@ -1,4 +1,12 @@
 package com.project.oop.task.management.commands.show;
 
-public class ShowAllPeopleCommand {
+import com.project.oop.task.management.commands.contracts.Command;
+
+import java.util.List;
+
+public class ShowAllPeopleCommand implements Command {
+    @Override
+    public String execute(List<String> parameters) {
+        return null;
+    }
 }

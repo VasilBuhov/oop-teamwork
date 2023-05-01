@@ -8,6 +8,8 @@ import com.project.oop.task.management.models.enums.StoryStatus;
 
 public class StoryImpl extends TaskImpl implements Story {
 
+    private static final StoryStatus INITIAL_STATUS = StoryStatus.NOT_DONE;
+    private static final StoryStatus FINAL_STATUS = StoryStatus.DONE;
     private StoryStatus status;
     private Priority priority;
     private Size size;
@@ -56,9 +58,30 @@ public class StoryImpl extends TaskImpl implements Story {
                 "Assignee: %s%n" +
                 "***********%n", status.toString(), priority, size, assignee);
     }
+    protected void revertStatus() {
+        if (status != INITIAL_STATUS) {
+            setStatus(StoryStatus.values()[status.ordinal() - 1]);
+        } else {
+            logEvent(String.format("Can't revert, already at %s", getStatus()));
+        }
+    }
+
+    protected void advanceStatus() {
+        if (status != FINAL_STATUS) {
+            setStatus(StoryStatus.values()[status.ordinal() + 1]);
+        } else {
+            logEvent(String.format("Can't advance, already at %s", getStatus()));
+        }
+    }
+
+    protected void setStatus(StoryStatus status) {
+        logEvent(String.format("Status changed from %s to %s", getStatus(), status));
+        this.status = status;
+    }
 
     @Override
     public String getStatus() {
         return this.status.toString();
     }
+
 }

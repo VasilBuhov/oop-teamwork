@@ -4,9 +4,12 @@ import com.project.oop.task.management.models.contracts.Bug;
 import com.project.oop.task.management.models.enums.BugStatus;
 import com.project.oop.task.management.models.enums.Priority;
 import com.project.oop.task.management.models.enums.Severity;
+import com.project.oop.task.management.models.enums.StoryStatus;
 
 
 public class BugImpl extends TaskImpl implements Bug {
+    private static final BugStatus INITIAL_STATUS = BugStatus.ACTIVE;
+    private static final BugStatus FINAL_STATUS = BugStatus.FIXED;
     private BugStatus status;
     private Priority priority;
     private Severity severity;
@@ -60,6 +63,26 @@ public class BugImpl extends TaskImpl implements Bug {
                 assignee);
     }
 
+    protected void revertStatus() {
+        if (status != INITIAL_STATUS) {
+            setStatus(BugStatus.values()[status.ordinal() - 1]);
+        } else {
+            logEvent(String.format("Can't revert, already at %s", getStatus()));
+        }
+    }
+
+    protected void advanceStatus() {
+        if (status != FINAL_STATUS) {
+            setStatus(BugStatus.values()[status.ordinal() + 1]);
+        } else {
+            logEvent(String.format("Can't advance, already at %s", getStatus()));
+        }
+    }
+
+    protected void setStatus(BugStatus status) {
+        logEvent(String.format("Status changed from %s to %s", getStatus(), status));
+        this.status = status;
+    }
     @Override
     public String getStatus() {
         return this.status.toString();

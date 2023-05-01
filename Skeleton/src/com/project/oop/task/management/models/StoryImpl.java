@@ -49,14 +49,14 @@ public class StoryImpl extends TaskImpl implements Story {
 
     @Override
     public String viewInfo() {
-        return String.format("***********%n" +
+        return String.format("*********************%n" +
                 "Story:%n" +
                 super.toString() +
                 "Status: %s%n" +
                 "Priority: %s%n" +
                 "Size: %d%n" +
                 "Assignee: %s%n" +
-                "***********%n", status.toString(), priority, size, assignee);
+                "*********************%n", status.toString(), priority, size, assignee);
     }
     protected void revertStatus() {
         if (status != INITIAL_STATUS) {
@@ -84,4 +84,8 @@ public class StoryImpl extends TaskImpl implements Story {
         return this.status.toString();
     }
 
+    @Override
+    public String getAsString() {
+        return viewInfo();
+    }
 }

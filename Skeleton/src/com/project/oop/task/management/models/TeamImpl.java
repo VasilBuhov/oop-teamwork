@@ -2,6 +2,7 @@ package com.project.oop.task.management.models;
 
 import com.project.oop.task.management.models.contracts.Board;
 import com.project.oop.task.management.models.contracts.Member;
+import com.project.oop.task.management.models.contracts.Task;
 import com.project.oop.task.management.models.contracts.Team;
 import com.project.oop.task.management.utils.ValidationHelper;
 
@@ -36,5 +37,22 @@ public class TeamImpl implements Team {
     @Override
     public List<Board> getBoards() {
         return new ArrayList<>(boards);
+    }
+
+    @Override
+    public String getAsString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format("*********************%n"));
+        sb.append(String.format("Team: %s%n", getName()));
+        sb.append(String.format("Members:%n"));
+        for (Member member : members) {
+            sb.append(member.getAsString());
+        }
+        sb.append(String.format("Boards:%n"));
+        for (Board board : boards) {
+            sb.append(board.getAsString());
+        }
+        sb.append(String.format("*********************%n"));
+        return sb.toString();
     }
 }

@@ -29,12 +29,12 @@ public class FeedbackImpl extends TaskImpl implements Feedback {
 
     @Override
     public String viewInfo() {
-        return String.format("***********%n" +
+        return String.format("*********************%n" +
                         "Feedback: %n" +
                         super.toString() +
                         "Status: %s%n" +
                         "Rating: %s%n" +
-                        "***********%n", status.toString(), rating);
+                        "*********************%n", status.toString(), rating);
     }
 
     protected void revertStatus() {
@@ -63,4 +63,8 @@ public class FeedbackImpl extends TaskImpl implements Feedback {
         return this.status.toString();
     }
 
+    @Override
+    public String getAsString() {
+        return viewInfo();
+    }
 }

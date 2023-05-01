@@ -49,14 +49,14 @@ public class BugImpl extends TaskImpl implements Bug {
 
     @Override
     public String viewInfo() {
-        return String.format("***********%n" +
+        return String.format("*********************%n" +
                 "Bug: %n" +
                 super.toString() +
                 "Status: %s%n" +
                 "Priority: %s%n" +
                 "Severity: %s%n" +
                 "Assignee: %s%n" +
-                "***********%n",
+                "*********************%n",
                 status.toString(),
                 priority.toString(),
                 severity.toString(),
@@ -86,5 +86,10 @@ public class BugImpl extends TaskImpl implements Bug {
     @Override
     public String getStatus() {
         return this.status.toString();
+    }
+
+    @Override
+    public String getAsString() {
+        return viewInfo();
     }
 }

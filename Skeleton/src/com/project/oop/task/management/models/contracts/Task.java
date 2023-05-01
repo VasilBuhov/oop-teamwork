@@ -1,6 +1,6 @@
 package com.project.oop.task.management.models.contracts;
 
-public interface Task extends Commentable, Loggable{
+public interface Task extends Commentable, Loggable, Printable{
 
     int getId();
     String getTitle();

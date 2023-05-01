@@ -64,4 +64,16 @@ public class MemberImpl implements Member {
     public void logEvent(String event) {
         this.history.add(new EventLogImpl(event).toString());
     }
+
+    @Override
+    public String getAsString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format("*********************%n"));
+        sb.append(String.format("Member: %s%n", getName()));
+        for (Task task : tasks) {
+            sb.append(task.viewInfo());
+        }
+        sb.append(String.format("*********************%n"));
+        return sb.toString();
+    }
 }

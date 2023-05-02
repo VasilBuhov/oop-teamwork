@@ -2,7 +2,6 @@ package com.project.oop.task.management.models;
 
 import com.project.oop.task.management.models.contracts.Board;
 import com.project.oop.task.management.models.contracts.Member;
-import com.project.oop.task.management.models.contracts.Task;
 import com.project.oop.task.management.models.contracts.Team;
 import com.project.oop.task.management.utils.ValidationHelper;
 
@@ -17,11 +16,14 @@ public class TeamImpl implements Team {
     private List<Board> boards;
 
     public TeamImpl(String name) {
+        members = new ArrayList<>();
+        boards = new ArrayList<>();
         setName(name);
     }
 
     private void setName(String name) {
         ValidationHelper.ValidateStringLength(name, NAME_MIN_LENGTH, NAME_MAX_LENGTH);
+        this.name = name;
     }
 
     @Override
@@ -40,19 +42,55 @@ public class TeamImpl implements Team {
     }
 
     @Override
+    public void addBoard(Board board) {
+        boards.add(board);
+    }
+
+    @Override
+    public void removeBoard(Board board) {
+        if (boards.contains(board)) {
+            boards.remove(board);
+        }
+    }
+
+    @Override
+    public void addMember(Member member) {
+        members.add(member);
+    }
+
+    @Override
+    public void removeMember(Member member) {
+        if (members.contains(member)) {
+            members.remove(member);
+        }
+    }
+
+    @Override
     public String getAsString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(String.format("*********************%n"));
+        sb.append(String.format("======================%n"));
         sb.append(String.format("Team: %s%n", getName()));
-        sb.append(String.format("Members:%n"));
-        for (Member member : members) {
-            sb.append(member.getAsString());
+        sb.append(String.format("---------------------%n"));
+        sb.append(String.format("MEMBERS:%n"));
+        if (!members.isEmpty()) {
+            int counter = 1;
+            for (Member member : members) {
+                sb.append(counter).append(". ").append(member.getAsString());
+            }
+        } else {
+            sb.append(String.format("There are no members in this team.%n"));
         }
-        sb.append(String.format("Boards:%n"));
-        for (Board board : boards) {
-            sb.append(board.getAsString());
+        sb.append(String.format("---------------------%n"));
+        sb.append(String.format("BOARDS:%n"));
+        if (!boards.isEmpty()) {
+            int counter = 1;
+            for (Board board : boards) {
+                sb.append(counter).append(". ").append(board.getAsString());
+            }
+        } else {
+            sb.append(String.format("There are no boards in this team.%n"));
         }
-        sb.append(String.format("*********************%n"));
+        sb.append("======================");
         return sb.toString();
     }
 }

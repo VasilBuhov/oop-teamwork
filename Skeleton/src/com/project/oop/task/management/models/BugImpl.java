@@ -4,17 +4,16 @@ import com.project.oop.task.management.models.contracts.Bug;
 import com.project.oop.task.management.models.enums.BugStatus;
 import com.project.oop.task.management.models.enums.Priority;
 import com.project.oop.task.management.models.enums.Severity;
-import com.project.oop.task.management.models.enums.StoryStatus;
 
 
 public class BugImpl extends TaskImpl implements Bug {
     private static final BugStatus INITIAL_STATUS = BugStatus.ACTIVE;
     private static final BugStatus FINAL_STATUS = BugStatus.FIXED;
+
     private BugStatus status;
     private Priority priority;
     private Severity severity;
     private String assignee;
-
 
     public BugImpl(int id, String title, String description, Priority priority, Severity severity, String assignee) {
         super(id, title, description);
@@ -45,6 +44,16 @@ public class BugImpl extends TaskImpl implements Bug {
     @Override
     public String getAssignee() {
         return this.assignee;
+    }
+
+    @Override
+    public void changePriority(Priority priority) {
+        this.priority = priority;
+    }
+
+    @Override
+    public void changeSeverity(Severity severity) {
+        this.severity = severity;
     }
 
     @Override

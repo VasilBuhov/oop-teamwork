@@ -6,7 +6,6 @@ import com.project.oop.task.management.utils.ValidationHelper;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class BoardImpl implements Board {
     public static final int NAME_MIN_LENGTH = 5;

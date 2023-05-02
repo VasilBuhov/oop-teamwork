@@ -22,7 +22,6 @@ public class CreateNewFeedbackCommand implements Command {
     private final TaskManagementRepository repository;
     public CreateNewFeedbackCommand(TaskManagementRepositoryImpl taskManagementRepository) {
         this.repository = taskManagementRepository;
-
     }
 
     @Override

@@ -4,6 +4,7 @@ import com.project.oop.task.management.core.contracts.TaskManagementRepository;
 import com.project.oop.task.management.models.FeedbackImpl;
 import com.project.oop.task.management.models.MemberImpl;
 import com.project.oop.task.management.models.StoryImpl;
+import com.project.oop.task.management.models.TeamImpl;
 import com.project.oop.task.management.models.contracts.*;
 import com.project.oop.task.management.models.enums.Priority;
 import com.project.oop.task.management.models.enums.Size;
@@ -23,10 +24,16 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
     private final List<Feedback> feedbacks = new ArrayList<>();
     private final List<Story> stories = new ArrayList<>();
     private final List<Member> members = new ArrayList<>();
+    private final List<Team> teams = new ArrayList<>();
 
     @Override
     public List<Member> getMembers() {
         return new ArrayList<>(members);
+    }
+
+    @Override
+    public List<Team> getTeams() {
+        return new ArrayList<>(teams);
     }
 
     @Override
@@ -69,6 +76,50 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
     @Override
     public Story findStoryById(int storyId) {
         return stories.stream().filter(story -> story.getId() == storyId).collect(Collectors.toList()).get(0);
+    }
+
+    @Override
+    public StoryImpl createNewStory(String title, String description, Priority priority, Size size, String assignee) {
+        StoryImpl story = new StoryImpl(++nextId, title, description, priority, size, assignee);
+        stories.add(story);
+        return story;
+    }
+
+    @Override
+    public void changeFeedbackRating(int id, int rating) {
+        for (Feedback feedback : getFeedback()) {
+            if (feedback.getId() == id) {
+                feedback.changeRating(rating);
+            }
+        }
+    }
+
+    @Override
+    public String changeFeedbackStatus(int id, String direction) {
+        for (Feedback feedback : getFeedback()) {
+            if (feedback.getId() == id) {
+                if (direction.equals("revert")) {
+                    feedback.revertStatus();
+                    return feedback.getStatus();
+                } else if (direction.equals("advance")) {
+                    feedback.advanceStatus();
+                    return feedback.getStatus();
+                }
+            }
+        }
+        return "Status not changed!";
+    }
+
+    @Override
+    public List<Feedback> getFeedback() {
+        return new ArrayList<>(feedbacks);
+    }
+
+    public Team createNewTeam(String name) {
+        Team team = new TeamImpl(name);
+        this.teams.add(team);
+        return team;
+
     }
 
     @Override

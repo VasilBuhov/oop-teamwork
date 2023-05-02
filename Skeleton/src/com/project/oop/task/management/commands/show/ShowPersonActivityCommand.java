@@ -30,7 +30,7 @@ public class ShowPersonActivityCommand implements Command {
 
         for (Member member : repository.getMembers()) {
             if(member.getName().equals(name)) {
-               return member.getActivity();
+               repository.showPersonActivity(member.getActivity());
             }
         }
         throw new IllegalArgumentException(NO_SUCH_MEMBER_FOUNDED);

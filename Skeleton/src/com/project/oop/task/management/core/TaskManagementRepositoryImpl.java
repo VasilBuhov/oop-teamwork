@@ -25,10 +25,52 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
         return new ArrayList<>(members);
     }
 
-
     @Override
     public List<Team> getTeams() {
         return new ArrayList<>(teams);
+    }
+
+    @Override
+    public List<Feedback> getFeedback() {
+        return new ArrayList<>(feedbacks);
+    }
+
+    @Override
+    public List<Bug> getBugs() {
+        return new ArrayList<>(bugs);
+    }
+
+    @Override
+    public Member createMember(String name) {
+        Member member = new MemberImpl(name);
+        members.add(member);
+
+        return member;
+    }
+
+    public Team createNewTeam(String name) {
+        Team team = new TeamImpl(name);
+        this.teams.add(team);
+        return team;
+    }
+
+    public Board createBoard(String name) {
+        Board board = new BoardImpl(name);
+        return board;
+    }
+
+    @Override
+    public StoryImpl createNewStory(String title, String description, Priority priority, Size size, String assignee) {
+        StoryImpl story = new StoryImpl(++nextId, title, description, priority, size, assignee);
+        stories.add(story);
+        tasks.add(story);
+        return story;
+    }
+
+    public Bug createBug(String title, String description, Priority priority, Severity severity, String assignee) {
+        Bug bug = new BugImpl(++nextId, title, description, priority, severity, assignee);
+        bugs.add(bug);
+        return bug;
     }
 
     @Override
@@ -38,14 +80,6 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
         this.feedbacks.add(feedback);
 
         return feedback;
-    }
-
-    @Override
-    public Member createMember(String name) {
-        Member member = new MemberImpl(name);
-        members.add(member);
-
-        return member;
     }
 
     @Override
@@ -68,44 +102,27 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
     }
 
     @Override
-    public Story findStoryById(int storyId) {
-        return stories.stream().filter(story -> story.getId() == storyId).collect(Collectors.toList()).get(0);
-    }
-
-    @Override
-    public StoryImpl createNewStory(String title, String description, Priority priority, Size size, String assignee) {
-        StoryImpl story = new StoryImpl(++nextId, title, description, priority, size, assignee);
-        stories.add(story);
-        tasks.add(story);
-        return story;
-    }
-
-    @Override
     public void changeFeedbackRating(int id, int rating) {
         Feedback feedback = findFeedbackById(id);
         feedback.changeRating(rating);
     }
 
     @Override
-    public String changeFeedbackStatus(int id, String direction) {
+    public void changeFeedbackStatus(int id, String direction) {
         Feedback feedback = findFeedbackById(id);
         if (direction.equals("revert")) {
             feedback.revertStatus();
         } else if (direction.equals("advance")) {
             feedback.advanceStatus();
         }
-        return feedback.getStatus().toString();
     }
 
-    @Override
-    public List<Feedback> getFeedback() {
-        return new ArrayList<>(feedbacks);
-    }
-
-    public Team createNewTeam(String name) {
-        Team team = new TeamImpl(name);
-        this.teams.add(team);
-        return team;
+    public void changeBugPriority(Priority priority, Priority newPriority) {
+        for (Bug bugs : getBugs()) {
+            if (bugs.getPriority().equals(priority)) {
+                bugs.changePriority(newPriority);
+            }
+        }
     }
 
     @Override
@@ -134,16 +151,9 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
         return feedbacks.stream().filter(story -> story.getId() == taskId).collect(Collectors.toList()).get(0);
     }
 
-
-    public Bug createBug(String title, String description, Priority priority, Severity severity, String assignee) {
-        Bug bug = new BugImpl(++nextId, title, description, priority, severity, assignee);
-        bugs.add(bug);
-        return bug;
-    }
-
-    public Board createBoard(String name) {
-        Board board = new BoardImpl(name);
-        return board;
+    @Override
+    public Story findStoryById(int storyId) {
+        return stories.stream().filter(story -> story.getId() == storyId).collect(Collectors.toList()).get(0);
     }
 
     public Team findTeamByName(String name) {
@@ -156,19 +166,6 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
         return bugs.stream().filter(bug -> bug.getTitle().equals(title)).findFirst().get();
     }
 
-    public void changeBugPriority(Priority priority, Priority newPriority) {
-        for (Bug bugs : getBugs()) {
-            if (bugs.getPriority().equals(priority)) {
-                bugs.changePriority(newPriority);
-            }
-        }
-    }
-
-    @Override
-    public List<Bug> getBugs() {
-        return new ArrayList<>(bugs);
-    }
-
     @Override
     public Member findMemberByName(String name, String teamName) {
         Team team = findTeamByName(teamName);
@@ -176,5 +173,11 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
                 .filter(member -> member.getName().equals(name)).collect(Collectors.toList()).get(0);
     }
 
+    public void showPersonActivity(String activity) {
+        System.out.println(activity);
+    }
 
+    public void showTeamActivity(String activity) {
+        System.out.println(activity);
+    }
 }

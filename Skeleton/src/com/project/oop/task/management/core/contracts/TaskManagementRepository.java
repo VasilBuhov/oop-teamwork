@@ -11,36 +11,34 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface TaskManagementRepository {
-    Feedback createFeedback(String title, String description, int rating);
-
+    List<Member> getMembers();
+    List<Team> getTeams();
+    List<Feedback> getFeedback();
+    List<Bug> getBugs();
     Member createMember(String name);
-
-    public List<Member> getMembers();
-    public List<Team> getTeams();
-
-    public void changeStoryPriority(int storyId, Priority newPriority);
-    public void changeStorySize(int storyId, Size newSize);
-
-    public void changeStoryStatus(int storyId, StoryStatus status);
-
+    Team createNewTeam(String name);
+    StoryImpl createNewStory(String title, String description, Priority priority, Size size, String assignee);
+    Feedback createFeedback(String title, String description, int rating);
+    void changeStoryPriority(int storyId, Priority newPriority);
+    void changeStorySize(int storyId, Size newSize);
+    void changeStoryStatus(int storyId, StoryStatus status);
+    void changeFeedbackRating(int id, int newRating);
+    void changeFeedbackStatus(int id, String direction);
     Member addNewPersonToTeam(String name, String team);
-
     public Task findTaskById(int taskId);
     Task findFeedbackById(int taskId);
-
-    public Story findStoryById(int storyId);
-
-    StoryImpl createNewStory(String title, String description, Priority priority, Size size, String assignee);
-
-    void changeFeedbackRating(int id, int newRating);
-
-    String changeFeedbackStatus(int id, String direction);
-
-    public List<Feedback> getFeedback();
-
-    Team createNewTeam(String name);
-
-    List<Bug> getBugs();
-    Member findMemberByName(String name, String teamName);
+    Story findStoryById(int storyId);
     Team findTeamByName(String name);
+    Member findMemberByName(String name, String teamName);
+    void showPersonActivity(String activity);
+    void showTeamActivity(String activity);
+
+
+
+
+
+
+
+
+
 }

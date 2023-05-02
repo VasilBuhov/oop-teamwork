@@ -16,6 +16,7 @@ public class CreateNewStoryCommand implements Command{
     public static final String STORY_CREATED = "Story with id: %d and title: %s was created.";
     public static final String NOT_A_MEMBER_MESSAGE = "You are not part of the team and cannot create a new story!";
     public static final String BOARD_IS_NOT_FOUNDED = "This board is not founded in your team!";
+    public static final String TEAM_IS_NOT_FOUNDED = "Team is not founded.";
     public static int EXPECTED_NUMBER_OF_ARGUMENTS = 5;
     private final TaskManagementRepository repository;
     private String team;
@@ -35,9 +36,11 @@ public class CreateNewStoryCommand implements Command{
 
         System.out.println("Please enter your team: ");
         team = scanner.nextLine();
+        if (repository.getTeams().stream().anyMatch(team1 -> team1.getName().equals(team))) {
         System.out.println("Please enter your name, as assignee: ");
         assignee = scanner.nextLine();
-        if (repository.getTeams().stream().filter(team1 -> team1.getName().equals(team)).anyMatch(team1 -> team1.getMembers().stream().anyMatch(member -> member.getName().equals(assignee)))) {
+        if (repository.getTeams().stream().filter(team1 -> team1.getName().equals(team))
+                .anyMatch(team1 -> team1.getMembers().stream().anyMatch(member -> member.getName().equals(assignee)))) {
             parameters.add(assignee);
             System.out.println("Please enter a valid title: ");
             title = scanner.nextLine();
@@ -64,7 +67,9 @@ public class CreateNewStoryCommand implements Command{
             }
             throw new IllegalArgumentException(BOARD_IS_NOT_FOUNDED);
         }
-        throw new IllegalArgumentException(NOT_A_MEMBER_MESSAGE);
+            throw new IllegalArgumentException(NOT_A_MEMBER_MESSAGE);
+        }
+        throw new IllegalArgumentException(TEAM_IS_NOT_FOUNDED);
     }
 
 }

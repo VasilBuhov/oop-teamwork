@@ -35,7 +35,7 @@ public class CreateNewTeamCommand implements Command {
             throw new IllegalArgumentException(String.format(NAME_ALREADY_EXIST, name));
         }
 
-        repository.createNewTeam(name);
+        Team team1 = repository.createNewTeam(name);
         return String.format(TEAM_CREATED, name);
     }
 }

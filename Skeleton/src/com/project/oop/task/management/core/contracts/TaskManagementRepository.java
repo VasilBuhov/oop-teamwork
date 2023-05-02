@@ -24,7 +24,7 @@ public interface TaskManagementRepository {
     void changeStoryStatus(int storyId, StoryStatus status);
     void changeFeedbackRating(int id, int newRating);
     void changeFeedbackStatus(int id, String direction);
-    Member addNewPersonToTeam(String name, String team);
+    void addNewPersonToTeam(String name, String team);
     public Task findTaskById(int taskId);
     Task findFeedbackById(int taskId);
     Story findStoryById(int storyId);

@@ -7,15 +7,17 @@ import com.project.oop.task.management.utils.ValidationHelper;
 
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class AddPersonToTeamCommand implements Command {
     public static final String MEMBER_ADDED_MESSAGE = "Member with name: %s was added to team: %s";
+    public static final String TEAM_NOT_FOUNDED_MESSAGE = "Team with name: %s is not found in the application!";
     public static int EXPECTED_NUMBER_OF_ARGUMENTS = 2;
     private String personName;
     private String teamName;
 
     private final TaskManagementRepository repository;
-    public AddPersonToTeamCommand(TaskManagementRepository taskManagementRepository) {
+    public AddPersonToTeamCommand(TaskManagementRepository repository) {
         this.repository = new TaskManagementRepositoryImpl();
     }
 
@@ -28,12 +30,15 @@ public class AddPersonToTeamCommand implements Command {
         parameters.add(personName);
         System.out.println("Please enter a team name: ");
         teamName = scanner.nextLine();
-        parameters.add(teamName);
+        if (repository.getTeams().stream().anyMatch(team -> team.getName().equals(teamName))) {
+            parameters.add(teamName);
 
-        ValidationHelper.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
+            ValidationHelper.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
 
-        repository.addNewPersonToTeam(personName, teamName);
+            repository.addNewPersonToTeam(personName, teamName);
 
-        return String.format(MEMBER_ADDED_MESSAGE, personName, teamName);
+            return String.format(MEMBER_ADDED_MESSAGE, personName, teamName);
+        }
+        throw new IllegalArgumentException(String.format(TEAM_NOT_FOUNDED_MESSAGE, teamName));
     }
 }

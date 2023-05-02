@@ -20,6 +20,9 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
     private final List<Member> members = new ArrayList<>();
     private final List<Team> teams = new ArrayList<>();
 
+    public TaskManagementRepositoryImpl() {
+        nextId = 0;
+    }
     @Override
     public List<Member> getMembers() {
         return new ArrayList<>(members);
@@ -50,12 +53,14 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
 
     public Team createNewTeam(String name) {
         Team team = new TeamImpl(name);
-        this.teams.add(team);
+        teams.add(team);
+
         return team;
     }
 
     public Board createBoard(String name) {
         Board board = new BoardImpl(name);
+
         return board;
     }
 
@@ -64,12 +69,14 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
         StoryImpl story = new StoryImpl(++nextId, title, description, priority, size, assignee);
         stories.add(story);
         tasks.add(story);
+
         return story;
     }
 
     public Bug createBug(String title, String description, Priority priority, Severity severity, String assignee) {
         Bug bug = new BugImpl(++nextId, title, description, priority, severity, assignee);
         bugs.add(bug);
+
         return bug;
     }
 
@@ -86,7 +93,6 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
     public void changeStoryPriority(int storyId, Priority newPriority) {
         Story story = findStoryById(storyId);
         story.changePriority(newPriority);
-
     }
 
     @Override
@@ -126,8 +132,8 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
     }
 
     @Override
-    public Member addNewPersonToTeam(String name, String team) {
-        Member member = null;
+    public void addNewPersonToTeam(String name, String team) {
+        Member member = findMemberByName(name, team);
         for (Member member1 : members) {
             if (member1.getName().equals(name)) {
                 member = member1;
@@ -138,7 +144,6 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
                 team1.addMember(member);
             }
         }
-        return member;
     }
 
     @Override

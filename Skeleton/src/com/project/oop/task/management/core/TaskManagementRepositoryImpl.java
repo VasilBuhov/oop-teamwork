@@ -37,9 +37,7 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
         Feedback feedback = new FeedbackImpl(++nextId, title, description, rating);
         this.tasks.add(feedback);
         this.feedbacks.add(feedback);
-        this.teams.stream().filter(team -> !team.getBoards().contains(null)).filter(task -> tasks.add(feedback));
 
-        this.teams.get(0).getBoards().get(0).addTask(feedback);
         return feedback;
     }
 

@@ -88,4 +88,19 @@ public class StoryImpl extends TaskImpl implements Story {
     public String getAsString() {
         return viewInfo();
     }
+
+    @Override
+    public void changePriority(Priority newPriority) {
+        setPriority(newPriority);
+    }
+
+    @Override
+    public void changeSize(Size newSize) {
+        setSize(newSize);
+    }
+
+    @Override
+    public void changeStatus(StoryStatus newStatus) {
+        setStatus(newStatus);
+    }
 }

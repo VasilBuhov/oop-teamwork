@@ -92,7 +92,7 @@ public abstract class TaskImpl implements Task{
                 "Comments: %n", title, description));
 
         for (String comment : comments) {
-          sb.append(comment.toString());
+          sb.append(comment);
         }
         return sb.toString();
     }

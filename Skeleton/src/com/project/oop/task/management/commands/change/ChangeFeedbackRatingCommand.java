@@ -25,10 +25,10 @@ public class ChangeFeedbackRatingCommand implements Command {
          Scanner scanner = new Scanner(System.in);
 
         System.out.println("Please enter a valid id: ");
-        id = ParsingHelpers.tryParseInt(scanner.nextLine(), "Invalid input, must be a number!");
+        id = ParsingHelpers.tryParseInt(scanner.nextLine(), "Invalid input, id must be a number!");
         parameters.add(String.valueOf(id));
         System.out.println("Please enter a new rating: ");
-        newRating = ParsingHelpers.tryParseInt(scanner.nextLine(), "Invalid input, must be a number!");
+        newRating = ParsingHelpers.tryParseInt(scanner.nextLine(), "Invalid input, rating must be a number!");
         parameters.add(String.valueOf(newRating));
 
         ValidationHelper.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);

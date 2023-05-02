@@ -1,27 +1,29 @@
 package com.project.oop.task.management.core.contracts;
 
-import com.project.oop.task.management.models.FeedbackImpl;
-import com.project.oop.task.management.models.StoryImpl;
-import com.project.oop.task.management.models.TaskImpl;
+import com.project.oop.task.management.models.contracts.Feedback;
 import com.project.oop.task.management.models.contracts.Member;
-import com.project.oop.task.management.models.contracts.Team;
+import com.project.oop.task.management.models.contracts.Story;
+import com.project.oop.task.management.models.contracts.Task;
 import com.project.oop.task.management.models.enums.Priority;
 import com.project.oop.task.management.models.enums.Size;
+import com.project.oop.task.management.models.enums.StoryStatus;
 
 import java.util.List;
 
 public interface TaskManagementRepository {
+    Feedback createFeedback(String title, String description, int rating);
 
-    StoryImpl createNewStory(String title, String description, Priority priority, Size size, String assignee);
+    Member createMember(String name);
 
-    Team createNewTeam(String name);
+    public List<Member> getMembers();
 
-    void changeFeedbackRating(int id, int rating);
-    String changeFeedbackStatus(int id, String direction);
+    public void changeStoryPriority(int storyId, Priority newPriority);
+    public void changeStorySize(int storyId, Size newSize);
 
-    List<Team> getTeams();
-    List<Member> getMembers();
-    List<StoryImpl> getStories();
-    List<TaskImpl> getTasksWithAssignee();
-    List<FeedbackImpl> getFeedback();
+    public void changeStoryStatus(int storyId, StoryStatus status);
+
+    public Task findTaskById(int taskId);
+
+    public Story findStoryById(int storyId);
+
 }

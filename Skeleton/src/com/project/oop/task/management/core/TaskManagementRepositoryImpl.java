@@ -27,7 +27,6 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
     }
 
 
-
     @Override
     public List<Team> getTeams() {
         return new ArrayList<>(teams);
@@ -38,7 +37,9 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
         Feedback feedback = new FeedbackImpl(++nextId, title, description, rating);
         this.tasks.add(feedback);
         this.feedbacks.add(feedback);
+        this.teams.stream().filter(team -> !team.getBoards().contains(null)).filter(task -> tasks.add(feedback));
 
+        this.teams.get(0).getBoards().get(0).addTask(feedback);
         return feedback;
     }
 
@@ -82,6 +83,7 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
         return story;
     }
 
+
     @Override
     public void changeFeedbackRating(int id, int rating) {
         for (Feedback feedback : getFeedback()) {
@@ -115,7 +117,7 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
     public Team createNewTeam(String name) {
         Team team = new TeamImpl(name);
         this.teams.add(team);
-        System.out.println(teams.get(0).getName());
+
         return team;
 
     }
@@ -127,7 +129,7 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
 
 
     public Bug createBug(String title, String description, Priority priority, Severity severity, String assignee) {
-        Bug bug = new BugImpl(++nextId,title,description,priority,severity,assignee);
+        Bug bug = new BugImpl(++nextId, title, description, priority, severity, assignee);
         bugs.add(bug);
         return bug;
     }
@@ -137,10 +139,28 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
         return board;
     }
 
-        public Team findTeamByName(String name) {
-            return teams.stream()
-                    .filter(team -> team.getName().equals(name))
-                    .findFirst().get();
+    public Team findTeamByName(String name) {
+        return teams.stream()
+                .filter(team -> team.getName().equals(name))
+                .findFirst().get();
     }
 
+    public Bug findBugByTitle(String title) {
+        return bugs.stream().filter(bug -> bug.getTitle().equals(title)).findFirst().get();
+    }
+
+    public void changeBugPriority(Priority priority, Priority newPriority) {
+        for (Bug bugs : getBugs()) {
+            if (bugs.getPriority().equals(priority)) {
+                bugs.changePriority(newPriority);
+            }
+        }
+
+
+    }
+
+    @Override
+    public List<Bug> getBugs() {
+        return new ArrayList<>(bugs);
+    }
 }

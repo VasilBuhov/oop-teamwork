@@ -36,4 +36,5 @@ public interface TaskManagementRepository {
     public List<Feedback> getFeedback();
 
     Team createNewTeam(String name);
+    List<Bug> getBugs();
 }

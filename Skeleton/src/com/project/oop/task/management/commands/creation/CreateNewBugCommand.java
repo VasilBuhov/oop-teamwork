@@ -17,7 +17,7 @@ public class CreateNewBugCommand implements Command {
     private final TaskManagementRepositoryImpl repository;
 
     public CreateNewBugCommand(TaskManagementRepositoryImpl taskManagementRepository) {
-        this.repository = new TaskManagementRepositoryImpl();
+        this.repository = taskManagementRepository;
     }
 
     @Override

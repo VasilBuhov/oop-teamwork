@@ -1,10 +1,7 @@
 package com.project.oop.task.management.core;
 
 import com.project.oop.task.management.core.contracts.TaskManagementRepository;
-import com.project.oop.task.management.models.FeedbackImpl;
-import com.project.oop.task.management.models.MemberImpl;
-import com.project.oop.task.management.models.StoryImpl;
-import com.project.oop.task.management.models.TeamImpl;
+import com.project.oop.task.management.models.*;
 import com.project.oop.task.management.models.contracts.*;
 import com.project.oop.task.management.models.enums.FeedbackStatus;
 import com.project.oop.task.management.models.enums.Priority;
@@ -85,6 +82,10 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
         stories.add(story);
         return story;
     }
+    public Board createBoard(String name){
+        Board board = new BoardImpl(name);
+        return board;
+    }
 
     @Override
     public void changeFeedbackRating(int id, int rating) {
@@ -127,6 +128,7 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
     public Task findTaskById(int taskId) {
         return tasks.stream().filter(task -> task.getId() == taskId).collect(Collectors.toList()).get(0);
     }
+
 
 
 }

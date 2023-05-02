@@ -68,13 +68,18 @@ public class MemberImpl implements Member {
     @Override
     public String getAsString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(String.format("*********************%n"));
+        sb.append(String.format("======================%n"));
         sb.append(String.format("Member: %s%n", getName()));
         sb.append(String.format("Tasks:%n"));
-        for (Task task : tasks) {
-            sb.append(task.viewInfo());
+        if (tasks.isEmpty()) {
+            sb.append(String.format("%s still does not have any task%n", name));
+        } else {
+            int counter = 1;
+            for (Task task : tasks) {
+                sb.append(counter).append(". ").append(task.viewInfo());
+            }
         }
-        sb.append(String.format("*********************%n"));
+        sb.append(String.format("======================%n"));
         return sb.toString();
     }
 }

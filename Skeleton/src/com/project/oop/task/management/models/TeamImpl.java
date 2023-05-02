@@ -73,8 +73,9 @@ public class TeamImpl implements Team {
         sb.append(String.format("---------------------%n"));
         sb.append(String.format("MEMBERS:%n"));
         if (!members.isEmpty()) {
+            int counter = 1;
             for (Member member : members) {
-                sb.append(member.getAsString());
+                sb.append(counter).append(". ").append(member.getAsString());
             }
         } else {
             sb.append(String.format("There are no members in this team.%n"));
@@ -82,8 +83,9 @@ public class TeamImpl implements Team {
         sb.append(String.format("---------------------%n"));
         sb.append(String.format("BOARDS:%n"));
         if (!boards.isEmpty()) {
+            int counter = 1;
             for (Board board : boards) {
-                sb.append(board.getAsString());
+                sb.append(counter).append(". ").append(board.getAsString());
             }
         } else {
             sb.append(String.format("There are no boards in this team.%n"));

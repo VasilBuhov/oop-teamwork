@@ -26,6 +26,8 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
         return new ArrayList<>(members);
     }
 
+
+
     @Override
     public List<Team> getTeams() {
         return new ArrayList<>(teams);
@@ -113,6 +115,7 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
     public Team createNewTeam(String name) {
         Team team = new TeamImpl(name);
         this.teams.add(team);
+        System.out.println(teams.get(0).getName());
         return team;
 
     }
@@ -133,4 +136,11 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
         Board board = new BoardImpl(name);
         return board;
     }
+
+        public Team findTeamByName(String name) {
+            return teams.stream()
+                    .filter(team -> team.getName().equals(name))
+                    .findFirst().get();
+    }
+
 }

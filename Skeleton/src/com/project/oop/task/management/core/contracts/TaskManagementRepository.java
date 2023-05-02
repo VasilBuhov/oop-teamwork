@@ -1,13 +1,13 @@
 package com.project.oop.task.management.core.contracts;
 
-import com.project.oop.task.management.models.contracts.Feedback;
-import com.project.oop.task.management.models.contracts.Member;
-import com.project.oop.task.management.models.contracts.Story;
-import com.project.oop.task.management.models.contracts.Task;
+import com.project.oop.task.management.models.FeedbackImpl;
+import com.project.oop.task.management.models.StoryImpl;
+import com.project.oop.task.management.models.contracts.*;
 import com.project.oop.task.management.models.enums.Priority;
 import com.project.oop.task.management.models.enums.Size;
 import com.project.oop.task.management.models.enums.StoryStatus;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface TaskManagementRepository {
@@ -16,6 +16,7 @@ public interface TaskManagementRepository {
     Member createMember(String name);
 
     public List<Member> getMembers();
+    public List<Team> getTeams();
 
     public void changeStoryPriority(int storyId, Priority newPriority);
     public void changeStorySize(int storyId, Size newSize);
@@ -26,4 +27,13 @@ public interface TaskManagementRepository {
 
     public Story findStoryById(int storyId);
 
+    StoryImpl createNewStory(String title, String description, Priority priority, Size size, String assignee);
+
+    void changeFeedbackRating(int id, int newRating);
+
+    String changeFeedbackStatus(int id, String direction);
+
+    public List<Feedback> getFeedback();
+
+    Team createNewTeam(String name);
 }

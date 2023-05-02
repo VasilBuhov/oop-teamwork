@@ -36,7 +36,7 @@ public abstract class TaskImpl implements Task{
     }
 
     private void setTitle(String title) {
-        ValidationHelper.ValidateStringLength(title, TITLE_MIN_LENGTH, TITLE_MAX_LENGTH);
+        validateTitle(title);
         this.title = title;
     }
 
@@ -45,13 +45,21 @@ public abstract class TaskImpl implements Task{
         return this.title;
     }
 
+    public void validateTitle(String title) {
+        ValidationHelper.ValidateStringLength(title, TITLE_MIN_LENGTH, TITLE_MAX_LENGTH);
+    }
+
     private void setDescription(String description) {
-        ValidationHelper.ValidateStringLength(description, DESCRIPTION_MIN_LENGTH, DESCRIPTION_MAX_LENGTH);
+        validateDescription(description);
         this.description = description;
     }
     @Override
     public String getDescription() {
         return this.description;
+    }
+
+    public void validateDescription(String description) {
+        ValidationHelper.ValidateStringLength(description, DESCRIPTION_MIN_LENGTH, DESCRIPTION_MAX_LENGTH);
     }
 
     @Override

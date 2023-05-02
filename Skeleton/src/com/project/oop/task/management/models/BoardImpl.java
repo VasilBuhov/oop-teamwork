@@ -22,7 +22,7 @@ public class BoardImpl implements Board {
         setName(name);
         tasks = new ArrayList<>();
         history = new ArrayList<>();
-        logEvent(new EventLogImpl(String.format(BOARD_CREATED, name)).toString());
+        logEvent(new EventLogImpl(String.format(BOARD_CREATED, name)));
     }
 
     private void setName(String name) {
@@ -45,23 +45,24 @@ public class BoardImpl implements Board {
         return new ArrayList<>(history);
     }
 
+
     @Override
     public void addTask(Task task) {
         tasks.add(task);
-        logEvent(new EventLogImpl(String.format(TASK_ADDED_TO_BOARD_MESSAGE, task.getTitle(), name)).toString());
+        logEvent(new EventLogImpl(String.format(TASK_ADDED_TO_BOARD_MESSAGE, task.getTitle(), name)));
     }
     @Override
     public void removeTask(Task task) {
         if (tasks.contains(task)) {
             tasks.remove(task);
-            logEvent(new EventLogImpl(String.format(TASK_REMOVED_FROM_BOARD_MESSAGE, task.getTitle(), name)).toString());
+            logEvent(new EventLogImpl(String.format(TASK_REMOVED_FROM_BOARD_MESSAGE, task.getTitle(), name)));
         } else {
             throw new IllegalArgumentException(TASK_ERROR_MESSAGE);
         }
     }
 
-    public void logEvent(String event) {
-        history.add(new EventLogImpl(event).toString());
+    public void logEvent(EventLogImpl event) {
+        history.add(event.toString());
     }
 
     @Override

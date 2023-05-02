@@ -24,7 +24,6 @@ public abstract class TaskImpl implements Task{
         setDescription(description);
         comments = new ArrayList<>();
         history = new ArrayList<>();
-
     }
 
     private void setId(int id) {
@@ -35,18 +34,20 @@ public abstract class TaskImpl implements Task{
         return this.id;
     }
 
+    public static void validateTitle(String title) {
+        ValidationHelper.ValidateStringLength(title, TITLE_MIN_LENGTH, TITLE_MAX_LENGTH);
+    }
+
     private void setTitle(String title) {
         validateTitle(title);
         this.title = title;
     }
-
     @Override
     public String getTitle() {
         return this.title;
     }
-
-    public static void validateTitle(String title) {
-        ValidationHelper.ValidateStringLength(title, TITLE_MIN_LENGTH, TITLE_MAX_LENGTH);
+    public static void validateDescription(String description) {
+        ValidationHelper.ValidateStringLength(description, DESCRIPTION_MIN_LENGTH, DESCRIPTION_MAX_LENGTH);
     }
 
     private void setDescription(String description) {
@@ -56,10 +57,6 @@ public abstract class TaskImpl implements Task{
     @Override
     public String getDescription() {
         return this.description;
-    }
-
-    public static void validateDescription(String description) {
-        ValidationHelper.ValidateStringLength(description, DESCRIPTION_MIN_LENGTH, DESCRIPTION_MAX_LENGTH);
     }
 
     @Override
@@ -84,8 +81,8 @@ public abstract class TaskImpl implements Task{
             throw new IllegalArgumentException("Comment is not exist!");
         }
     }
-    public void logEvent(String event) {
-        history.add(new EventLogImpl(event).toString());
+    public void logEvent(EventLogImpl event) {
+        history.add(event.toString());
     }
 
     public String viewInfo() {

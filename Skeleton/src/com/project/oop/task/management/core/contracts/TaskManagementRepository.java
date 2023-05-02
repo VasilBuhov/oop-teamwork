@@ -41,4 +41,6 @@ public interface TaskManagementRepository {
     Team createNewTeam(String name);
 
     List<Bug> getBugs();
+    Member findMemberByName(String name, String teamName);
+    Team findTeamByName(String name);
 }

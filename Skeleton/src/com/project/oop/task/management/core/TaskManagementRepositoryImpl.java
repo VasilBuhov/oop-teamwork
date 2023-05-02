@@ -168,4 +168,13 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
     public List<Bug> getBugs() {
         return new ArrayList<>(bugs);
     }
+
+    @Override
+    public Member findMemberByName(String name, String teamName) {
+        Team team = findTeamByName(teamName);
+       return team.getMembers().stream()
+                .filter(member -> member.getName().equals(name)).collect(Collectors.toList()).get(0);
+    }
+
+
 }

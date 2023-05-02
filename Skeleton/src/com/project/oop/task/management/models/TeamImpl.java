@@ -32,11 +32,6 @@ public class TeamImpl implements Team {
     }
 
     @Override
-    public List<Member> getMembers() {
-        return new ArrayList<>(members);
-    }
-
-    @Override
     public List<Board> getBoards() {
         return new ArrayList<>(boards);
     }
@@ -51,6 +46,11 @@ public class TeamImpl implements Team {
         if (boards.contains(board)) {
             boards.remove(board);
         }
+    }
+
+    @Override
+    public List<Member> getMembers() {
+        return new ArrayList<>(members);
     }
 
     @Override

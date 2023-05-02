@@ -4,6 +4,8 @@ import com.project.oop.task.management.commands.contracts.Command;
 import com.project.oop.task.management.core.TaskManagementRepositoryImpl;
 import com.project.oop.task.management.core.contracts.TaskManagementRepository;
 import com.project.oop.task.management.models.StoryImpl;
+import com.project.oop.task.management.models.contracts.Board;
+import com.project.oop.task.management.models.contracts.Team;
 import com.project.oop.task.management.models.enums.Priority;
 import com.project.oop.task.management.models.enums.Size;
 import com.project.oop.task.management.utils.ParsingHelpers;
@@ -63,6 +65,15 @@ public class CreateNewStoryCommand implements Command{
 
                 StoryImpl story = repository.createNewStory(title, description, priority, size, assignee);
 
+                for (Team team1 : repository.getTeams()) {
+                    if (team1.getName().equals(team)) {
+                        for (Board board : team1.getBoards()) {
+                            if (board.getName().equals(targetBoard)) {
+                                board.addTask(story);
+                            }
+                        }
+                    }
+                }
                 return String.format(STORY_CREATED, story.getId(), story.getTitle());
             }
             throw new IllegalArgumentException(BOARD_IS_NOT_FOUNDED);

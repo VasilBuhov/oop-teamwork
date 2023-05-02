@@ -6,12 +6,13 @@ import com.project.oop.task.management.models.contracts.Bug;
 import com.project.oop.task.management.models.enums.Priority;
 import com.project.oop.task.management.models.enums.Severity;
 import com.project.oop.task.management.utils.ParsingHelpers;
+import com.project.oop.task.management.utils.ValidationHelper;
 
 import java.util.List;
 import java.util.Scanner;
 
 public class CreateNewBugCommand implements Command {
-    public static int EXPECTED_NUMBER_OF_ARGUMENTS;
+    public static int EXPECTED_NUMBER_OF_ARGUMENTS=5;
 
     private final TaskManagementRepositoryImpl repository;
 
@@ -24,16 +25,21 @@ public class CreateNewBugCommand implements Command {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please enter Bug title");
         String title= scanner.nextLine();
+        parameters.add(title);
         System.out.println("Please enter Bug description");
 
         String description = scanner.nextLine();
+        parameters.add(description);
         System.out.println("Please enter Bug priority");
         Priority priority = ParsingHelpers.tryParseEnum(scanner.nextLine(), Priority.class);
+        parameters.add(priority.toString());
         System.out.println("Please enter Bug severity");
-        Severity severity= ParsingHelpers.tryParseEnum(scanner.nextLine(),Severity.class);
+        Severity severity= ParsingHelpers.tryParseEnum(scanner.nextLine(),Severity.class);System.out.println("Please enter Bug assignee");
+        parameters.add(severity.toString());
         System.out.println("Please enter Bug assignee");
         String assignee= scanner.nextLine();
-//        ValidationHelper.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
+        parameters.add(assignee);
+        ValidationHelper.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
         Bug createdBug = repository.createBug(title,description,priority,severity,assignee);
         return String.format("Bug with ID %d was created", createdBug.getId());
     }

@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 public class CreateNewBoardCommand implements Command {
 
-    public static int EXPECTED_NUMBER_OF_ARGUMENTS;
+    public static int EXPECTED_NUMBER_OF_ARGUMENTS=1;
 
     private final TaskManagementRepositoryImpl repository;
 
@@ -23,6 +23,7 @@ public class CreateNewBoardCommand implements Command {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please enter board name ");
         String name = scanner.nextLine();
+        parameters.add(name);
         ValidationHelper.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
         Board createdBoard = repository.createBoard(name);
         return String.format("Board with name %s was created", createdBoard.getName());

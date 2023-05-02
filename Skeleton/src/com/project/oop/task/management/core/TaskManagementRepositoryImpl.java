@@ -14,7 +14,6 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
     private int nextId;
 
     private final List<Task> tasks = new ArrayList<>();
-
     private final List<Bug> bugs = new ArrayList<>();
     private final List<Feedback> feedbacks = new ArrayList<>();
     private final List<Story> stories = new ArrayList<>();
@@ -66,7 +65,6 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
     public void changeStoryStatus(int storyId, StoryStatus status) {
         Story story = findStoryById(storyId);
         story.changeStatus(status);
-
     }
 
     @Override
@@ -78,33 +76,25 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
     public StoryImpl createNewStory(String title, String description, Priority priority, Size size, String assignee) {
         StoryImpl story = new StoryImpl(++nextId, title, description, priority, size, assignee);
         stories.add(story);
+        tasks.add(story);
         return story;
     }
 
-
     @Override
     public void changeFeedbackRating(int id, int rating) {
-        for (Feedback feedback : getFeedback()) {
-            if (feedback.getId() == id) {
-                feedback.changeRating(rating);
-            }
-        }
+        Feedback feedback = findFeedbackById(id);
+        feedback.changeRating(rating);
     }
 
     @Override
     public String changeFeedbackStatus(int id, String direction) {
-        for (Feedback feedback : getFeedback()) {
-            if (feedback.getId() == id) {
-                if (direction.equals("revert")) {
-                    feedback.revertStatus();
-                    return feedback.getStatus();
-                } else if (direction.equals("advance")) {
-                    feedback.advanceStatus();
-                    return feedback.getStatus();
-                }
-            }
+        Feedback feedback = findFeedbackById(id);
+        if (direction.equals("revert")) {
+            feedback.revertStatus();
+        } else if (direction.equals("advance")) {
+            feedback.advanceStatus();
         }
-        return "Status not changed!";
+        return feedback.getStatus().toString();
     }
 
     @Override
@@ -115,14 +105,33 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
     public Team createNewTeam(String name) {
         Team team = new TeamImpl(name);
         this.teams.add(team);
-
         return team;
+    }
 
+    @Override
+    public Member addNewPersonToTeam(String name, String team) {
+        Member member = null;
+        for (Member member1 : members) {
+            if (member1.getName().equals(name)) {
+                member = member1;
+            }
+        }
+        for (Team team1 : teams) {
+            if (team1.getName().equals(team)) {
+                team1.addMember(member);
+            }
+        }
+        return member;
     }
 
     @Override
     public Task findTaskById(int taskId) {
         return tasks.stream().filter(task -> task.getId() == taskId).collect(Collectors.toList()).get(0);
+    }
+
+    @Override
+    public Feedback findFeedbackById(int taskId) {
+        return feedbacks.stream().filter(story -> story.getId() == taskId).collect(Collectors.toList()).get(0);
     }
 
 
@@ -153,8 +162,6 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
                 bugs.changePriority(newPriority);
             }
         }
-
-
     }
 
     @Override

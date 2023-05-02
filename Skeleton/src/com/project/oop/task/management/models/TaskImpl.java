@@ -45,7 +45,7 @@ public abstract class TaskImpl implements Task{
         return this.title;
     }
 
-    public void validateTitle(String title) {
+    public static void validateTitle(String title) {
         ValidationHelper.ValidateStringLength(title, TITLE_MIN_LENGTH, TITLE_MAX_LENGTH);
     }
 
@@ -58,7 +58,7 @@ public abstract class TaskImpl implements Task{
         return this.description;
     }
 
-    public void validateDescription(String description) {
+    public static void validateDescription(String description) {
         ValidationHelper.ValidateStringLength(description, DESCRIPTION_MIN_LENGTH, DESCRIPTION_MAX_LENGTH);
     }
 

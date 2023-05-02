@@ -23,7 +23,10 @@ public interface TaskManagementRepository {
 
     public void changeStoryStatus(int storyId, StoryStatus status);
 
+    Member addNewPersonToTeam(String name, String team);
+
     public Task findTaskById(int taskId);
+    Task findFeedbackById(int taskId);
 
     public Story findStoryById(int storyId);
 
@@ -36,5 +39,6 @@ public interface TaskManagementRepository {
     public List<Feedback> getFeedback();
 
     Team createNewTeam(String name);
+
     List<Bug> getBugs();
 }

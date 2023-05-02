@@ -9,4 +9,5 @@ public interface Story extends Task{
     Size getSize();
 
     String getAssignee();
+
 }

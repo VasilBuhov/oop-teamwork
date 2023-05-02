@@ -70,6 +70,7 @@ public class MemberImpl implements Member {
         StringBuilder sb = new StringBuilder();
         sb.append(String.format("*********************%n"));
         sb.append(String.format("Member: %s%n", getName()));
+        sb.append(String.format("Tasks:%n"));
         for (Task task : tasks) {
             sb.append(task.viewInfo());
         }

@@ -9,4 +9,7 @@ public interface Bug extends Task{
     Severity getSeverity();
 
     String getAssignee();
+
+    void changePriority(Priority priority);
+    void changeSeverity(Severity severity);
 }

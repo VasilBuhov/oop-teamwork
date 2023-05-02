@@ -1,9 +1,7 @@
 package com.project.oop.task.management.models;
 
 import com.project.oop.task.management.models.contracts.Feedback;
-import com.project.oop.task.management.models.enums.BugStatus;
 import com.project.oop.task.management.models.enums.FeedbackStatus;
-import com.project.oop.task.management.models.enums.StoryStatus;
 
 public class FeedbackImpl extends TaskImpl implements Feedback {
     private static final FeedbackStatus INITIAL_STATUS = FeedbackStatus.NEW;
@@ -28,6 +26,11 @@ public class FeedbackImpl extends TaskImpl implements Feedback {
     }
 
     @Override
+    public void changeRating(int rating) {
+        this.rating = rating;
+    }
+
+    @Override
     public String viewInfo() {
         return String.format("*********************%n" +
                         "Feedback: %n" +
@@ -37,7 +40,7 @@ public class FeedbackImpl extends TaskImpl implements Feedback {
                         "*********************%n", status.toString(), rating);
     }
 
-    protected void revertStatus() {
+    public void revertStatus() {
         if (status != INITIAL_STATUS) {
             setStatus(FeedbackStatus.values()[status.ordinal() - 1]);
         } else {
@@ -45,7 +48,7 @@ public class FeedbackImpl extends TaskImpl implements Feedback {
         }
     }
 
-    protected void advanceStatus() {
+    public void advanceStatus() {
         if (status != FINAL_STATUS) {
             setStatus(FeedbackStatus.values()[status.ordinal() + 1]);
         } else {

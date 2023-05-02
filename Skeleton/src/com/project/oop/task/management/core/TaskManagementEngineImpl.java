@@ -46,7 +46,7 @@ public class TaskManagementEngineImpl implements Engine {
     private void processCommand(String inputLine) {
         String commandName = extractCommandName(inputLine);
         Command command = commandFactory.createCommandFromCommandName(commandName, repository);
-        List<String> parameters = extractCommandParameters(inputLine);
+        List<String> parameters = new ArrayList<>();
         String commandResult = command.execute(parameters);
         System.out.println(commandResult);
     }
@@ -55,13 +55,13 @@ public class TaskManagementEngineImpl implements Engine {
         return inputLine.split(" ")[0];
     }
 
-    private List<String> extractCommandParameters(String inputLine) {
-        String[] commandParts = inputLine.split(" ");
-        ArrayList<String> parameters = new ArrayList<>();
-        for (int i = 1; i < commandParts.length; i++) {
-            parameters.add(commandParts[i]);
-        }
-        return parameters;
-    }
+//    private List<String> extractCommandParameters(String inputLine) {
+//        String[] commandParts = inputLine.split(" ");
+//        ArrayList<String> parameters = new ArrayList<>();
+//        for (int i = 1; i < commandParts.length; i++) {
+//            parameters.add(commandParts[i]);
+//        }
+//        return parameters;
+//    }
 
 }

@@ -30,6 +30,7 @@ public class CreateNewStoryCommand implements Command{
             "Invalid priority, choose between: %s, %s and %s:";
     public static final String INVALID_SIZE_MESSAGE =
             "Invalid size, choose between: %s, %s or %s:";
+    public static final String INVALID_INPUT = "Invalid input! Enter a new command, please:";
 
     public static int EXPECTED_NUMBER_OF_ARGUMENTS = 7;
     private final TaskManagementRepository repository;
@@ -48,7 +49,6 @@ public class CreateNewStoryCommand implements Command{
     public String execute(List<String> parameters) {
         Scanner scanner = new Scanner(System.in);
 
-
         System.out.println("Please enter your team: ");
         boolean teamIsValid = false;
         while (!teamIsValid) {
@@ -57,6 +57,9 @@ public class CreateNewStoryCommand implements Command{
                 teamIsValid = true;
                 parameters.add(team);
             } else {
+                if (team.equals("cancel")) {
+                    throw new IllegalArgumentException(INVALID_INPUT);
+                }
                 System.out.println(TEAM_IS_NOT_FOUNDED);
             }
         }
@@ -73,6 +76,9 @@ public class CreateNewStoryCommand implements Command{
                 boardIsValid = true;
                 parameters.add(targetBoard);
             } else {
+                if (targetBoard.equals("cancel")) {
+                    throw new IllegalArgumentException(INVALID_INPUT);
+                }
                 System.out.println(BOARD_IS_NOT_FOUNDED);
             }
         }
@@ -85,6 +91,9 @@ public class CreateNewStoryCommand implements Command{
                 assigneeIsValid = true;
                 parameters.add(assignee);
             } else {
+                if (assignee.equals("cancel")) {
+                    throw new IllegalArgumentException(INVALID_INPUT);
+                }
                 System.out.println(NOT_A_MEMBER_MESSAGE);
             }
         }
@@ -93,6 +102,9 @@ public class CreateNewStoryCommand implements Command{
         boolean isValidTitle = false;
         while (!isValidTitle) {
             title = scanner.nextLine();
+            if (title.equals("cancel")) {
+                throw new IllegalArgumentException(INVALID_INPUT);
+            }
             try {
                 TaskImpl.validateTitle(title);
             } catch (IllegalArgumentException e) {
@@ -111,6 +123,9 @@ public class CreateNewStoryCommand implements Command{
         boolean isValidDescription = false;
         while (!isValidDescription) {
             description = scanner.nextLine();
+            if (description.equals("cancel")) {
+                throw new IllegalArgumentException(INVALID_INPUT);
+            }
             try {
                 TaskImpl.validateDescription(description);
             } catch (IllegalArgumentException e) {
@@ -127,8 +142,12 @@ public class CreateNewStoryCommand implements Command{
         System.out.println("Please enter a valid priority: ");
         boolean isValidPriority = false;
         while (!isValidPriority) {
+            String input = scanner.nextLine();
+            if (input.equals("cancel")) {
+                throw new IllegalArgumentException(INVALID_INPUT);
+            }
             try {
-                priority = ParsingHelpers.tryParseEnum(scanner.nextLine(), Priority.class);
+                priority = ParsingHelpers.tryParseEnum(input, Priority.class);
             } catch (IllegalArgumentException e) {
                 System.out.printf((INVALID_PRIORITY_MESSAGE)
                         + "%n", Priority.LOW, Priority.MEDIUM, Priority.HIGH);
@@ -142,8 +161,12 @@ public class CreateNewStoryCommand implements Command{
         System.out.println("Please enter a valid size: ");
         boolean isValidSize = false;
         while (!isValidSize) {
+            String input = scanner.nextLine();
+            if (input.equals("cancel")) {
+                throw new IllegalArgumentException(INVALID_INPUT);
+            }
             try {
-                size = ParsingHelpers.tryParseEnum(scanner.nextLine(), Size.class);
+                size = ParsingHelpers.tryParseEnum(input, Size.class);
             } catch (IllegalArgumentException e) {
                 System.out.printf((INVALID_SIZE_MESSAGE)
                         + "%n", Size.SMALL, Size.MEDIUM, Size.LARGE);

@@ -17,12 +17,15 @@ public class CreateNewStoryCommand implements Command{
     public static final String STORY_CREATED =
             "Story with id: %d and title: %s was created.";
     public static final String NOT_A_MEMBER_MESSAGE =
-            "You are not part of the team and cannot create a new story! Please enter a valid assignee:";
+            "You are not part of the team and cannot create a new story! " +
+                    "Please enter a valid assignee or 'cancel' if you want to exit: ";
     public static final String BOARD_IS_NOT_FOUNDED =
-            "This board is not founded in your team! Please enter a valid board name:";
+            "This board is not founded in your team! " +
+                    "Please enter a valid board name or 'cancel' if you want to exit: ";
     public static final String TEAM_IS_NOT_FOUNDED =
-            "There is no team with this name. Please enter a valid team name:";
-    public static final String INVALID_INPUT = "Invalid input! Enter a new command, please:";
+            "There is no team with this name. " +
+                    "Please enter a valid team name or 'cancel' if you want to exit: ";
+    public static final String INVALID_INPUT = "Command is terminated. Please enter a new command:";
 
 
     public static int EXPECTED_NUMBER_OF_ARGUMENTS = 7;
@@ -42,7 +45,7 @@ public class CreateNewStoryCommand implements Command{
     public String execute(List<String> parameters) {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Please enter your team or 'cancel' if you want to exit: ");
+        System.out.println("Please enter your team name: ");
         boolean teamIsValid = false;
         while (!teamIsValid) {
             team = scanner.nextLine();
@@ -57,8 +60,7 @@ public class CreateNewStoryCommand implements Command{
             }
         }
 
-        System.out.println("Please enter in which board you would like to add this story or " +
-                "'cancel' if you want to exit: : ");
+        System.out.println("Please enter in which board you would like to add this story: ");
         boolean boardIsValid = false;
         while (!boardIsValid) {
             targetBoard = scanner.nextLine();
@@ -77,7 +79,7 @@ public class CreateNewStoryCommand implements Command{
             }
         }
 
-        System.out.println("Please enter your name, as assignee or 'cancel' if you want to exit: ");
+        System.out.println("Please enter your name, as assignee: ");
         boolean assigneeIsValid = false;
         while (!assigneeIsValid) {
             assignee = scanner.nextLine();
@@ -92,7 +94,7 @@ public class CreateNewStoryCommand implements Command{
             }
         }
 
-        System.out.println("Please enter a valid title or 'cancel' if you want to exit: ");
+        System.out.println("Please enter a valid title: ");
         boolean isValidTitle = false;
         while (!isValidTitle) {
             title = scanner.nextLine();
@@ -102,7 +104,7 @@ public class CreateNewStoryCommand implements Command{
             try {
                 TaskImpl.validateTitle(title);
             } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
+                System.out.println(e.getMessage() + " Try again or enter 'cancel' to exit:");
                 title = "";
             }
             if (!title.isBlank()) {
@@ -112,7 +114,7 @@ public class CreateNewStoryCommand implements Command{
         }
 
 
-        System.out.println("Please enter a valid description or 'cancel' if you want to exit: ");
+        System.out.println("Please enter a valid description: ");
         boolean isValidDescription = false;
         while (!isValidDescription) {
             description = scanner.nextLine();
@@ -122,7 +124,7 @@ public class CreateNewStoryCommand implements Command{
             try {
                 TaskImpl.validateDescription(description);
             } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
+                System.out.println(e.getMessage() + " Try again or enter 'cancel' to exit:");
                 description = "";
             }
             if (!description.isBlank()) {
@@ -131,7 +133,7 @@ public class CreateNewStoryCommand implements Command{
             }
         }
 
-        System.out.println("Please enter a valid priority or 'cancel' if you want to exit: ");
+        System.out.println("Please enter a valid priority: ");
         boolean isValidPriority = false;
         while (!isValidPriority) {
             String input = scanner.nextLine();
@@ -141,7 +143,9 @@ public class CreateNewStoryCommand implements Command{
             try {
                 priority = ParsingHelpers.tryParseEnum(input, Priority.class);
             } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
+                System.out.println(e.getMessage() +
+                        String.format(" You can choose between: %s, %s or %s. Try again or enter 'cancel' to exit:",
+                        Priority.LOW, Priority.MEDIUM, Priority.HIGH));
             }
             if (priority != null) {
                 isValidPriority = true;
@@ -149,7 +153,7 @@ public class CreateNewStoryCommand implements Command{
             }
         }
 
-        System.out.println("Please enter a valid size or 'cancel' if you want to exit: ");
+        System.out.println("Please enter a valid size: ");
         boolean isValidSize = false;
         while (!isValidSize) {
             String input = scanner.nextLine();
@@ -159,7 +163,9 @@ public class CreateNewStoryCommand implements Command{
             try {
                 size = ParsingHelpers.tryParseEnum(input, Size.class);
             } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
+                System.out.println(e.getMessage()+
+                        String.format(" You can choose between: %s, %s or %s. Try again or enter 'cancel' to exit:",
+                                Size.SMALL, Size.MEDIUM, Size.LARGE));
             }
             if (size != null) {
                 isValidSize = true;

@@ -56,13 +56,5 @@ public class TaskManagementEngineImpl implements Engine {
         return inputLine.split(" ")[0];
     }
 
-    //private List<String> extractCommandParameters(String inputLine) {
-   //     String[] commandParts = inputLine.split(" ");
-   //     ArrayList<String> parameters = new ArrayList<>();
-   //     for (int i = 1; i < commandParts.length; i++) {
-   //         parameters.add(commandParts[i]);
-   //     }
-   //     return parameters;
-   // }
 
 }

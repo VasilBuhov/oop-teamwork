@@ -3,6 +3,7 @@ package com.project.oop.task.management.commands.creation;
 import com.project.oop.task.management.commands.contracts.Command;
 import com.project.oop.task.management.core.TaskManagementRepositoryImpl;
 import com.project.oop.task.management.core.contracts.TaskManagementRepository;
+import com.project.oop.task.management.models.MemberImpl;
 import com.project.oop.task.management.models.TaskImpl;
 import com.project.oop.task.management.models.contracts.Member;
 import com.project.oop.task.management.utils.ValidationHelper;
@@ -24,27 +25,39 @@ public class CreateNewPersonCommand implements Command {
     public String execute( List<String> parameters) {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Please enter person name:");
-        String personName = "";
+        System.out.println("Please enter person name or 'cancel' if you want to exit:");
         boolean nameIsValid = false;
         while (!nameIsValid) {
-            personName = scanner.nextLine();
+            name = scanner.nextLine();
+            if (name.equals("cancel")){
+                throw new IllegalArgumentException("Command is terminated. Please enter a new command:");
+            }
             try {
-                TaskImpl.validateTitle(personName);
+                MemberImpl.validateName(name);
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
-                personName = "";
+                name = "";
             }
-            if (!personName.equals("")) {
+
+
+            if (!name.equals("")) {
+                try{
+                    if (repository.getMembers().stream().anyMatch(member -> member.getName().equals(name))) {
+                        throw new IllegalArgumentException("A person with the same name already exists. Please enter another name or 'cancel' if you want to exit:");
+                    }
+                }catch (IllegalArgumentException e){
+                    System.out.println(e.getMessage());
+                    name = "";
+                }
+            }
+            if (!name.equals("")){
                 nameIsValid = true;
-                parameters.add(personName);
+                parameters.add(name);
             }
         }
 
         name = parameters.get(0);
-        if (repository.getMembers().stream().anyMatch(member -> member.getName().equals(name))){
-            throw new IllegalArgumentException("A person with the same name already exists.");
-        }
+
         Member createdMember = repository.createMember(name);
 
         return String.format("Person %s was created.", name);

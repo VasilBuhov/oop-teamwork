@@ -177,6 +177,11 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
                 .filter(member -> member.getName().equals(name)).collect(Collectors.toList()).get(0);
     }
 
+    public boolean isAssigneeMemberOfTheTeam(String assignee, String teamName) {
+        Team team = findTeamByName(teamName);
+        return team.getMembers().stream().anyMatch(member -> member.getName().equals(assignee));
+    }
+
     public void showPersonActivity(String activity) {
         System.out.println(activity);
     }

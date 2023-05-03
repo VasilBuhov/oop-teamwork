@@ -43,7 +43,7 @@ public class CreateNewStoryCommand implements Command{
         if (repository.getTeams().stream().anyMatch(team1 -> team1.getName().equals(team))) {
         System.out.println("Please enter your name, as assignee: ");
         assignee = scanner.nextLine();
-        if (isValidAssignee(assignee)) {
+        if (repository.isAssigneeMemberOfTheTeam(assignee, team)) {
             parameters.add(assignee);
             System.out.println("Please enter a valid title: ");
             title = scanner.nextLine();
@@ -79,18 +79,4 @@ public class CreateNewStoryCommand implements Command{
         }
         throw new IllegalArgumentException(TEAM_IS_NOT_FOUNDED);
     }
-
-    private boolean isValidAssignee(String assignee) {
-        for (Team team1 : repository.getTeams()) {
-            if (team1.getName().equals(team)) {
-                for (Member member : team1.getMembers()) {
-                    if (member.getName().equals(assignee)) {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
-    }
-
 }

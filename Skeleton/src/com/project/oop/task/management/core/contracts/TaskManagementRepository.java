@@ -31,6 +31,7 @@ public interface TaskManagementRepository {
     Team findTeamByName(String name);
     Member findMemberByName(String name, String teamName);
     Board findBoardByName(String boardName, String teamName);
+    boolean isAssigneeMemberOfTheTeam(String assignee, String teamName);
     void showPersonActivity(String activity);
     void showTeamActivity(String activity);
 

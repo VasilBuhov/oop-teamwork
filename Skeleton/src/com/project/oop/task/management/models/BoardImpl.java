@@ -22,7 +22,7 @@ public class BoardImpl implements Board {
         setName(name);
         tasks = new ArrayList<>();
         history = new ArrayList<>();
-        logEvent(new EventLogImpl(String.format(BOARD_CREATED, name)).toString());
+        logEvent(new EventLogImpl(String.format(BOARD_CREATED, name)));
     }
 
     private void setName(String name) {
@@ -45,23 +45,24 @@ public class BoardImpl implements Board {
         return new ArrayList<>(history);
     }
 
+
     @Override
     public void addTask(Task task) {
         tasks.add(task);
-        logEvent(new EventLogImpl(String.format(TASK_ADDED_TO_BOARD_MESSAGE, task.getTitle(), name)).toString());
+        logEvent(new EventLogImpl(String.format(TASK_ADDED_TO_BOARD_MESSAGE, task.getTitle(), name)));
     }
     @Override
     public void removeTask(Task task) {
         if (tasks.contains(task)) {
             tasks.remove(task);
-            logEvent(new EventLogImpl(String.format(TASK_REMOVED_FROM_BOARD_MESSAGE, task.getTitle(), name)).toString());
+            logEvent(new EventLogImpl(String.format(TASK_REMOVED_FROM_BOARD_MESSAGE, task.getTitle(), name)));
         } else {
             throw new IllegalArgumentException(TASK_ERROR_MESSAGE);
         }
     }
 
-    public void logEvent(String event) {
-        history.add(new EventLogImpl(event).toString());
+    public void logEvent(EventLogImpl event) {
+        history.add(event.toString());
     }
 
     @Override
@@ -73,6 +74,21 @@ public class BoardImpl implements Board {
             sb.append(task.viewInfo());
         }
         sb.append(String.format("*********************%n"));
+        return sb.toString();
+    }
+    public String getActivity() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format("======================%n"));
+        sb.append(String.format("Board: %s%n", getName()));
+        sb.append(String.format("Activity:%n"));
+        if (history.isEmpty()) {
+            sb.append(String.format("No activity registered!%n"));
+        } else {
+            for (String event : history) {
+                sb.append(event).append(System.lineSeparator());
+            }
+        }
+        sb.append(String.format("======================%n"));
         return sb.toString();
     }
 }

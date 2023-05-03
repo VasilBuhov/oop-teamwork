@@ -16,9 +16,9 @@ public class TeamImpl implements Team {
     private List<Board> boards;
 
     public TeamImpl(String name) {
+        setName(name);
         members = new ArrayList<>();
         boards = new ArrayList<>();
-        setName(name);
     }
 
     private void setName(String name) {
@@ -29,11 +29,6 @@ public class TeamImpl implements Team {
     @Override
     public String getName() {
         return this.name;
-    }
-
-    @Override
-    public List<Member> getMembers() {
-        return new ArrayList<>(members);
     }
 
     @Override
@@ -51,6 +46,11 @@ public class TeamImpl implements Team {
         if (boards.contains(board)) {
             boards.remove(board);
         }
+    }
+
+    @Override
+    public List<Member> getMembers() {
+        return new ArrayList<>(members);
     }
 
     @Override

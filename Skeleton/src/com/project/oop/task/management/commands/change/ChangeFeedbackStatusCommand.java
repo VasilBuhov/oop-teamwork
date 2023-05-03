@@ -10,6 +10,7 @@ import com.project.oop.task.management.utils.ValidationHelper;
 
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class ChangeFeedbackStatusCommand implements Command {
     public static final String CHANGED_STATUS = "Status of feedback with id: %d was changed from %s to %s.";
@@ -40,13 +41,9 @@ public class ChangeFeedbackStatusCommand implements Command {
             if (direction.equals("advance") || direction.equals("revert")) {
                 parameters.add(direction);
                 ValidationHelper.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
-                String oldStatus = "";
-                for (Feedback feedback : repository.getFeedback()) {
-                    if (feedback.getId() == id) {
-                        oldStatus = feedback.getStatus();
-                    }
-                }
-                String newStatus = repository.changeFeedbackStatus(id, direction);
+                String oldStatus = repository.getFeedback().stream().filter(feedback -> feedback.getId() == id).collect(Collectors.toList()).get(0).getStatus();
+                repository.changeFeedbackStatus(id, direction);
+                String newStatus = repository.getFeedback().stream().filter(feedback -> feedback.getId() == id).collect(Collectors.toList()).get(0).getStatus();
 
                 if (newStatus.equals(oldStatus) && newStatus.equals(FeedbackStatus.NEW.toString())) {
                     return String.format(CANNOT_REVERT_MESSAGE);

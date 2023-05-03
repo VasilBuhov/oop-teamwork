@@ -3,6 +3,8 @@ package com.project.oop.task.management.commands.show;
 import com.project.oop.task.management.commands.contracts.Command;
 import com.project.oop.task.management.core.contracts.TaskManagementRepository;
 import com.project.oop.task.management.models.TeamImpl;
+import com.project.oop.task.management.models.contracts.Board;
+import com.project.oop.task.management.models.contracts.Member;
 import com.project.oop.task.management.models.contracts.Team;
 import com.project.oop.task.management.utils.ValidationHelper;
 
@@ -29,9 +31,18 @@ public class ShowTeamActivityCommand implements Command {
         ValidationHelper.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
 
        for (Team team : repository.getTeams()) {
+           StringBuilder sb = new StringBuilder();
            if (team.getName().equals(name)) {
-               return team.getAsString();
+               sb.append(String.format("Members activity:%n"));
+               for (Member member : team.getMembers()) {
+                  sb.append(member.getActivity());
+               }
+               sb.append(String.format("Boards activity:%n"));
+               for (Board board : team.getBoards()) {
+                   sb.append(board.getActivity());
+               }
            }
+           repository.showTeamActivity(sb.toString());
        }
        throw new IllegalArgumentException(TEAM_NOT_FOUNDED);
     }

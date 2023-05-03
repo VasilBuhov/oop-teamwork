@@ -3,8 +3,10 @@ package com.project.oop.task.management.commands.creation;
 import com.project.oop.task.management.commands.contracts.Command;
 import com.project.oop.task.management.core.TaskManagementRepositoryImpl;
 import com.project.oop.task.management.core.contracts.TaskManagementRepository;
+import com.project.oop.task.management.models.FeedbackImpl;
 import com.project.oop.task.management.models.StoryImpl;
 import com.project.oop.task.management.models.contracts.Board;
+import com.project.oop.task.management.models.contracts.Member;
 import com.project.oop.task.management.models.contracts.Team;
 import com.project.oop.task.management.models.enums.Priority;
 import com.project.oop.task.management.models.enums.Size;
@@ -41,14 +43,15 @@ public class CreateNewStoryCommand implements Command{
         if (repository.getTeams().stream().anyMatch(team1 -> team1.getName().equals(team))) {
         System.out.println("Please enter your name, as assignee: ");
         assignee = scanner.nextLine();
-        if (repository.getTeams().stream().filter(team1 -> team1.getName().equals(team))
-                .anyMatch(team1 -> team1.getMembers().stream().anyMatch(member -> member.getName().equals(assignee)))) {
+        if (isValidAssignee(assignee)) {
             parameters.add(assignee);
             System.out.println("Please enter a valid title: ");
             title = scanner.nextLine();
+            StoryImpl.validateTitle(title);
             parameters.add(title);
             System.out.println("Please enter a valid description: ");
             description = scanner.nextLine();
+            StoryImpl.validateDescription(description);
             parameters.add(description);
             System.out.println("Please enter a valid priority: ");
             priority = ParsingHelpers.tryParseEnum(scanner.nextLine(), Priority.class);
@@ -58,7 +61,7 @@ public class CreateNewStoryCommand implements Command{
             parameters.add(size.toString());
             System.out.println("Please int which board you would like to add this story: ");
             targetBoard = scanner.nextLine();
-            if (repository.getTeams().stream().anyMatch(team1 -> team1.getBoards().stream().anyMatch(board -> board.getName().equals(targetBoard)))) {
+            if (repository.findTeamByName(team).getBoards().stream().anyMatch(board -> board.getName().equals(targetBoard))) {
                 parameters.add(targetBoard);
 
                 ValidationHelper.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
@@ -81,6 +84,19 @@ public class CreateNewStoryCommand implements Command{
             throw new IllegalArgumentException(NOT_A_MEMBER_MESSAGE);
         }
         throw new IllegalArgumentException(TEAM_IS_NOT_FOUNDED);
+    }
+
+    private boolean isValidAssignee(String assignee) {
+        for (Team team1 : repository.getTeams()) {
+            if (team1.getName().equals(team)) {
+                for (Member member : team1.getMembers()) {
+                    if (member.getName().equals(assignee)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 
 }

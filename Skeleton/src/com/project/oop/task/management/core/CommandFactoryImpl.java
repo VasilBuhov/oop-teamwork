@@ -40,7 +40,7 @@ public class CommandFactoryImpl implements CommandFactory {
             case CREATENEWBUG:
                 return new CreateNewBugCommand(taskManagementRepository);
             case CREATENEWMEMBER:
-                return new CreateNewMemberCommand(taskManagementRepository);
+                return new CreateNewPersonCommand(taskManagementRepository);
             case CREATENEWFEEDBACK:
                 return new CreateNewFeedbackCommand(taskManagementRepository);
             case CREATENEWSTORY:

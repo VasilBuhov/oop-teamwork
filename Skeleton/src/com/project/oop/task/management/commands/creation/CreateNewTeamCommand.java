@@ -14,7 +14,9 @@ import java.util.Scanner;
 
 public class CreateNewTeamCommand implements Command {
     public static final String TEAM_CREATED = "Team with name %s was created!";
-    public static final String NAME_ALREADY_EXIST = "Team with name %s already exist!";
+    public static final String TEAM_ALREADY_EXIST =
+            "Team with this name already exist. Please enter a valid team name:";
+    public static final String INVALID_INPUT = "Invalid input! Enter a new command, please:";
     public static int EXPECTED_NUMBER_OF_ARGUMENTS = 1;
     private final TaskManagementRepositoryImpl repository;
     private String name;
@@ -25,15 +27,22 @@ public class CreateNewTeamCommand implements Command {
     @Override
     public String execute(List<String> parameters) {
         Scanner scanner = new Scanner(System.in);
-
-        System.out.println("Please enter a valid name to your new team: ");
-        name = scanner.nextLine();
-        parameters.add(name);
+        System.out.println("Please enter the name of yor new team or 'cancel' if you want to exit: ");
+        boolean teamIsValid = false;
+        while (!teamIsValid) {
+            name = scanner.nextLine();
+            if (repository.getTeams().stream().noneMatch(team1 -> team1.getName().equals(name))) {
+                if (name.equals("cancel")) {
+                    throw new IllegalArgumentException(INVALID_INPUT);
+                }
+                teamIsValid = true;
+                parameters.add(name);
+            } else {
+                System.out.println(TEAM_ALREADY_EXIST);
+            }
+        }
 
         ValidationHelper.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
-        if (repository.getTeams().stream().anyMatch(team -> team.getName().equals(name))) {
-            throw new IllegalArgumentException(String.format(NAME_ALREADY_EXIST, name));
-        }
 
         Team team1 = repository.createNewTeam(name);
         return String.format(TEAM_CREATED, name);

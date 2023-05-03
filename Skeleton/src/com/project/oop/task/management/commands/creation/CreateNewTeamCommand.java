@@ -15,7 +15,7 @@ import java.util.Scanner;
 
 public class CreateNewTeamCommand implements Command {
     public static final String ENTER_TEAM_NAME_MESSAGE =
-            "Please enter the name of your new team or enter 'cancel' to exit:";
+            "Please enter the name of your new team or 'cancel' to exit:";
     public static final String TEAM_ALREADY_EXIST =
             "Team with this name already exist. Please enter a valid team name or 'cancel' if you want to exit:";
     public static final String TEAM_CREATED =

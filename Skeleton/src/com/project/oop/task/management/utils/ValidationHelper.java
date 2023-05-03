@@ -4,9 +4,9 @@ import java.util.List;
 
 public class ValidationHelper {
 
-    public static final String INVALID_NUMBER_MESSAGE = "Number must be between %d and %d.%n";
-    public static final String INVALID_STRING_LENGTH_MESSAGE = "Input must be between %d and %d symbols.%n";
-    public static final String INVALID_ARGS_COUNT_MESSAGE = "Invalid arguments count. Expected - %d, received - %d.%n";
+    public static final String INVALID_NUMBER_MESSAGE = "Number must be between %d and %d.";
+    public static final String INVALID_STRING_LENGTH_MESSAGE = "Input must be between %d and %d symbols.";
+    public static final String INVALID_ARGS_COUNT_MESSAGE = "Invalid arguments count. Expected - %d, received - %d.";
 
     public static void ValidateStringLength(String str, int min, int max) {
         if (str.length() < min || str.length() > max) {

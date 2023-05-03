@@ -42,7 +42,7 @@ public class CreateNewStoryCommand implements Command{
     public String execute(List<String> parameters) {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Please enter your team: ");
+        System.out.println("Please enter your team or 'cancel' if you want to exit: ");
         boolean teamIsValid = false;
         while (!teamIsValid) {
             team = scanner.nextLine();
@@ -57,7 +57,8 @@ public class CreateNewStoryCommand implements Command{
             }
         }
 
-        System.out.println("Please enter in which board you would like to add this story: ");
+        System.out.println("Please enter in which board you would like to add this story or " +
+                "'cancel' if you want to exit: : ");
         boolean boardIsValid = false;
         while (!boardIsValid) {
             targetBoard = scanner.nextLine();
@@ -76,7 +77,7 @@ public class CreateNewStoryCommand implements Command{
             }
         }
 
-        System.out.println("Please enter your name, as assignee: ");
+        System.out.println("Please enter your name, as assignee or 'cancel' if you want to exit: ");
         boolean assigneeIsValid = false;
         while (!assigneeIsValid) {
             assignee = scanner.nextLine();
@@ -91,7 +92,7 @@ public class CreateNewStoryCommand implements Command{
             }
         }
 
-        System.out.println("Please enter a valid title: ");
+        System.out.println("Please enter a valid title or 'cancel' if you want to exit: ");
         boolean isValidTitle = false;
         while (!isValidTitle) {
             title = scanner.nextLine();
@@ -111,7 +112,7 @@ public class CreateNewStoryCommand implements Command{
         }
 
 
-        System.out.println("Please enter a valid description: ");
+        System.out.println("Please enter a valid description or 'cancel' if you want to exit: ");
         boolean isValidDescription = false;
         while (!isValidDescription) {
             description = scanner.nextLine();
@@ -130,7 +131,7 @@ public class CreateNewStoryCommand implements Command{
             }
         }
 
-        System.out.println("Please enter a valid priority: ");
+        System.out.println("Please enter a valid priority or 'cancel' if you want to exit: ");
         boolean isValidPriority = false;
         while (!isValidPriority) {
             String input = scanner.nextLine();
@@ -148,7 +149,7 @@ public class CreateNewStoryCommand implements Command{
             }
         }
 
-        System.out.println("Please enter a valid size: ");
+        System.out.println("Please enter a valid size or 'cancel' if you want to exit: ");
         boolean isValidSize = false;
         while (!isValidSize) {
             String input = scanner.nextLine();

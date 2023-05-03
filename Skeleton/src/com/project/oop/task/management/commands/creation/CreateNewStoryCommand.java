@@ -68,15 +68,9 @@ public class CreateNewStoryCommand implements Command{
 
                 StoryImpl story = repository.createNewStory(title, description, priority, size, assignee);
 
-                for (Team team1 : repository.getTeams()) {
-                    if (team1.getName().equals(team)) {
-                        for (Board board : team1.getBoards()) {
-                            if (board.getName().equals(targetBoard)) {
-                                board.addTask(story);
-                            }
-                        }
-                    }
-                }
+                repository.findMemberByName(assignee, team).addTask(story);
+                repository.findBoardByName(targetBoard, team).addTask(story);
+
                 return String.format(STORY_CREATED, story.getId(), story.getTitle());
             }
             throw new IllegalArgumentException(BOARD_IS_NOT_FOUNDED);

@@ -18,7 +18,7 @@ public class AddPersonToTeamCommand implements Command {
 
     private final TaskManagementRepository repository;
     public AddPersonToTeamCommand(TaskManagementRepository repository) {
-        this.repository = new TaskManagementRepositoryImpl();
+        this.repository = repository;
     }
 
     @Override

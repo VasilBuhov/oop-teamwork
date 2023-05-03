@@ -76,6 +76,7 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
     public Bug createBug(String title, String description, Priority priority, Severity severity, String assignee) {
         Bug bug = new BugImpl(++nextId, title, description, priority, severity, assignee);
         bugs.add(bug);
+        tasks.add(bug);
 
         return bug;
     }
@@ -166,7 +167,14 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
                 .filter(team -> team.getName().equals(name))
                 .findFirst().get();
     }
+    public Board findBoardByName(String boardName, String teamName) {
+        Team team = findTeamByName(teamName);
 
+       return team.getBoards()
+               .stream()
+               .filter(board1 -> board1.getName().equals(boardName))
+               .collect(Collectors.toList()).get(0);
+    }
     public Bug findBugByTitle(String title) {
         return bugs.stream().filter(bug -> bug.getTitle().equals(title)).findFirst().get();
     }

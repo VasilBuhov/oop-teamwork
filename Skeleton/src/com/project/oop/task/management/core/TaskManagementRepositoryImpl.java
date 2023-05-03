@@ -50,7 +50,7 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
 
         return member;
     }
-
+    @Override
     public Team createNewTeam(String name) {
         Team team = new TeamImpl(name);
         teams.add(team);
@@ -158,6 +158,7 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
                 .filter(team -> team.getName().equals(name))
                 .findFirst().get();
     }
+    @Override
     public Board findBoardByName(String boardName, String teamName) {
         Team team = findTeamByName(teamName);
 
@@ -176,17 +177,23 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
        return team.getMembers().stream()
                 .filter(member -> member.getName().equals(name)).collect(Collectors.toList()).get(0);
     }
-
+    @Override
     public boolean isAssigneeMemberOfTheTeam(String assignee, String teamName) {
         Team team = findTeamByName(teamName);
         return team.getMembers().stream().anyMatch(member -> member.getName().equals(assignee));
     }
-
+    @Override
     public void showPersonActivity(String activity) {
         System.out.println(activity);
     }
-
+    @Override
     public void showTeamActivity(String activity) {
         System.out.println(activity);
+    }
+    @Override
+    public void isItCancel(String string, String errorMessage) {
+        if (string.equalsIgnoreCase("cancel")) {
+            throw new IllegalArgumentException(errorMessage);
+        }
     }
 }

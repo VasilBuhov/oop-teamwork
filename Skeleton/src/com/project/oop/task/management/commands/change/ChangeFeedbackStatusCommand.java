@@ -51,9 +51,7 @@ public class ChangeFeedbackStatusCommand implements Command {
         boolean isValidId = false;
         while (!isValidId) {
             String input = scanner.nextLine();
-            if (input.equals("cancel")) {
-                throw new IllegalArgumentException(INVALID_INPUT);
-            }
+            repository.isItCancel(input, INVALID_INPUT);
             try {
                 id = ParsingHelpers.tryParseInt(input, PARSING_ERROR_MESSAGE);
                 if (repository.getFeedback().stream().anyMatch(feedback -> feedback.getId() == id)) {
@@ -73,9 +71,8 @@ public class ChangeFeedbackStatusCommand implements Command {
         String oldStatus = "";
         while (!isValidDirection) {
             direction = scanner.nextLine();
-            if (direction.equals("cancel")) {
-                throw new IllegalArgumentException(INVALID_INPUT);
-            } else if (direction.equals("advance") || direction.equals("revert")) {
+            repository.isItCancel(direction, INVALID_INPUT);
+            if (direction.equals("advance") || direction.equals("revert")) {
                 isValidDirection = true;
                 oldStatus = feedback.getStatus();
 

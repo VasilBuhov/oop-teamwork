@@ -34,8 +34,7 @@ public interface TaskManagementRepository {
     boolean isAssigneeMemberOfTheTeam(String assignee, String teamName);
     void showPersonActivity(String activity);
     void showTeamActivity(String activity);
-
-
+    void isItCancel(String string, String errorMessage);
 
 
 

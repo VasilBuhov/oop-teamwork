@@ -68,8 +68,8 @@ public class CreateNewStoryCommand implements Command{
                 teamIsValid = true;
                 parameters.add(team);
             } else {
-               isItCancel(team);
-                System.out.println(TEAM_IS_NOT_FOUNDED);
+               repository.isItCancel(team, INVALID_INPUT);
+               System.out.println(TEAM_IS_NOT_FOUNDED);
             }
         }
 
@@ -85,7 +85,7 @@ public class CreateNewStoryCommand implements Command{
                 boardIsValid = true;
                 parameters.add(targetBoard);
             } else {
-               isItCancel(targetBoard);
+                repository.isItCancel(targetBoard, INVALID_INPUT);
                 System.out.println(BOARD_IS_NOT_FOUNDED);
             }
         }
@@ -98,7 +98,7 @@ public class CreateNewStoryCommand implements Command{
                 assigneeIsValid = true;
                 parameters.add(assignee);
             } else {
-                isItCancel(assignee);
+                repository.isItCancel(assignee, INVALID_INPUT);
                 System.out.println(NOT_A_MEMBER_MESSAGE);
             }
         }
@@ -107,7 +107,7 @@ public class CreateNewStoryCommand implements Command{
         boolean isValidTitle = false;
         while (!isValidTitle) {
             title = scanner.nextLine();
-            isItCancel(title);
+            repository.isItCancel(title, INVALID_INPUT);
             try {
                 TaskImpl.validateTitle(title);
             } catch (IllegalArgumentException e) {
@@ -125,7 +125,7 @@ public class CreateNewStoryCommand implements Command{
         boolean isValidDescription = false;
         while (!isValidDescription) {
             description = scanner.nextLine();
-            isItCancel(description);
+            repository.isItCancel(description, INVALID_INPUT);
             try {
                 TaskImpl.validateDescription(description);
             } catch (IllegalArgumentException e) {
@@ -142,7 +142,7 @@ public class CreateNewStoryCommand implements Command{
         boolean isValidPriority = false;
         while (!isValidPriority) {
             String input = scanner.nextLine();
-           isItCancel(input);
+            repository.isItCancel(input, INVALID_INPUT);
             try {
                 priority = ParsingHelpers.tryParseEnum(input, Priority.class);
             } catch (IllegalArgumentException e) {
@@ -160,7 +160,7 @@ public class CreateNewStoryCommand implements Command{
         boolean isValidSize = false;
         while (!isValidSize) {
             String input = scanner.nextLine();
-            isItCancel(input);
+            repository.isItCancel(input, INVALID_INPUT);
             try {
                 size = ParsingHelpers.tryParseEnum(input, Size.class);
             } catch (IllegalArgumentException e) {
@@ -182,11 +182,5 @@ public class CreateNewStoryCommand implements Command{
                 repository.findBoardByName(targetBoard, team).addTask(story);
 
                 return String.format(STORY_CREATED, story.getId(), story.getTitle());
-    }
-
-    private void isItCancel(String string) {
-        if (string.equalsIgnoreCase("cancel")) {
-            throw new IllegalArgumentException(INVALID_INPUT);
-        }
     }
 }

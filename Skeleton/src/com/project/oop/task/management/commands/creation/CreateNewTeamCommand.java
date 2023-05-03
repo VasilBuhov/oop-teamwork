@@ -38,9 +38,7 @@ public class CreateNewTeamCommand implements Command {
         while (!teamIsValid) {
             name = scanner.nextLine();
             if (repository.getTeams().stream().noneMatch(team1 -> team1.getName().equals(name))) {
-                if (name.equals("cancel")) {
-                    throw new IllegalArgumentException(INVALID_INPUT);
-                }
+                repository.isItCancel(name, INVALID_INPUT);
                 try {
                     TeamImpl.validateName(name);
                 } catch (IllegalArgumentException e) {

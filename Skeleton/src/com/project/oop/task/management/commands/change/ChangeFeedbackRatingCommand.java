@@ -41,9 +41,7 @@ public class ChangeFeedbackRatingCommand implements Command {
         boolean isValidId = false;
         while (!isValidId) {
             String input = scanner.nextLine();
-            if (input.equals("cancel")) {
-                throw new IllegalArgumentException(INVALID_INPUT);
-            }
+            repository.isItCancel(input, INVALID_INPUT);
             try {
                 id = ParsingHelpers.tryParseInt(input, PARSING_ERROR_MESSAGE);
                 if (repository.getFeedback().stream().anyMatch(feedback -> feedback.getId() == id)) {
@@ -61,9 +59,7 @@ public class ChangeFeedbackRatingCommand implements Command {
         boolean isValidRating = false;
         while (!isValidRating) {
             String input = scanner.nextLine();
-            if (input.equals("cancel")) {
-                throw new IllegalArgumentException(INVALID_INPUT);
-            }
+            repository.isItCancel(input, INVALID_INPUT);
             try {
                 newRating = ParsingHelpers.tryParseInt(input, PARSING_ERROR_MESSAGE);
             } catch (IllegalArgumentException e) {

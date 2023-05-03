@@ -55,10 +55,6 @@ public class CreateNewFeedbackCommand implements Command {
             }
         }
 
-
-
-
-
             System.out.println("Please enter the board name for your feedback:");
             boolean boardIsValid = false;
             String boardName;

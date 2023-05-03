@@ -21,8 +21,11 @@ public class TeamImpl implements Team {
         boards = new ArrayList<>();
     }
 
-    private void setName(String name) {
+    public static void validateName(String name) {
         ValidationHelper.ValidateStringLength(name, NAME_MIN_LENGTH, NAME_MAX_LENGTH);
+    }
+    private void setName(String name) {
+        validateName(name);
         this.name = name;
     }
 

@@ -61,7 +61,7 @@ public class CreateNewStoryCommand implements Command{
             parameters.add(size.toString());
             System.out.println("Please int which board you would like to add this story: ");
             targetBoard = scanner.nextLine();
-            if (repository.getTeams().stream().anyMatch(team1 -> team1.getBoards().stream().anyMatch(board -> board.getName().equals(targetBoard)))) {
+            if (repository.findTeamByName(team).getBoards().stream().anyMatch(board -> board.getName().equals(targetBoard))) {
                 parameters.add(targetBoard);
 
                 ValidationHelper.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);

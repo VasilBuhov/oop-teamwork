@@ -3,11 +3,8 @@ package com.project.oop.task.management.commands.creation;
 import com.project.oop.task.management.commands.contracts.Command;
 import com.project.oop.task.management.core.TaskManagementRepositoryImpl;
 import com.project.oop.task.management.core.contracts.TaskManagementRepository;
-import com.project.oop.task.management.models.FeedbackImpl;
 import com.project.oop.task.management.models.StoryImpl;
-import com.project.oop.task.management.models.contracts.Board;
-import com.project.oop.task.management.models.contracts.Member;
-import com.project.oop.task.management.models.contracts.Team;
+import com.project.oop.task.management.models.TaskImpl;
 import com.project.oop.task.management.models.enums.Priority;
 import com.project.oop.task.management.models.enums.Size;
 import com.project.oop.task.management.utils.ParsingHelpers;
@@ -17,11 +14,25 @@ import java.util.List;
 import java.util.Scanner;
 
 public class CreateNewStoryCommand implements Command{
-    public static final String STORY_CREATED = "Story with id: %d and title: %s was created.";
-    public static final String NOT_A_MEMBER_MESSAGE = "You are not part of the team and cannot create a new story!";
-    public static final String BOARD_IS_NOT_FOUNDED = "This board is not founded in your team!";
-    public static final String TEAM_IS_NOT_FOUNDED = "Team is not founded.";
-    public static int EXPECTED_NUMBER_OF_ARGUMENTS = 6;
+    public static final String STORY_CREATED =
+            "Story with id: %d and title: %s was created.";
+    public static final String NOT_A_MEMBER_MESSAGE =
+            "You are not part of the team and cannot create a new story! Please enter a valid assignee:";
+    public static final String BOARD_IS_NOT_FOUNDED =
+            "This board is not founded in your team! Please enter a valid board name:";
+    public static final String TEAM_IS_NOT_FOUNDED =
+            "There is no team with this name. Please enter a valid team name:";
+    public static final String INVALID_TITLE_MESSAGE = "" +
+            "Invalid title, must be between %d and %d symbols. Please try again:";
+    public static final String INVALID_DESCRIPTION_MESSAGE =
+            "Invalid description, must be between %d and %d symbols. Please try again:";
+    public static final String INVALID_PRIORITY_MESSAGE =
+            "Invalid priority, choose between: %s, %s and %s:";
+    public static final String INVALID_SIZE_MESSAGE =
+            "Invalid size, choose between: %s, %s or %s:";
+    public static final String INVALID_INPUT = "Invalid input! Enter a new command, please:";
+
+    public static int EXPECTED_NUMBER_OF_ARGUMENTS = 7;
     private final TaskManagementRepository repository;
     private String team;
     private String title;
@@ -39,58 +50,140 @@ public class CreateNewStoryCommand implements Command{
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Please enter your team: ");
-        team = scanner.nextLine();
-        if (repository.getTeams().stream().anyMatch(team1 -> team1.getName().equals(team))) {
-        System.out.println("Please enter your name, as assignee: ");
-        assignee = scanner.nextLine();
-        if (isValidAssignee(assignee)) {
-            parameters.add(assignee);
-            System.out.println("Please enter a valid title: ");
-            title = scanner.nextLine();
-            StoryImpl.validateTitle(title);
-            parameters.add(title);
-            System.out.println("Please enter a valid description: ");
-            description = scanner.nextLine();
-            StoryImpl.validateDescription(description);
-            parameters.add(description);
-            System.out.println("Please enter a valid priority: ");
-            priority = ParsingHelpers.tryParseEnum(scanner.nextLine(), Priority.class);
-            parameters.add(priority.toString());
-            System.out.println("Please enter a valid size: ");
-            size = ParsingHelpers.tryParseEnum(scanner.nextLine(), Size.class);
-            parameters.add(size.toString());
-            System.out.println("Please enter in which board you would like to add this story: ");
+        boolean teamIsValid = false;
+        while (!teamIsValid) {
+            team = scanner.nextLine();
+            if (repository.getTeams().stream().anyMatch(team1 -> team1.getName().equals(team))) {
+                teamIsValid = true;
+                parameters.add(team);
+            } else {
+                if (team.equals("cancel")) {
+                    throw new IllegalArgumentException(INVALID_INPUT);
+                }
+                System.out.println(TEAM_IS_NOT_FOUNDED);
+            }
+        }
+
+        System.out.println("Please enter in which board you would like to add this story: ");
+        boolean boardIsValid = false;
+        while (!boardIsValid) {
             targetBoard = scanner.nextLine();
-            if (repository.findTeamByName(team).getBoards().stream().anyMatch(board -> board.getName().equals(targetBoard))) {
+            if (repository
+                    .findTeamByName(team)
+                    .getBoards()
+                    .stream()
+                    .anyMatch(board -> board.getName().equals(targetBoard))) {
+                boardIsValid = true;
                 parameters.add(targetBoard);
+            } else {
+                if (targetBoard.equals("cancel")) {
+                    throw new IllegalArgumentException(INVALID_INPUT);
+                }
+                System.out.println(BOARD_IS_NOT_FOUNDED);
+            }
+        }
 
-                ValidationHelper.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
+        System.out.println("Please enter your name, as assignee: ");
+        boolean assigneeIsValid = false;
+        while (!assigneeIsValid) {
+            assignee = scanner.nextLine();
+            if (repository.isAssigneeMemberOfTheTeam(assignee, team)) {
+                assigneeIsValid = true;
+                parameters.add(assignee);
+            } else {
+                if (assignee.equals("cancel")) {
+                    throw new IllegalArgumentException(INVALID_INPUT);
+                }
+                System.out.println(NOT_A_MEMBER_MESSAGE);
+            }
+        }
 
-                StoryImpl story = repository.createNewStory(title, description, priority, size, assignee);
+        System.out.println("Please enter a valid title: ");
+        boolean isValidTitle = false;
+        while (!isValidTitle) {
+            title = scanner.nextLine();
+            if (title.equals("cancel")) {
+                throw new IllegalArgumentException(INVALID_INPUT);
+            }
+            try {
+                TaskImpl.validateTitle(title);
+            } catch (IllegalArgumentException e) {
+                System.out.printf((INVALID_TITLE_MESSAGE)
+                        + "%n", TaskImpl.TITLE_MIN_LENGTH, TaskImpl.TITLE_MAX_LENGTH);
+                title = "";
+            }
+            if (!title.isBlank()) {
+                isValidTitle = true;
+                parameters.add(title);
+            }
+        }
+
+
+        System.out.println("Please enter a valid description: ");
+        boolean isValidDescription = false;
+        while (!isValidDescription) {
+            description = scanner.nextLine();
+            if (description.equals("cancel")) {
+                throw new IllegalArgumentException(INVALID_INPUT);
+            }
+            try {
+                TaskImpl.validateDescription(description);
+            } catch (IllegalArgumentException e) {
+                System.out.printf((INVALID_DESCRIPTION_MESSAGE)
+                        + "%n", TaskImpl.DESCRIPTION_MIN_LENGTH, TaskImpl.DESCRIPTION_MAX_LENGTH);
+                description = "";
+            }
+            if (!description.isBlank()) {
+                isValidDescription = true;
+                parameters.add(description);
+            }
+        }
+
+        System.out.println("Please enter a valid priority: ");
+        boolean isValidPriority = false;
+        while (!isValidPriority) {
+            String input = scanner.nextLine();
+            if (input.equals("cancel")) {
+                throw new IllegalArgumentException(INVALID_INPUT);
+            }
+            try {
+                priority = ParsingHelpers.tryParseEnum(input, Priority.class);
+            } catch (IllegalArgumentException e) {
+                System.out.printf((INVALID_PRIORITY_MESSAGE)
+                        + "%n", Priority.LOW, Priority.MEDIUM, Priority.HIGH);
+            }
+            if (priority != null) {
+                isValidPriority = true;
+                parameters.add(priority.toString());
+            }
+        }
+
+        System.out.println("Please enter a valid size: ");
+        boolean isValidSize = false;
+        while (!isValidSize) {
+            String input = scanner.nextLine();
+            if (input.equals("cancel")) {
+                throw new IllegalArgumentException(INVALID_INPUT);
+            }
+            try {
+                size = ParsingHelpers.tryParseEnum(input, Size.class);
+            } catch (IllegalArgumentException e) {
+                System.out.printf((INVALID_SIZE_MESSAGE)
+                        + "%n", Size.SMALL, Size.MEDIUM, Size.LARGE);
+            }
+            if (size != null) {
+                isValidSize = true;
+                parameters.add(size.toString());
+            }
+        }
+
+        ValidationHelper.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
+
+        StoryImpl story = repository.createNewStory(title, description, priority, size, assignee);
 
                 repository.findMemberByName(assignee, team).addTask(story);
                 repository.findBoardByName(targetBoard, team).addTask(story);
 
                 return String.format(STORY_CREATED, story.getId(), story.getTitle());
-            }
-            throw new IllegalArgumentException(BOARD_IS_NOT_FOUNDED);
-        }
-            throw new IllegalArgumentException(NOT_A_MEMBER_MESSAGE);
-        }
-        throw new IllegalArgumentException(TEAM_IS_NOT_FOUNDED);
     }
-
-    private boolean isValidAssignee(String assignee) {
-        for (Team team1 : repository.getTeams()) {
-            if (team1.getName().equals(team)) {
-                for (Member member : team1.getMembers()) {
-                    if (member.getName().equals(assignee)) {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
-    }
-
 }

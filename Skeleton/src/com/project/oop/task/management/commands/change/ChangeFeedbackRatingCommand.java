@@ -11,6 +11,7 @@ import java.util.Scanner;
 
 public class ChangeFeedbackRatingCommand implements Command {
     public static final String CHANGED_RATING = "Rating to feedback with id: %d was changed to %d.";
+    public static final String FEEDBACK_NOT_FOUND_MESSAGE = "Feedback with id: %d is not found!";
     public static int EXPECTED_NUMBER_OF_ARGUMENTS = 2;
     private int id;
     private int newRating;
@@ -26,16 +27,20 @@ public class ChangeFeedbackRatingCommand implements Command {
 
         System.out.println("Please enter a valid id: ");
         id = ParsingHelpers.tryParseInt(scanner.nextLine(), "Invalid input, id must be a number!");
-        parameters.add(String.valueOf(id));
-        System.out.println("Please enter a new rating: ");
-        newRating = ParsingHelpers.tryParseInt(scanner.nextLine(), "Invalid input, rating must be a number!");
-        parameters.add(String.valueOf(newRating));
+        if (repository.getFeedback().stream().anyMatch(feedback -> feedback.getId() == id)) {
+            parameters.add(String.valueOf(id));
+            System.out.println("Please enter a new rating: ");
+            newRating = ParsingHelpers.tryParseInt(scanner.nextLine(), "Invalid input, rating must be a number!");
+            parameters.add(String.valueOf(newRating));
 
-        ValidationHelper.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
+            ValidationHelper.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
 
-        repository.changeFeedbackRating(id, newRating);
+            repository.changeFeedbackRating(id, newRating);
 
-        return String.format(CHANGED_RATING, id, newRating);
+            return String.format(CHANGED_RATING, id, newRating);
+        } else {
+            throw new IllegalArgumentException(String.format(FEEDBACK_NOT_FOUND_MESSAGE, id));
+        }
     }
 
 }

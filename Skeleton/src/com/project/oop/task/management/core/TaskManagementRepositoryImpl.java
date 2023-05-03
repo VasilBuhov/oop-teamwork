@@ -145,7 +145,7 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
 
     @Override
     public Feedback findFeedbackById(int taskId) {
-        return feedbacks.stream().filter(story -> story.getId() == taskId).collect(Collectors.toList()).get(0);
+        return feedbacks.stream().filter(feedback -> feedback.getId() == taskId).collect(Collectors.toList()).get(0);
     }
 
     @Override

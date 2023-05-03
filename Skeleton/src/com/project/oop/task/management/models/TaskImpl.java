@@ -96,7 +96,7 @@ public abstract class TaskImpl implements Task{
         }
         return sb.toString();
     }
-    protected abstract void revertStatus();
+    public abstract void revertStatus();
 
-    protected abstract void advanceStatus();
+    public abstract void advanceStatus();
 }

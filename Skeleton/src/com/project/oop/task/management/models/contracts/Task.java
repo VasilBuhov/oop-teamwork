@@ -9,4 +9,6 @@ public interface Task extends Commentable, Loggable, Printable{
     void addComment(Comment comment);
     void removeComment(Comment comment);
     String viewInfo();
+    void revertStatus();
+    void advanceStatus();
 }

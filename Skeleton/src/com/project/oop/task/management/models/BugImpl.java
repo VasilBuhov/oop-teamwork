@@ -79,7 +79,7 @@ public class BugImpl extends TaskImpl implements Bug {
         return this.status.toString();
     }
 
-    protected void revertStatus() {
+    public void revertStatus() {
         if (status != INITIAL_STATUS) {
             setStatus(BugStatus.values()[status.ordinal() - 1]);
         } else {
@@ -87,7 +87,7 @@ public class BugImpl extends TaskImpl implements Bug {
         }
     }
 
-    protected void advanceStatus() {
+    public void advanceStatus() {
         if (status != FINAL_STATUS) {
             setStatus(BugStatus.values()[status.ordinal() + 1]);
         } else {

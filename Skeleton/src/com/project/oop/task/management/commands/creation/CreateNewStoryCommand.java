@@ -21,11 +21,26 @@ public class CreateNewStoryCommand implements Command{
                     "Please enter a valid assignee or 'cancel' if you want to exit: ";
     public static final String BOARD_IS_NOT_FOUNDED =
             "This board is not founded in your team! " +
-                    "Please enter a valid board name or 'cancel' if you want to exit: ";
+                    "Please enter a valid board name or 'cancel' if you want to exit:";
     public static final String TEAM_IS_NOT_FOUNDED =
             "There is no team with this name. " +
-                    "Please enter a valid team name or 'cancel' if you want to exit: ";
-    public static final String INVALID_INPUT = "Command is terminated. Please enter a new command:";
+                    "Please enter a valid team name or 'cancel' if you want to exit:";
+    public static final String INVALID_INPUT =
+            "Command is terminated. Please enter a new command:";
+    public static final String ENTER_TEAM_NAME_MESSAGE =
+            "Please enter your team name or 'cancel' if you want to exit:";
+    public static final String ENTER_BOARD_NAME_MESSAGE =
+            "Please enter a board where you would like to add this story or 'cancel' if you want to exit:";
+    public static final String ENTER_ASSIGNEE_MESSAGE =
+            "Please enter your name, as assignee or 'cancel' if you want to exit:";
+    public static final String ENTER_TITLE_MESSAGE =
+            "Please enter a valid title or 'cancel' if you want to exit:";
+    public static final String ENTER_DESCRIPTION_MESSAGE =
+            "Please enter a valid description or 'cancel' if you want to exit:";
+    public static final String ENTER_PRIORITY_MESSAGE =
+            "Please enter a valid priority or 'cancel' if you want to exit:";
+    public static final String ENTER_SIZE_MESSAGE =
+            "Please enter a valid size or 'cancel' if you want to exit:";
 
 
     public static int EXPECTED_NUMBER_OF_ARGUMENTS = 7;
@@ -45,7 +60,7 @@ public class CreateNewStoryCommand implements Command{
     public String execute(List<String> parameters) {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Please enter your team name: ");
+        System.out.println(ENTER_TEAM_NAME_MESSAGE);
         boolean teamIsValid = false;
         while (!teamIsValid) {
             team = scanner.nextLine();
@@ -53,14 +68,12 @@ public class CreateNewStoryCommand implements Command{
                 teamIsValid = true;
                 parameters.add(team);
             } else {
-                if (team.equals("cancel")) {
-                    throw new IllegalArgumentException(INVALID_INPUT);
-                }
+               isItCancel(team);
                 System.out.println(TEAM_IS_NOT_FOUNDED);
             }
         }
 
-        System.out.println("Please enter in which board you would like to add this story: ");
+        System.out.println(ENTER_BOARD_NAME_MESSAGE);
         boolean boardIsValid = false;
         while (!boardIsValid) {
             targetBoard = scanner.nextLine();
@@ -72,14 +85,12 @@ public class CreateNewStoryCommand implements Command{
                 boardIsValid = true;
                 parameters.add(targetBoard);
             } else {
-                if (targetBoard.equals("cancel")) {
-                    throw new IllegalArgumentException(INVALID_INPUT);
-                }
+               isItCancel(targetBoard);
                 System.out.println(BOARD_IS_NOT_FOUNDED);
             }
         }
 
-        System.out.println("Please enter your name, as assignee: ");
+        System.out.println(ENTER_ASSIGNEE_MESSAGE);
         boolean assigneeIsValid = false;
         while (!assigneeIsValid) {
             assignee = scanner.nextLine();
@@ -87,20 +98,16 @@ public class CreateNewStoryCommand implements Command{
                 assigneeIsValid = true;
                 parameters.add(assignee);
             } else {
-                if (assignee.equals("cancel")) {
-                    throw new IllegalArgumentException(INVALID_INPUT);
-                }
+                isItCancel(assignee);
                 System.out.println(NOT_A_MEMBER_MESSAGE);
             }
         }
 
-        System.out.println("Please enter a valid title: ");
+        System.out.println(ENTER_TITLE_MESSAGE);
         boolean isValidTitle = false;
         while (!isValidTitle) {
             title = scanner.nextLine();
-            if (title.equals("cancel")) {
-                throw new IllegalArgumentException(INVALID_INPUT);
-            }
+            isItCancel(title);
             try {
                 TaskImpl.validateTitle(title);
             } catch (IllegalArgumentException e) {
@@ -114,13 +121,11 @@ public class CreateNewStoryCommand implements Command{
         }
 
 
-        System.out.println("Please enter a valid description: ");
+        System.out.println(ENTER_DESCRIPTION_MESSAGE);
         boolean isValidDescription = false;
         while (!isValidDescription) {
             description = scanner.nextLine();
-            if (description.equals("cancel")) {
-                throw new IllegalArgumentException(INVALID_INPUT);
-            }
+            isItCancel(description);
             try {
                 TaskImpl.validateDescription(description);
             } catch (IllegalArgumentException e) {
@@ -133,13 +138,11 @@ public class CreateNewStoryCommand implements Command{
             }
         }
 
-        System.out.println("Please enter a valid priority: ");
+        System.out.println(ENTER_PRIORITY_MESSAGE);
         boolean isValidPriority = false;
         while (!isValidPriority) {
             String input = scanner.nextLine();
-            if (input.equals("cancel")) {
-                throw new IllegalArgumentException(INVALID_INPUT);
-            }
+           isItCancel(input);
             try {
                 priority = ParsingHelpers.tryParseEnum(input, Priority.class);
             } catch (IllegalArgumentException e) {
@@ -153,13 +156,11 @@ public class CreateNewStoryCommand implements Command{
             }
         }
 
-        System.out.println("Please enter a valid size: ");
+        System.out.println(ENTER_SIZE_MESSAGE);
         boolean isValidSize = false;
         while (!isValidSize) {
             String input = scanner.nextLine();
-            if (input.equals("cancel")) {
-                throw new IllegalArgumentException(INVALID_INPUT);
-            }
+            isItCancel(input);
             try {
                 size = ParsingHelpers.tryParseEnum(input, Size.class);
             } catch (IllegalArgumentException e) {
@@ -181,5 +182,11 @@ public class CreateNewStoryCommand implements Command{
                 repository.findBoardByName(targetBoard, team).addTask(story);
 
                 return String.format(STORY_CREATED, story.getId(), story.getTitle());
+    }
+
+    private void isItCancel(String string) {
+        if (string.equalsIgnoreCase("cancel")) {
+            throw new IllegalArgumentException(INVALID_INPUT);
+        }
     }
 }

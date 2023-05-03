@@ -86,7 +86,7 @@ public class StoryImpl extends TaskImpl implements Story {
         return this.status.toString();
     }
 
-    protected void revertStatus() {
+    public void revertStatus() {
         if (status != INITIAL_STATUS) {
             setStatus(StoryStatus.values()[status.ordinal() - 1]);
         } else {
@@ -94,7 +94,7 @@ public class StoryImpl extends TaskImpl implements Story {
         }
     }
 
-    protected void advanceStatus() {
+    public void advanceStatus() {
         if (status != FINAL_STATUS) {
             setStatus(StoryStatus.values()[status.ordinal() + 1]);
         } else {

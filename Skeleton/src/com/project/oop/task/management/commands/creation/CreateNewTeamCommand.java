@@ -39,7 +39,7 @@ public class CreateNewTeamCommand implements Command {
                 try {
                     TeamImpl.validateName(name);
                 } catch (IllegalArgumentException e) {
-                    System.out.println(e.getMessage());
+                    System.out.println(e.getMessage() + " Try again or enter 'cancel' to exit:");
                     name = "";
                 }
                 if (!name.equals("")) {

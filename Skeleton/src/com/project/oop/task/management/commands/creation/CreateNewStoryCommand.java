@@ -104,7 +104,7 @@ public class CreateNewStoryCommand implements Command{
             try {
                 TaskImpl.validateTitle(title);
             } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
+                System.out.println(e.getMessage() + " Try again or enter 'cancel' to exit:");
                 title = "";
             }
             if (!title.isBlank()) {
@@ -124,7 +124,7 @@ public class CreateNewStoryCommand implements Command{
             try {
                 TaskImpl.validateDescription(description);
             } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
+                System.out.println(e.getMessage() + " Try again or enter 'cancel' to exit:");
                 description = "";
             }
             if (!description.isBlank()) {
@@ -143,7 +143,9 @@ public class CreateNewStoryCommand implements Command{
             try {
                 priority = ParsingHelpers.tryParseEnum(input, Priority.class);
             } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
+                System.out.println(e.getMessage() +
+                        String.format(" You can choose between: %s, %s or %s. Try again or enter 'cancel' to exit:",
+                        Priority.LOW, Priority.MEDIUM, Priority.HIGH));
             }
             if (priority != null) {
                 isValidPriority = true;
@@ -161,7 +163,9 @@ public class CreateNewStoryCommand implements Command{
             try {
                 size = ParsingHelpers.tryParseEnum(input, Size.class);
             } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
+                System.out.println(e.getMessage()+
+                        String.format(" You can choose between: %s, %s or %s. Try again or enter 'cancel' to exit:",
+                                Size.SMALL, Size.MEDIUM, Size.LARGE));
             }
             if (size != null) {
                 isValidSize = true;

@@ -21,7 +21,7 @@ public class CreateNewStoryCommand implements Command{
     public static final String NOT_A_MEMBER_MESSAGE = "You are not part of the team and cannot create a new story!";
     public static final String BOARD_IS_NOT_FOUNDED = "This board is not founded in your team!";
     public static final String TEAM_IS_NOT_FOUNDED = "Team is not founded.";
-    public static int EXPECTED_NUMBER_OF_ARGUMENTS = 5;
+    public static int EXPECTED_NUMBER_OF_ARGUMENTS = 6;
     private final TaskManagementRepository repository;
     private String team;
     private String title;
@@ -59,7 +59,7 @@ public class CreateNewStoryCommand implements Command{
             System.out.println("Please enter a valid size: ");
             size = ParsingHelpers.tryParseEnum(scanner.nextLine(), Size.class);
             parameters.add(size.toString());
-            System.out.println("Please int which board you would like to add this story: ");
+            System.out.println("Please enter in which board you would like to add this story: ");
             targetBoard = scanner.nextLine();
             if (repository.findTeamByName(team).getBoards().stream().anyMatch(board -> board.getName().equals(targetBoard))) {
                 parameters.add(targetBoard);

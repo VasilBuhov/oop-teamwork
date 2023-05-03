@@ -12,8 +12,8 @@ public class MemberImpl implements Member {
     public static final int NAME_MAX_LENGTH = 15;
     public static final String MEMBER_CREATED = "Member with name %s was created!";
     public static final String TASK_ERROR_MESSAGE = "No such task founded!";
-    private static final String TASK_ADDED_TO_BOARD_MESSAGE = "Task: %s is added to board: %s!";
-    private static final String TASK_REMOVED_FROM_BOARD_MESSAGE = "Task: %s is removed from board: %s!";
+    private static final String TASK_ADDED_TO_MEMBER_MESSAGE = "Task with title: %s is added to %s's tasks!";
+    private static final String TASK_REMOVED_FROM_MEMBER_MESSAGE = "Task with title: %s is removed from %s's tasks!";
     private String name;
     private final List<Task> tasks;
     private final List<String> history;
@@ -47,14 +47,14 @@ public class MemberImpl implements Member {
     @Override
     public void addTask(Task task) {
         tasks.add(task);
-        logEvent(new EventLogImpl(TASK_ADDED_TO_BOARD_MESSAGE));
+        logEvent(new EventLogImpl(String.format(TASK_ADDED_TO_MEMBER_MESSAGE, task.getTitle(), name)));
     }
 
     @Override
     public void removeTask(Task task) {
         if (tasks.contains(task)) {
             tasks.remove(task);
-            logEvent(new EventLogImpl(TASK_REMOVED_FROM_BOARD_MESSAGE));
+            logEvent(new EventLogImpl(String.format(TASK_REMOVED_FROM_MEMBER_MESSAGE, task.getTitle(), name)));
         } else {
             throw new IllegalArgumentException(TASK_ERROR_MESSAGE);
         }

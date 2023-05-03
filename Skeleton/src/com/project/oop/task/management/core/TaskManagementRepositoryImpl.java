@@ -134,17 +134,8 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
 
     @Override
     public void addNewPersonToTeam(String name, String team) {
-        Member member = findMemberByName(name, team);
-        for (Member member1 : members) {
-            if (member1.getName().equals(name)) {
-                member = member1;
-            }
-        }
-        for (Team team1 : teams) {
-            if (team1.getName().equals(team)) {
-                team1.addMember(member);
-            }
-        }
+        Member member = createMember(name);
+        findTeamByName(team).addMember(member);
     }
 
     @Override

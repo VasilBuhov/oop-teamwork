@@ -12,6 +12,8 @@ import java.util.stream.Collectors;
 public class AddPersonToTeamCommand implements Command {
     public static final String MEMBER_ADDED_MESSAGE = "Member with name: %s was added to team: %s";
     public static final String TEAM_NOT_FOUNDED_MESSAGE = "Team with name: %s is not found in the application!";
+    public static final String PERSON_NOT_FOUNDED = "Person with name: %s is not founded in the application.";
+
     public static int EXPECTED_NUMBER_OF_ARGUMENTS = 2;
     private String personName;
     private String teamName;
@@ -27,17 +29,21 @@ public class AddPersonToTeamCommand implements Command {
 
         System.out.println("Please enter a person name: ");
         personName = scanner.nextLine();
-        parameters.add(personName);
-        System.out.println("Please enter a team name: ");
-        teamName = scanner.nextLine();
-        if (repository.getTeams().stream().anyMatch(team -> team.getName().equals(teamName))) {
-            parameters.add(teamName);
+        if (repository.getMembers().stream().anyMatch(member -> member.getName().equals(personName))) {
+            parameters.add(personName);
+            System.out.println("Please enter a team name: ");
+            teamName = scanner.nextLine();
+            if (repository.getTeams().stream().anyMatch(team -> team.getName().equals(teamName))) {
+                parameters.add(teamName);
 
-            ValidationHelper.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
+                ValidationHelper.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
 
-            repository.addNewPersonToTeam(personName, teamName);
+                repository.addNewPersonToTeam(personName, teamName);
 
-            return String.format(MEMBER_ADDED_MESSAGE, personName, teamName);
+                return String.format(MEMBER_ADDED_MESSAGE, personName, teamName);
+            }
+        } else {
+            throw new IllegalArgumentException(String.format(PERSON_NOT_FOUNDED, personName));
         }
         throw new IllegalArgumentException(String.format(TEAM_NOT_FOUNDED_MESSAGE, teamName));
     }

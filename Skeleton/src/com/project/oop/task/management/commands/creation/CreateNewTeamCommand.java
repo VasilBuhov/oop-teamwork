@@ -27,7 +27,7 @@ public class CreateNewTeamCommand implements Command {
     @Override
     public String execute(List<String> parameters) {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Please enter the name of yor new team or 'cancel' if you want to exit: ");
+        System.out.println("Please enter the name of your new team or 'cancel' if you want to exit: ");
         boolean teamIsValid = false;
         while (!teamIsValid) {
             name = scanner.nextLine();

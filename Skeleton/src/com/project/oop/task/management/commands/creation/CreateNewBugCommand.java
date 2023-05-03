@@ -39,7 +39,7 @@ public class CreateNewBugCommand implements Command {
         boolean allParamsValid = false;
         System.out.println("Please enter a team name for your Bug:");
         boolean teamIsValid = false;
-        Team teamToAddFeedback = null;
+        Team teamToAddBug = null;
 
         while (!teamIsValid) {
             teamName = scanner.nextLine();
@@ -47,7 +47,7 @@ public class CreateNewBugCommand implements Command {
                 throw new IllegalArgumentException("Command is terminated. Please enter a new command:");
             }
             if (repository.getTeams().stream().anyMatch(team -> team.getName().equals(teamName))){
-                teamToAddFeedback = repository
+                teamToAddBug = repository
                         .getTeams()
                         .stream()
                         .filter(team -> team.getName().equals(teamName))
@@ -60,15 +60,15 @@ public class CreateNewBugCommand implements Command {
         }
         System.out.println("Please enter the board name for your feedback:");
         boolean boardIsValid = false;
-        Board boardToAddFeedback = null;
+        Board boardToAddBug = null;
 
         while (!boardIsValid) {
             boardName = scanner.nextLine();
             if (boardName.equals("cancel")){
                 throw new IllegalArgumentException("Command is terminated. Please enter a new command:");
             }
-            if (teamToAddFeedback.getBoards().stream().anyMatch(board -> board.getName().equals(boardName))){
-                boardToAddFeedback = teamToAddFeedback
+            if (teamToAddBug.getBoards().stream().anyMatch(board -> board.getName().equals(boardName))){
+                boardToAddBug = teamToAddBug
                         .getBoards()
                         .stream()
                         .filter(board -> board.getName().equals(boardName))
@@ -190,6 +190,10 @@ public class CreateNewBugCommand implements Command {
 //        parameters.add(assignee);
         ValidationHelper.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
         Bug createdBug = repository.createBug(title,description,priority,severity,assignee);
-        return String.format("Bug with ID %d was created", createdBug.getId());
+        boardToAddBug.addTask(createdBug);
+        return String.format("Bug with ID %d was created and added to board %s of team %s",
+                createdBug.getId(),
+                boardToAddBug.getName(),
+                teamToAddBug.getName());
     }
 }

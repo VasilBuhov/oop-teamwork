@@ -25,7 +25,7 @@ public class MemberImpl implements Member {
         logEvent(new EventLogImpl(String.format(MEMBER_CREATED, name)));
     }
     private void setName(String name) {
-        ValidationHelper.ValidateStringLength(name, NAME_MIN_LENGTH, NAME_MAX_LENGTH);
+        validateName(name);
         this.name = name;
     }
 
@@ -96,5 +96,9 @@ public class MemberImpl implements Member {
         }
         sb.append(String.format("======================%n"));
         return sb.toString();
+    }
+
+    public static void validateName(String name){
+        ValidationHelper.ValidateStringLength(name, NAME_MIN_LENGTH, NAME_MAX_LENGTH);
     }
 }

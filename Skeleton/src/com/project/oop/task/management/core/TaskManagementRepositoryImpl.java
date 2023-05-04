@@ -86,6 +86,7 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
 
     public Bug createBug(String title, String description, Priority priority, Severity severity, String assignee) {
         Bug bug = new BugImpl(++nextId, title, description, priority, severity, assignee);
+        findPersonByName(assignee).addTask(bug);
         bugs.add(bug);
         tasks.add(bug);
 

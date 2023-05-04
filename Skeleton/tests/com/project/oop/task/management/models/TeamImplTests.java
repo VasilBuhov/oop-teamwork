@@ -1,24 +1,16 @@
 package com.project.oop.task.management.models;
 
-import com.project.oop.task.management.commands.contracts.Command;
-import com.project.oop.task.management.commands.creation.CreateNewTeamCommand;
-import com.project.oop.task.management.core.TaskManagementRepositoryImpl;
 import com.project.oop.task.management.models.contracts.Board;
 import com.project.oop.task.management.models.contracts.Member;
 import com.project.oop.task.management.models.contracts.Task;
 import com.project.oop.task.management.models.enums.Priority;
 import com.project.oop.task.management.models.enums.Size;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class TeamImplTests {
-
-    public static final int NAME_MIN_LENGTH = 5;
-    public static final int NAME_MAX_LENGTH = 15;
-
 
     @Test
     public void should_ThrowException_When_NameIsShorter() {
@@ -43,7 +35,7 @@ public class TeamImplTests {
     }
 
     @Test
-    public void getBoards_Should_ReturnCopyOfTheCollection() {
+    public void getTasks_Should_ReturnCopyOfTheCollection() {
         // Arrange
         TeamImpl team = initializeTestTeam();
         BoardImpl board = initializeTestBoard();

@@ -16,7 +16,7 @@ public class ListBugsCommand implements Command {
 
     @Override
     public String execute(List<String> parameters) {
-       return repository.getBugs().stream().map(bug -> bug.getDescription()).
+       return repository.getBugs().stream().map(bug -> bug.getTitle()).
        collect(Collectors.toList()).toString();
 
     }

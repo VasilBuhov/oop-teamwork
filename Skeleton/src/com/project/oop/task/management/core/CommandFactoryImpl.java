@@ -51,8 +51,6 @@ public class CommandFactoryImpl implements CommandFactory {
                 return new FilterBugsByAssigneeCommand(taskManagementRepository);
             case FILTERBUGSBYSTATUS:
                 return new FilterBugsByStatusCommand(taskManagementRepository);
-            case FILTERFEEDBACKBYASSIGNEE:
-                return new FilterFeedbackByAssigneeCommand(taskManagementRepository);
             case FILTERFEEDBACKBYSTATUS:
                 return new FilterFeedbackByStatusCommand(taskManagementRepository);
             case FILTERSTORIESBYASSIGNEE:

@@ -44,6 +44,11 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
     }
 
     @Override
+    public List<Story> getStories() {
+        return new ArrayList<>(stories);
+    }
+
+    @Override
     public List<Feedback> getFeedback() {
         return new ArrayList<>(feedbacks);
     }

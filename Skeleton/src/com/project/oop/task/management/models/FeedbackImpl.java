@@ -68,7 +68,7 @@ public class FeedbackImpl extends TaskImpl implements Feedback {
     public String viewInfo() {
         return String.format("*********************%n" +
                         "Feedback: %n" +
-                        super.toString() +
+                        super.viewInfo() + "%n" +
                         "Status: %s%n" +
                         "Rating: %s%n" +
                         "*********************%n", status.toString(), rating);
@@ -78,4 +78,5 @@ public class FeedbackImpl extends TaskImpl implements Feedback {
     public String getAsString() {
         return viewInfo();
     }
+
 }

@@ -16,6 +16,7 @@ public interface TaskManagementRepository {
     List<Member> getPeople();
     List<Team> getTeams();
     List<Task> getTasks();
+    List<Story> getStories();
     List<Feedback> getFeedback();
     List<Bug> getBugs();
     Member createNewPerson(String name);

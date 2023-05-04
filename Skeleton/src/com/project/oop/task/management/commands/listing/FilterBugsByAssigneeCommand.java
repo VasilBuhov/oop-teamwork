@@ -3,6 +3,7 @@ package com.project.oop.task.management.commands.listing;
 import com.project.oop.task.management.commands.contracts.Command;
 import com.project.oop.task.management.core.TaskManagementRepositoryImpl;
 import com.project.oop.task.management.models.contracts.Bug;
+import com.project.oop.task.management.utils.ListingHelpers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +50,7 @@ public class FilterBugsByAssigneeCommand implements Command {
             }
         }
 
-        return null;
+        return ListingHelpers.bugsToString(filteredBugs);
     }
 
 }

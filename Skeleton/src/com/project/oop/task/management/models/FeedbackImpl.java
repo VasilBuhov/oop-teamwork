@@ -51,6 +51,7 @@ public class FeedbackImpl extends TaskImpl implements Feedback {
             setStatus(FeedbackStatus.values()[status.ordinal() - 1]);
         } else {
             logEvent(new EventLogImpl(String.format(CANNOT_REVERT_MESSAGE, getStatus())));
+            throw new IllegalArgumentException(String.format(CANNOT_REVERT_MESSAGE, getStatus()));
         }
     }
 
@@ -59,6 +60,7 @@ public class FeedbackImpl extends TaskImpl implements Feedback {
             setStatus(FeedbackStatus.values()[status.ordinal() + 1]);
         } else {
             logEvent(new EventLogImpl(String.format(CANNOT_ADVANCE_MESSAGE, getStatus())));
+            throw new IllegalArgumentException(String.format(CANNOT_ADVANCE_MESSAGE, getStatus()));
         }
     }
 

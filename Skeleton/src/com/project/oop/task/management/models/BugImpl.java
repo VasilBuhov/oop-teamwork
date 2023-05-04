@@ -28,7 +28,7 @@ public class BugImpl extends TaskImpl implements Bug {
         this.severity = severity;
         this.assignee = assignee;
         logEvent(new EventLogImpl(String.format(BUG_CREATED_MESSAGE, title)));
-    }
+     }
 
     @Override
     public void changePriority(Priority priority) {

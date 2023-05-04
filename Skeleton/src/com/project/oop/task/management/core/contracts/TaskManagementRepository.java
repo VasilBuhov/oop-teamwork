@@ -33,13 +33,11 @@ public interface TaskManagementRepository {
     Task findFeedbackById(int taskId);
     Story findStoryById(int storyId);
     Team findTeamByName(String name);
-    Member findMemberByName(String name, String teamName);
+    Member findMemberByName(String name);
     Member findPersonByName(String name);
     Board findBoardByName(String boardName, String teamName);
     boolean isAssigneeMemberOfTheTeam(String assignee, String teamName);
     void isItCancel(String string, String errorMessage);
     Bug findBugById(int id);
-
-
     void changeBugSeverity(int id, Severity severity);
 }

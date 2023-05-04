@@ -82,18 +82,20 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
     @Override
     public StoryImpl createNewStory(String title, String description, Priority priority, Size size, String assignee) {
         StoryImpl story = new StoryImpl(++nextId, title, description, priority, size, assignee);
-        findPersonByName(assignee).addTask(story);
+
         stories.add(story);
         tasks.add(story);
+        findMemberByName(assignee).addTask(story);
 
         return story;
     }
 
     public Bug createBug(String title, String description, Priority priority, Severity severity, String assignee) {
         Bug bug = new BugImpl(++nextId, title, description, priority, severity, assignee);
-        findPersonByName(assignee).addTask(bug);
+
         bugs.add(bug);
         tasks.add(bug);
+        findMemberByName(assignee).addTask(bug);
 
         return bug;
     }
@@ -194,10 +196,8 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
     }
 
     @Override
-    public Member findMemberByName(String name, String teamName) {
-        Team team = findTeamByName(teamName);
-       return team.getMembers().stream()
-                .filter(member -> member.getName().equals(name)).collect(Collectors.toList()).get(0);
+    public Member findMemberByName(String name) {
+        return getMembers().stream().filter(member -> member.getName().equals(name)).collect(Collectors.toList()).get(0);
     }
     public Member findPersonByName(String name) {
         return people.stream().filter(person -> person.getName().equals(name)).collect(Collectors.toList()).get(0);

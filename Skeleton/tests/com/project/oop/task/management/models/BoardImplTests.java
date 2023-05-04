@@ -27,8 +27,10 @@ public class BoardImplTests {
 
     @Test
     public void constructor_Should_CreateNewBoard_When_ParametersAreCorrect() {
+        //Arrange
         BoardImpl board = initializeTestBoard();
 
+        //Assert
         assertEquals("valid", board.getName());
     }
 
@@ -60,14 +62,15 @@ public class BoardImplTests {
 
     @Test
     public void removeTask_Should_RemoveTaskFromTheCollection() {
-        // Arrange
+        //Arrange
         BoardImpl board = initializeTestBoard();
         Task task = initializeTestStory();
 
+        //Act
         board.addTask(task);
         board.removeTask(task);
 
-        // Assert
+        //Assert
         assertEquals(0, board.getTasks().size());
     }
 
@@ -75,6 +78,12 @@ public class BoardImplTests {
         return new BoardImpl("valid");
     }
     public static Task initializeTestStory() {
-        return new StoryImpl(1, "nikolnikol", "nikolnikolnikol", Priority.LOW, Size.LARGE, "Nikol");
+        return new StoryImpl(
+                1,
+                "valid title",
+                "valid description",
+                Priority.LOW,
+                Size.LARGE,
+                "Nikol");
     }
 }

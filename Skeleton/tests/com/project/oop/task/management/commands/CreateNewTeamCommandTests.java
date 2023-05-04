@@ -4,7 +4,8 @@ import com.project.oop.task.management.commands.contracts.Command;
 import com.project.oop.task.management.commands.creation.CreateNewTeamCommand;
 import com.project.oop.task.management.core.TaskManagementRepositoryImpl;
 import com.project.oop.task.management.models.TeamImpl;
-import com.project.oop.task.management.utils.TestUtilities;
+import com.project.oop.task.management.models.contracts.Team;
+import com.project.oop.task.management.utils.ValidationHelper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,7 +13,6 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class CreateNewTeamCommandTests {
 
@@ -39,7 +39,6 @@ public class CreateNewTeamCommandTests {
         String name = "valid";
         String teamIsValid = "false";
         List<String> parameters = new ArrayList<>();
-        parameters.add(name);
         if (repository.getTeams().stream().noneMatch(team1 -> team1.getName().equals("valid"))) {
             repository.isItCancel(name, INVALID_INPUT);
             try {
@@ -51,12 +50,13 @@ public class CreateNewTeamCommandTests {
             if (!name.equals("")) {
                 teamIsValid = "true";
                 parameters.add(name);
+                ValidationHelper.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
+                Team team1 = repository.createNewTeam(name);
             }
         } else {
             System.out.println(TEAM_ALREADY_EXIST);
         }
         Assertions.assertEquals("true", teamIsValid);
     }
-
 
 }

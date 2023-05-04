@@ -51,7 +51,7 @@ public class MemberImplTests {
     }
 
     @Test
-    public void should_ThrowException_When_TaskIsMissing() {
+    public void removerComment_Should_ThrowException_When_TaskIsMissing() {
         // Arrange, Act, Assert
         assertThrows(IllegalArgumentException.class, () ->
                 initializeTestMember().removeTask(initializeTestStory()));

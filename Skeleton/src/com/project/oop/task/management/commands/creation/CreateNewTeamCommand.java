@@ -40,9 +40,7 @@ public class CreateNewTeamCommand implements Command {
             teamIsValid = isTeamValid(parameters, teamIsValid);
         }
 
-        ValidationHelper.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
 
-        Team team1 = repository.createNewTeam(name);
         return String.format(TEAM_CREATED, name);
     }
 
@@ -58,6 +56,8 @@ public class CreateNewTeamCommand implements Command {
             if (!name.equals("")) {
                 teamIsValid = true;
                 parameters.add(name);
+                ValidationHelper.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
+                Team team1 = repository.createNewTeam(name);
             }
         } else {
             System.out.println(TEAM_ALREADY_EXIST);

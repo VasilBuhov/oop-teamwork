@@ -36,6 +36,7 @@ public interface TaskManagementRepository {
     void showPersonActivity(String activity);
     void showTeamActivity(String activity);
     void isItCancel(String string, String errorMessage);
+    Bug findBugById(int id);
 
 
 

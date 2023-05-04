@@ -4,6 +4,7 @@ import com.project.oop.task.management.models.enums.*;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class BugImplTests {
     @Test
@@ -56,7 +57,7 @@ public class BugImplTests {
 
 
     @Test
-    public void getAssignee_Should_ReturnAssignee_When_StoryIsCreated() {
+    public void getAssignee_Should_ReturnAssignee_When_BugIsCreated() {
         // Arrange
         BugImpl bug = initializeTestBug();
 
@@ -65,7 +66,7 @@ public class BugImplTests {
     }
 
     @Test
-    public void getStatus_Should_ReturnStatus_When_StoryIsCreated() {
+    public void getStatus_Should_ReturnStatus_When_BugIsCreated() {
         // Arrange
         BugImpl bug = initializeTestBug();
 

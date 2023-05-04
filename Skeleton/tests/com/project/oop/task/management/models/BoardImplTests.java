@@ -24,6 +24,13 @@ public class BoardImplTests {
                 new BoardImpl("nikolnikolnikolnikol"));
     }
 
+    @Test
+    public void should_ThrowException_When_TaskIsMissing() {
+        // Arrange, Act, Assert
+        assertThrows(IllegalArgumentException.class, () ->
+                initializeTestBoard().removeTask(initializeTestStory()));
+    }
+
 
     @Test
     public void constructor_Should_CreateNewBoard_When_ParametersAreCorrect() {

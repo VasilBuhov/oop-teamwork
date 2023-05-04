@@ -13,6 +13,7 @@ import java.util.List;
 public interface TaskManagementRepository {
     List<Member> getMembers();
     List<Team> getTeams();
+    List<Task> getTasks();
     List<Feedback> getFeedback();
     List<Bug> getBugs();
     Member createMember(String name);

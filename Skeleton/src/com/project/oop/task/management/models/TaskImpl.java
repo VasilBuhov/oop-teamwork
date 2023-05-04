@@ -96,6 +96,21 @@ public abstract class TaskImpl implements Task{
         }
         return sb.toString();
     }
+    public String getActivity() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format("======================%n"));
+        sb.append(String.format("Task: %s%n", getTitle()));
+        sb.append(String.format("Activity:%n"));
+        if (history.isEmpty()) {
+            sb.append(String.format("No activity registered!%n"));
+        } else {
+            for (String event : history) {
+                sb.append(event).append(System.lineSeparator());
+            }
+        }
+        sb.append(String.format("======================%n"));
+        return sb.toString();
+    }
     public abstract void revertStatus();
 
     public abstract void advanceStatus();

@@ -2,6 +2,7 @@ package com.project.oop.task.management.models;
 
 import com.project.oop.task.management.models.contracts.Board;
 import com.project.oop.task.management.models.contracts.Member;
+import com.project.oop.task.management.models.contracts.Task;
 import com.project.oop.task.management.models.contracts.Team;
 import com.project.oop.task.management.utils.ValidationHelper;
 
@@ -94,6 +95,37 @@ public class TeamImpl implements Team {
             sb.append(String.format("There are no boards in this team.%n"));
         }
         sb.append("======================");
+        return sb.toString();
+    }
+
+    @Override
+    public String getActivity() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format("---------------------%n"));
+        sb.append(String.format("Team: %s%n", getName()));
+        sb.append(String.format("---------------------%n")).append(System.lineSeparator());
+        sb.append(String.format("*********************%n"));
+        sb.append(String.format("Members activity:%n"));
+        for (Member member : getMembers()) {
+            sb.append(member.getActivity());
+        }
+        sb.append(String.format("*********************%n")).append(System.lineSeparator());
+
+        sb.append(String.format("*********************%n"));
+        sb.append(String.format("Boards activity:%n"));
+        for (Board board : getBoards()) {
+            sb.append(board.getActivity());
+
+        }
+        sb.append(String.format("*********************%n")).append(System.lineSeparator());
+
+        sb.append(String.format("*********************%n"));
+        sb.append(String.format("Tasks activity:%n"));
+        for (Board board : getBoards()) {
+            for (Task task : board.getTasks()) {
+                sb.append(task.getActivity());
+            }
+        } sb.append(String.format("*********************%n"));
         return sb.toString();
     }
 }

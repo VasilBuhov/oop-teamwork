@@ -17,6 +17,7 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
     private final List<Bug> bugs = new ArrayList<>();
     private final List<Feedback> feedbacks = new ArrayList<>();
     private final List<Story> stories = new ArrayList<>();
+    private final List<Member> people = new ArrayList<>();
     private final List<Member> members = new ArrayList<>();
     private final List<Team> teams = new ArrayList<>();
 
@@ -26,6 +27,10 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
     @Override
     public List<Member> getMembers() {
         return new ArrayList<>(members);
+    }
+    @Override
+    public List<Member> getPeople() {
+        return new ArrayList<>(people);
     }
 
     @Override
@@ -49,11 +54,11 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
     }
 
     @Override
-    public Member createMember(String name) {
-        Member member = new MemberImpl(name);
-        members.add(member);
+    public Member createNewPerson(String name) {
+        Member person = new MemberImpl(name);
+        people.add(person);
 
-        return member;
+        return person;
     }
     @Override
     public Team createNewTeam(String name) {
@@ -72,6 +77,7 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
     @Override
     public StoryImpl createNewStory(String title, String description, Priority priority, Size size, String assignee) {
         StoryImpl story = new StoryImpl(++nextId, title, description, priority, size, assignee);
+        findPersonByName(assignee).addTask(story);
         stories.add(story);
         tasks.add(story);
 
@@ -80,6 +86,7 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
 
     public Bug createBug(String title, String description, Priority priority, Severity severity, String assignee) {
         Bug bug = new BugImpl(++nextId, title, description, priority, severity, assignee);
+        findPersonByName(assignee).addTask(bug);
         bugs.add(bug);
         tasks.add(bug);
 
@@ -129,18 +136,17 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
         }
     }
 
-    public void changeBugPriority(Priority priority, Priority newPriority) {
-        for (Bug bugs : getBugs()) {
-            if (bugs.getPriority().equals(priority)) {
-                bugs.changePriority(newPriority);
-            }
-        }
+    public void changeBugPriority(int id, Priority newPriority) {
+        Bug bug = findBugById(id);
+        bug.changePriority(newPriority);
     }
 
     @Override
     public void addNewPersonToTeam(String name, String team) {
-        Member member = createMember(name);
-        findTeamByName(team).addMember(member);
+        Member person = findPersonByName(name);
+        members.add(person);
+        findTeamByName(team).addMember(person);
+        this.people.remove(person);
     }
 
     @Override
@@ -172,8 +178,14 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
                .filter(board1 -> board1.getName().equals(boardName))
                .collect(Collectors.toList()).get(0);
     }
-    public Bug findBugByTitle(String title) {
-        return bugs.stream().filter(bug -> bug.getTitle().equals(title)).findFirst().get();
+    public Bug findBugById(int id) {
+        return bugs.stream().filter(bug -> bug.getId()==id).findFirst().get();
+    }
+
+    @Override
+    public void changeBugSeverity(int id, Severity severity) {
+        Bug bug = findBugById(id);
+        bug.changeSeverity(severity);
     }
 
     @Override
@@ -182,18 +194,13 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
        return team.getMembers().stream()
                 .filter(member -> member.getName().equals(name)).collect(Collectors.toList()).get(0);
     }
+    public Member findPersonByName(String name) {
+        return people.stream().filter(person -> person.getName().equals(name)).collect(Collectors.toList()).get(0);
+    }
     @Override
     public boolean isAssigneeMemberOfTheTeam(String assignee, String teamName) {
         Team team = findTeamByName(teamName);
         return team.getMembers().stream().anyMatch(member -> member.getName().equals(assignee));
-    }
-    @Override
-    public void showPersonActivity(String activity) {
-        System.out.println(activity);
-    }
-    @Override
-    public void showTeamActivity(String activity) {
-        System.out.println(activity);
     }
     @Override
     public void isItCancel(String string, String errorMessage) {

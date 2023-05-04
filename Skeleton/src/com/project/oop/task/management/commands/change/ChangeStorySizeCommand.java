@@ -12,7 +12,10 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ChangeStorySizeCommand implements Command{
-    public static final int EXPECTED_NUMBER_OF_ARGUMENTS = 2;
+
+    private Size size;
+    private int storyId;
+
 
     private final TaskManagementRepository repository;
     public ChangeStorySizeCommand(TaskManagementRepositoryImpl taskManagementRepository) {
@@ -23,19 +26,60 @@ public class ChangeStorySizeCommand implements Command{
     public String execute(List<String> parameters) {
 
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Please enter story ID:");
-        int storyId = ParsingHelpers.tryParseInt(scanner.nextLine(), "ID is not valid");
 
+        boolean idIsValid = false;
+        System.out.println("Please enter story ID or 'cancel' if you want to exit:");
+        while (!idIsValid){
+            String input = scanner.nextLine();
+            if (input.equals("cancel")){
+                throw new IllegalArgumentException("Command is terminated. Please enter a new command:");
+            }
+            try{
+                storyId = ParsingHelpers.tryParseInt(input,
+                        "ID is not valid. Please enter a number or 'cancel' if you want to exit:");
+            }catch (IllegalArgumentException e){
+                System.out.println(e.getMessage());
+            }
+
+            if (storyId != 0){
+                try{
+                    if (!repository.getTasks().stream().anyMatch(task -> task.getId() == storyId)) {
+                        throw new IllegalArgumentException("Story with this ID not found. Please enter another ID or 'cancel' if you want to exit:");
+                    }
+                }catch (IllegalArgumentException e){
+                    System.out.println(e.getMessage());
+                    storyId = 0;
+                }
+            }
+
+            if (storyId != 0){
+                idIsValid = true;
+            }
+
+        }
+        boolean sizeIsValid = false;
         System.out.println("Please enter the new size of the story:");
-        String newSize = scanner.nextLine();
-        parameters.add(newSize);
+        while (!sizeIsValid){
+            String newSize = scanner.nextLine();
+            try {
+                if (!newSize.equalsIgnoreCase("small")
+                        && (!newSize.equalsIgnoreCase("medium"))
+                        && (!newSize.equalsIgnoreCase("large"))){
+                    throw new IllegalArgumentException("Size is not valid. Please choose between SMALL, MEDIUM and LARGE or cancel if you want to exit:");
+                }
+            }catch (IllegalArgumentException e){
+                System.out.println(e.getMessage());
+                newSize = "";
+            }
 
-        ValidationHelper.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
-
-        Size size = Size.valueOf(newSize);
+            if (!newSize.equals("")){
+                sizeIsValid = true;
+                size = Size.valueOf(newSize.toUpperCase());
+            }
+        }
 
         repository.changeStorySize(storyId, size);
 
-        return String.format("Story size was changed to %s", newSize);
+        return String.format("Story size was changed to %s", size.name());
     }
 }

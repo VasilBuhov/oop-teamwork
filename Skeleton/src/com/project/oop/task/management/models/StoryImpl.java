@@ -111,11 +111,11 @@ public class StoryImpl extends TaskImpl implements Story {
     public String viewInfo() {
         return String.format("*********************%n" +
                 "Story:%n" +
-                super.toString() +
+                super.viewInfo() + "%n" +
                 "Status: %s%n" +
                 "Priority: %s%n" +
-                "Size: %d%n" +
+                "Size: %s%n" +
                 "Assignee: %s%n" +
-                "*********************%n", status.toString(), priority, size, assignee);
+                "*********************%n", status.toString(), priority.toString(), size.toString(), assignee);
     }
 }

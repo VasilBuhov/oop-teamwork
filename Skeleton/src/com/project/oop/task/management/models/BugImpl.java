@@ -99,7 +99,7 @@ public class BugImpl extends TaskImpl implements Bug {
     public String viewInfo() {
         return String.format("*********************%n" +
                         "Bug: %n" +
-                        super.toString() +
+                        super.viewInfo() + "%n" +
                         "Status: %s%n" +
                         "Priority: %s%n" +
                         "Severity: %s%n" +

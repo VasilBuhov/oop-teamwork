@@ -181,8 +181,6 @@ public class CreateNewStoryCommand implements Command{
 
         StoryImpl story = repository.createNewStory(title, description, priority, size, assignee);
         board1.addTask(story);
-        repository.findMemberByName(assignee, team).addTask(story);
-
         return String.format(STORY_CREATED, story.getId(), story.getTitle());
     }
 }

@@ -125,7 +125,7 @@ public class StoryImplTests {
     }
 
     @Test
-    public void toString_Should_ReturnResultFromViewInfo() {
+    public void getAsString_Should_ReturnResultFromViewInfo() {
         //Arrange
         StoryImpl story = initializeTestStory();
 

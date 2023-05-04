@@ -39,6 +39,11 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
     }
 
     @Override
+    public List<Task> getTasks() {
+        return new ArrayList<>(tasks);
+    }
+
+    @Override
     public List<Feedback> getFeedback() {
         return new ArrayList<>(feedbacks);
     }
@@ -131,12 +136,9 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
         }
     }
 
-    public void changeBugPriority(Priority priority, Priority newPriority) {
-        for (Bug bugs : getBugs()) {
-            if (bugs.getPriority().equals(priority)) {
-                bugs.changePriority(newPriority);
-            }
-        }
+    public void changeBugPriority(int id, Priority newPriority) {
+        Bug bug = findBugById(id);
+        bug.changePriority(newPriority);
     }
 
     @Override
@@ -176,8 +178,14 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
                .filter(board1 -> board1.getName().equals(boardName))
                .collect(Collectors.toList()).get(0);
     }
-    public Bug findBugByTitle(String title) {
-        return bugs.stream().filter(bug -> bug.getTitle().equals(title)).findFirst().get();
+    public Bug findBugById(int id) {
+        return bugs.stream().filter(bug -> bug.getId()==id).findFirst().get();
+    }
+
+    @Override
+    public void changeBugSeverity(int id, Severity severity) {
+        Bug bug = findBugById(id);
+        bug.changeSeverity(severity);
     }
 
     @Override

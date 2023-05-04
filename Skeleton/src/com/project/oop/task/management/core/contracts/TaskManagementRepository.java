@@ -4,6 +4,7 @@ import com.project.oop.task.management.models.FeedbackImpl;
 import com.project.oop.task.management.models.StoryImpl;
 import com.project.oop.task.management.models.contracts.*;
 import com.project.oop.task.management.models.enums.Priority;
+import com.project.oop.task.management.models.enums.Severity;
 import com.project.oop.task.management.models.enums.Size;
 import com.project.oop.task.management.models.enums.StoryStatus;
 
@@ -14,6 +15,7 @@ public interface TaskManagementRepository {
     List<Member> getMembers();
     List<Member> getPeople();
     List<Team> getTeams();
+    List<Task> getTasks();
     List<Feedback> getFeedback();
     List<Bug> getBugs();
     Member createNewPerson(String name);
@@ -35,11 +37,8 @@ public interface TaskManagementRepository {
     Board findBoardByName(String boardName, String teamName);
     boolean isAssigneeMemberOfTheTeam(String assignee, String teamName);
     void isItCancel(String string, String errorMessage);
+    Bug findBugById(int id);
 
 
-
-
-
-
-
+    void changeBugSeverity(int id, Severity severity);
 }

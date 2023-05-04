@@ -11,12 +11,12 @@ public class ListFeedbackCommand implements Command {
 
     private final TaskManagementRepositoryImpl repository;
     public ListFeedbackCommand(TaskManagementRepositoryImpl taskManagementRepository) {
-        this.repository = new TaskManagementRepositoryImpl();
+        this.repository = taskManagementRepository;
     }
 
     @Override
     public String execute(List<String> parameters) {
-        return repository.getFeedback().stream().map(bug -> bug.getTitle()).
+        return repository.getFeedback().stream().map(feedback-> feedback.getTitle()).
                 collect(Collectors.toList()).toString();
     }
 }

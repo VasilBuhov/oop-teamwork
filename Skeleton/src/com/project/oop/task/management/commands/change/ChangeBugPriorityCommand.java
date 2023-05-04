@@ -79,6 +79,7 @@ public class ChangeBugPriorityCommand implements Command {
             }
         }
 
+
 //        System.out.println("Please enter a valid priority: ");
 //        priority = ParsingHelpers.tryParseEnum(scanner.nextLine(), Priority.class);
 //        parameters.add(String.valueOf(priority));

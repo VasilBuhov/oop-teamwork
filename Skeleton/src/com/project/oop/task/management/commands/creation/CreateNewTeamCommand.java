@@ -37,26 +37,31 @@ public class CreateNewTeamCommand implements Command {
         boolean teamIsValid = false;
         while (!teamIsValid) {
             name = scanner.nextLine();
-            if (repository.getTeams().stream().noneMatch(team1 -> team1.getName().equals(name))) {
-                repository.isItCancel(name, INVALID_INPUT);
-                try {
-                    TeamImpl.validateName(name);
-                } catch (IllegalArgumentException e) {
-                    System.out.println(e.getMessage() + " Try again or enter 'cancel' to exit:");
-                    name = "";
-                }
-                if (!name.equals("")) {
-                    teamIsValid = true;
-                    parameters.add(name);
-                }
-            } else {
-                System.out.println(TEAM_ALREADY_EXIST);
-            }
+            teamIsValid = isTeamValid(parameters, teamIsValid);
         }
 
         ValidationHelper.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
 
         Team team1 = repository.createNewTeam(name);
         return String.format(TEAM_CREATED, name);
+    }
+
+    private boolean isTeamValid(List<String> parameters, boolean teamIsValid) {
+        if (repository.getTeams().stream().noneMatch(team1 -> team1.getName().equals(name))) {
+            repository.isItCancel(name, INVALID_INPUT);
+            try {
+                TeamImpl.validateName(name);
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage() + " Try again or enter 'cancel' to exit:");
+                name = "";
+            }
+            if (!name.equals("")) {
+                teamIsValid = true;
+                parameters.add(name);
+            }
+        } else {
+            System.out.println(TEAM_ALREADY_EXIST);
+        }
+        return teamIsValid;
     }
 }

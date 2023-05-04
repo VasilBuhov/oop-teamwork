@@ -191,6 +191,7 @@ public class CreateNewBugCommand implements Command {
         ValidationHelper.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
         Bug createdBug = repository.createBug(title,description,priority,severity,assignee);
         boardToAddBug.addTask(createdBug);
+        repository.findMemberByName(assignee, teamName).addTask(createdBug);
         return String.format("Bug with ID %d was created and added to board %s of team %s",
                 createdBug.getId(),
                 boardToAddBug.getName(),

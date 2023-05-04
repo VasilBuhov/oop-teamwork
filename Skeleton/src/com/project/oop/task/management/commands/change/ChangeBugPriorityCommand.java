@@ -58,9 +58,9 @@ public class ChangeBugPriorityCommand implements Command {
                 idIsValid = true;
             }
         }
-        boolean priorityIsValid = false;
+        boolean isValidPriority = false;
         System.out.println("Please enter the new priority of the id:");
-        while (!priorityIsValid){
+        while (!isValidPriority){
             String newPriority = scanner.nextLine();
             try {
                 if (!newPriority.equalsIgnoreCase("low")
@@ -74,7 +74,7 @@ public class ChangeBugPriorityCommand implements Command {
             }
 
             if (!newPriority.equals("")){
-                priorityIsValid = true;
+                isValidPriority = true;
                 priority = Priority.valueOf(newPriority.toUpperCase());
             }
         }

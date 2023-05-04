@@ -174,6 +174,12 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
     }
 
     @Override
+    public void changeBugSeverity(int id, Severity severity) {
+        Bug bug = findBugById(id);
+        bug.changeSeverity(severity);
+    }
+
+    @Override
     public Member findMemberByName(String name, String teamName) {
         Team team = findTeamByName(teamName);
        return team.getMembers().stream()

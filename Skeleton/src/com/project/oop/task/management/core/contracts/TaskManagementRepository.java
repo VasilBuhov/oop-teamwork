@@ -4,6 +4,7 @@ import com.project.oop.task.management.models.FeedbackImpl;
 import com.project.oop.task.management.models.StoryImpl;
 import com.project.oop.task.management.models.contracts.*;
 import com.project.oop.task.management.models.enums.Priority;
+import com.project.oop.task.management.models.enums.Severity;
 import com.project.oop.task.management.models.enums.Size;
 import com.project.oop.task.management.models.enums.StoryStatus;
 
@@ -39,9 +40,5 @@ public interface TaskManagementRepository {
     Bug findBugById(int id);
 
 
-
-
-
-
-
+    void changeBugSeverity(int id, Severity severity);
 }

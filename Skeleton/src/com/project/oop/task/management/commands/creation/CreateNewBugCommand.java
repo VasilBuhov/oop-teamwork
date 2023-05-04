@@ -50,7 +50,7 @@ public class CreateNewBugCommand implements Command {
                 teamToAddBug = repository
                         .getTeams()
                         .stream()
-                        .filter(team -> team.getName().equals(teamName))
+                        .filter(team1 -> team1.getName().equals(teamName))
                         .collect(Collectors.toList())
                         .get(0);
                 teamIsValid = true;
@@ -188,8 +188,12 @@ public class CreateNewBugCommand implements Command {
 //        System.out.println("Please enter Bug assignee");
 //        String assignee= scanner.nextLine();
 //        parameters.add(assignee);
-        ValidationHelper.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
-        Bug createdBug = repository.createBug(title,description,priority,severity,assignee);
+//        ValidationHelper.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
+        Bug createdBug = repository.createBug(title,
+                description,
+                priority,
+                severity,
+                assignee);
         boardToAddBug.addTask(createdBug);
         return String.format("Bug with ID %d was created and added to board %s of team %s",
                 createdBug.getId(),

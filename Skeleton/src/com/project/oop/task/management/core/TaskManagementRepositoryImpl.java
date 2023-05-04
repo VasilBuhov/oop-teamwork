@@ -77,6 +77,7 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
     @Override
     public StoryImpl createNewStory(String title, String description, Priority priority, Size size, String assignee) {
         StoryImpl story = new StoryImpl(++nextId, title, description, priority, size, assignee);
+
         stories.add(story);
         tasks.add(story);
         findMemberByName(assignee).addTask(story);
@@ -86,6 +87,7 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
 
     public Bug createBug(String title, String description, Priority priority, Severity severity, String assignee) {
         Bug bug = new BugImpl(++nextId, title, description, priority, severity, assignee);
+
         bugs.add(bug);
         tasks.add(bug);
         findMemberByName(assignee).addTask(bug);

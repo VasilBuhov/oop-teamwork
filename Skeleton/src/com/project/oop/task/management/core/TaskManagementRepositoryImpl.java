@@ -77,6 +77,7 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
     @Override
     public StoryImpl createNewStory(String title, String description, Priority priority, Size size, String assignee) {
         StoryImpl story = new StoryImpl(++nextId, title, description, priority, size, assignee);
+        findPersonByName(assignee).addTask(story);
         stories.add(story);
         tasks.add(story);
 

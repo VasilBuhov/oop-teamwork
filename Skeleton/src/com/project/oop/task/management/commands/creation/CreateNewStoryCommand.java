@@ -5,6 +5,7 @@ import com.project.oop.task.management.core.TaskManagementRepositoryImpl;
 import com.project.oop.task.management.core.contracts.TaskManagementRepository;
 import com.project.oop.task.management.models.StoryImpl;
 import com.project.oop.task.management.models.TaskImpl;
+import com.project.oop.task.management.models.contracts.Board;
 import com.project.oop.task.management.models.enums.Priority;
 import com.project.oop.task.management.models.enums.Size;
 import com.project.oop.task.management.utils.ParsingHelpers;
@@ -73,6 +74,7 @@ public class CreateNewStoryCommand implements Command{
             }
         }
 
+        Board board1 = null;
         System.out.println(ENTER_BOARD_NAME_MESSAGE);
         boolean boardIsValid = false;
         while (!boardIsValid) {
@@ -83,6 +85,7 @@ public class CreateNewStoryCommand implements Command{
                     .stream()
                     .anyMatch(board -> board.getName().equals(targetBoard))) {
                 boardIsValid = true;
+                board1 = repository.findBoardByName(targetBoard,team);
                 parameters.add(targetBoard);
             } else {
                 repository.isItCancel(targetBoard, INVALID_INPUT);
@@ -177,10 +180,8 @@ public class CreateNewStoryCommand implements Command{
         ValidationHelper.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
 
         StoryImpl story = repository.createNewStory(title, description, priority, size, assignee);
+        board1.addTask(story);
 
-                repository.findMemberByName(assignee, team).addTask(story);
-                repository.findBoardByName(targetBoard, team).addTask(story);
-
-                return String.format(STORY_CREATED, story.getId(), story.getTitle());
+        return String.format(STORY_CREATED, story.getId(), story.getTitle());
     }
 }

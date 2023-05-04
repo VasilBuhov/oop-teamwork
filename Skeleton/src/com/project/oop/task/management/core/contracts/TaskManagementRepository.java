@@ -12,10 +12,11 @@ import java.util.List;
 
 public interface TaskManagementRepository {
     List<Member> getMembers();
+    List<Member> getPeople();
     List<Team> getTeams();
     List<Feedback> getFeedback();
     List<Bug> getBugs();
-    Member createMember(String name);
+    Member createNewPerson(String name);
     Team createNewTeam(String name);
     StoryImpl createNewStory(String title, String description, Priority priority, Size size, String assignee);
     Feedback createFeedback(String title, String description, int rating);
@@ -30,10 +31,9 @@ public interface TaskManagementRepository {
     Story findStoryById(int storyId);
     Team findTeamByName(String name);
     Member findMemberByName(String name, String teamName);
+    Member findPersonByName(String name);
     Board findBoardByName(String boardName, String teamName);
     boolean isAssigneeMemberOfTheTeam(String assignee, String teamName);
-    void showPersonActivity(String activity);
-    void showTeamActivity(String activity);
     void isItCancel(String string, String errorMessage);
 
 

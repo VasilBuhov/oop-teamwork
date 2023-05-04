@@ -43,7 +43,7 @@ public class AddPersonToTeamCommand implements Command {
         boolean nameIsValid = false;
         while (!nameIsValid) {
             personName = scanner.nextLine();
-            if (repository.getMembers().stream().anyMatch(member -> member.getName().equals(personName))) {
+            if (repository.getPeople().stream().anyMatch(member -> member.getName().equals(personName))) {
                 nameIsValid = true;
                 parameters.add(personName);
             } else {
@@ -60,7 +60,7 @@ public class AddPersonToTeamCommand implements Command {
                 teamIsValid = true;
                 parameters.add(teamName);
             } else {
-                repository.isItCancel(personName, INVALID_INPUT);
+                repository.isItCancel(teamName, INVALID_INPUT);
                 System.out.println(TEAM_IS_NOT_FOUNDED);
             }
         }

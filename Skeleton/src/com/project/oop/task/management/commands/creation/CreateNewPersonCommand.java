@@ -58,7 +58,7 @@ public class CreateNewPersonCommand implements Command {
 
         name = parameters.get(0);
 
-        Member createdMember = repository.createMember(name);
+        Member createdMember = repository.createNewPerson(name);
 
         return String.format("Person %s was created.", name);
     }

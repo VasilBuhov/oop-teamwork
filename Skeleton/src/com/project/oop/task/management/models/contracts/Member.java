@@ -7,5 +7,4 @@ public interface Member extends Loggable, Printable{
     List<Task> getTasks();
     void addTask(Task task);
     void removeTask(Task task);
-    public String getActivity();
 }

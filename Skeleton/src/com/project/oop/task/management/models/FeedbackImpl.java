@@ -18,7 +18,7 @@ public class FeedbackImpl extends TaskImpl implements Feedback {
         super(id, title, description);
         this.status = FeedbackStatus.NEW;
         this.rating = rating;
-        logEvent(new EventLogImpl(String.format(FEEDBACK_CREATED_MESSAGE, viewInfo())));
+        logEvent(new EventLogImpl(String.format(FEEDBACK_CREATED_MESSAGE, title)));
     }
 
     @Override

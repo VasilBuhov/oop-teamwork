@@ -58,7 +58,7 @@ public class CreateNewBugCommand implements Command {
                 System.out.println("Team is not found. Please enter a valid team name or 'cancel' if you want to exit");
             }
         }
-        System.out.println("Please enter the board name for your feedback:");
+        System.out.println("Please enter the board name for your bug");
         boolean boardIsValid = false;
         Board boardToAddBug = null;
 

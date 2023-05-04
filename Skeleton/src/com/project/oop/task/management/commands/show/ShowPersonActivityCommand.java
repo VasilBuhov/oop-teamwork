@@ -44,6 +44,6 @@ public class ShowPersonActivityCommand implements Command {
         }
 
         ValidationHelper.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
-        return repository.findPersonByName(personName).getActivity();
+        return repository.findMemberByName(personName).getActivity();
     }
 }

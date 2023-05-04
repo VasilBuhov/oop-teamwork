@@ -13,19 +13,12 @@ import java.util.Scanner;
 public class ChangeBugPriorityCommand implements Command {
     public static final String ENTER_ID_MESSAGE =
             "Please enter a valid ID or 'cancel' if you want to exit:";
-    public static final String BUG_NOT_FOUND_MESSAGE =
-            "Bug with id: %d is not found! Please enter a valid id or 'cancel if you want to exit:";
 
-    public static final String PARSING_ERROR_MESSAGE =
-            "Invalid input, must be a number! Please try again or enter 'cancel' if you want to exit:";
-
-    public static final String INVALID_INPUT =
-            "Command is terminated. Please enter a new command:";
 
     public static int EXPECTED_NUMBER_OF_ARGUMENTS=2;
-    public static final String CHANGED_PRIORITY = "Priority with priority: %s was changed to %s.";
+
     private Priority priority;
-    private Priority newPriority;
+
     private int id;
     private final TaskManagementRepositoryImpl repository;
 
@@ -94,7 +87,7 @@ public class ChangeBugPriorityCommand implements Command {
 //        parameters.add(String.valueOf(newPriority));
 
         ValidationHelper.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
-        repository.changeBugPriority(id, newPriority);
+        repository.changeBugPriority(id, priority);
         return String.format("Bug priority was changed to %s", priority.name());
     }
 }

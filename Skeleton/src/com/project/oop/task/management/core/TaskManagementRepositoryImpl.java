@@ -142,6 +142,15 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
             feedback.advanceStatus();
         }
     }
+    @Override
+    public void changeBugStatus(int id, String direction) {
+        Bug bug = findBugById(id);
+        if (direction.equals("revert")) {
+            bug.revertStatus();
+        } else if (direction.equals("advance")) {
+            bug.advanceStatus();
+        }
+    }
 
     public void changeBugPriority(int id, Priority newPriority) {
         Bug bug = findBugById(id);
@@ -194,6 +203,8 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
         Bug bug = findBugById(id);
         bug.changeSeverity(severity);
     }
+
+
 
     @Override
     public Member findMemberByName(String name) {

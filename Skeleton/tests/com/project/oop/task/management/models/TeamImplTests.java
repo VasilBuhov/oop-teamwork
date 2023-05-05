@@ -29,8 +29,10 @@ public class TeamImplTests {
 
     @Test
     public void constructor_Should_CreateNewTeam_When_ParametersAreCorrect() {
+        //Arrange
         TeamImpl user = initializeTestTeam();
 
+        //Act
         assertEquals("valid", initializeTestTeam().getName());
     }
 
@@ -39,6 +41,7 @@ public class TeamImplTests {
         // Arrange
         TeamImpl team = initializeTestTeam();
         BoardImpl board = initializeTestBoard();
+
         // Act
         team.getBoards().add(board);
 
@@ -65,6 +68,7 @@ public class TeamImplTests {
         TeamImpl team = initializeTestTeam();
         BoardImpl board = initializeTestBoard();
 
+        //Act
         team.addBoard(board);
 
         // Assert
@@ -77,6 +81,7 @@ public class TeamImplTests {
         TeamImpl team = initializeTestTeam();
         BoardImpl board = initializeTestBoard();
 
+        //Act
         team.addBoard(board);
         team.removeBoard(board);
 
@@ -90,6 +95,7 @@ public class TeamImplTests {
         TeamImpl team = initializeTestTeam();
         BoardImpl board = initializeTestBoard();
 
+        //Act
         team.addBoard(board);
 
         // Assert
@@ -102,6 +108,7 @@ public class TeamImplTests {
         TeamImpl team = initializeTestTeam();
         MemberImpl member = initializeTestMember();
 
+        //Act
         team.addMember(member);
         team.removeMember(member);
 
@@ -116,6 +123,7 @@ public class TeamImplTests {
         BoardImpl board = initializeTestBoard();
         MemberImpl member = initializeTestMember();
 
+        //Act
         team.addBoard(board);
         team.addMember(member);
 
@@ -150,11 +158,13 @@ public class TeamImplTests {
 
     @Test
     public void getActivity_Should_ReturnFormattedString() {
+        //Arrange
         TeamImpl team = initializeTestTeam();
         BoardImpl board = initializeTestBoard();
         MemberImpl member = initializeTestMember();
         Task task = initializeTestStory();
 
+        //Act
         team.addBoard(board);
         team.addMember(member);
         team.getBoards().get(0).addTask(task);
@@ -200,6 +210,12 @@ public class TeamImplTests {
         return new MemberImpl("valid");
     }
     public static Task initializeTestStory() {
-        return new StoryImpl(1, "nikolnikol", "nikolnikolnikol", Priority.LOW, Size.LARGE, "Nikol");
+        return new StoryImpl(
+                1,
+                "valid title",
+                "valid description",
+                Priority.LOW,
+                Size.LARGE,
+                "Nikol");
     }
 }

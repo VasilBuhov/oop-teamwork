@@ -27,10 +27,6 @@ public class FeedbackImpl extends TaskImpl implements Feedback {
         this.rating = rating;
     }
 
-    private void setRating(int rating) {
-        this.rating = rating;
-    }
-
     @Override
     public int getRating() {
         return this.rating;
@@ -66,12 +62,16 @@ public class FeedbackImpl extends TaskImpl implements Feedback {
 
     @Override
     public String viewInfo() {
-        return String.format("*********************%n" +
-                        "Feedback: %n" +
-                        super.viewInfo() + "%n" +
-                        "Status: %s%n" +
-                        "Rating: %s%n" +
-                        "*********************%n", status.toString(), rating);
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format("*********************%n" +
+                "Feedback:%n"));
+        sb.append(super.viewInfo());
+        sb.append(String.format("Status: %s%n" +
+                        "Rating: %d%n" +
+                        "*********************%n",
+                getStatus(),
+                rating));
+        return sb.toString();
     }
 
     @Override

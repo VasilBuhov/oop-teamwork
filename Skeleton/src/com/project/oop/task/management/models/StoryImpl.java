@@ -23,7 +23,7 @@ public class StoryImpl extends TaskImpl implements Story {
 
     public StoryImpl(int id, String title, String description, Priority priority, Size size, String assignee) {
         super(id, title, description);
-        this.status = StoryStatus.IN_PROGRESS;
+        this.status = StoryStatus.NOT_DONE;
         setPriority(priority);
         setSize(size);
         setAssignee(assignee);
@@ -109,13 +109,20 @@ public class StoryImpl extends TaskImpl implements Story {
 
     @Override
     public String viewInfo() {
-        return String.format("*********************%n" +
-                "Story:%n" +
-                super.viewInfo() + "%n" +
-                "Status: %s%n" +
-                "Priority: %s%n" +
-                "Size: %s%n" +
-                "Assignee: %s%n" +
-                "*********************%n", status.toString(), priority.toString(), size.toString(), assignee);
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format("*********************%n" +
+                        "Story:%n"));
+        sb.append(super.viewInfo());
+        sb.append(String.format("Status: %s%n" +
+                        "Priority: %s%n" +
+                        "Size: %s%n" +
+                        "Assignee: %s%n" +
+                        "*********************%n",
+                getStatus(),
+                priority.toString(),
+                size.toString(),
+                assignee));
+
+        return sb.toString();
     }
 }

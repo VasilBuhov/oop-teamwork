@@ -25,10 +25,10 @@ public class CommentImpl implements Comment{
         return this.content;
     }
 
-    public String toString(Comment comment) {
-        return String.format("***********%n") +
-                String.format("Comment: " + comment.getContent() + "%n") +
-                String.format("Author: %s%n", comment.getAuthor()) +
+    public String toString() {
+        return  String.format("***********%n") +
+                String.format("Comment: " + getContent() + "%n") +
+                String.format("Author: %s%n", getAuthor()) +
                 String.format("***********%n");
     }
 }

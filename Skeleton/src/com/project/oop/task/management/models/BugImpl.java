@@ -36,10 +36,6 @@ public class BugImpl extends TaskImpl implements Bug {
         this.priority = priority;
     }
 
-    private void setPriority(Priority priority) {
-        this.priority = priority;
-    }
-
     @Override
     public Priority getPriority() {
         return this.priority;
@@ -51,17 +47,9 @@ public class BugImpl extends TaskImpl implements Bug {
         this.severity = severity;
     }
 
-    private void setSeverity(Severity severity) {
-        this.severity = severity;
-    }
-
     @Override
     public Severity getSeverity() {
         return this.severity;
-    }
-
-    private void setAssignee(String assignee) {
-        this.assignee = assignee;
     }
 
     @Override
@@ -97,10 +85,11 @@ public class BugImpl extends TaskImpl implements Bug {
 
     @Override
     public String viewInfo() {
-        return String.format("*********************%n" +
-                        "Bug: %n" +
-                        super.viewInfo() + "%n" +
-                        "Status: %s%n" +
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format("*********************%n" +
+                "Bug:%n"));
+        sb.append(super.viewInfo());
+        sb.append(String.format("Status: %s%n" +
                         "Priority: %s%n" +
                         "Severity: %s%n" +
                         "Assignee: %s%n" +
@@ -108,7 +97,9 @@ public class BugImpl extends TaskImpl implements Bug {
                 status.toString(),
                 priority.toString(),
                 severity.toString(),
-                assignee);
+                assignee));
+
+        return sb.toString();
     }
 
     @Override

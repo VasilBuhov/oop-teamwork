@@ -1,4 +1,4 @@
-package com.project.oop.task.management.commands;
+package com.project.oop.task.management.commands.creation;
 
 import com.project.oop.task.management.commands.contracts.Command;
 import com.project.oop.task.management.commands.creation.CreateNewBoardCommand;

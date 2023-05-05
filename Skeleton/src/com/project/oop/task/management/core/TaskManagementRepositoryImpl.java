@@ -172,6 +172,13 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
     }
 
     @Override
+    public void assignTask(int taskId, String name) {
+        Task task = findTaskById(taskId);
+        Member member = findMemberByName(name);
+        member.addTask(task);
+    }
+
+    @Override
     public Task findTaskById(int taskId) {
         return tasks.stream().filter(task -> task.getId() == taskId).collect(Collectors.toList()).get(0);
     }

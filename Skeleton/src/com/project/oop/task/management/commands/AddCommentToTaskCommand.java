@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Scanner;
 
 public class AddCommentToTaskCommand implements Command {
-    public static final String COMMENT_ADDED_MESSAGE = "%sWas added to task with ID: %d";
     public static int EXPECTED_NUMBER_OF_ARGUMENTS = 2;
     public static final String ENTER_ID_MESSAGE =
             "Please enter a valid ID or 'cancel' if you want to exit:";
@@ -22,10 +21,12 @@ public class AddCommentToTaskCommand implements Command {
     public static final String MEMBER_IS_NOT_FOUND_MESSAGE =
             "Person with this name is not found! " +
                     "Please enter a valid assignee or 'cancel' if you want to exit: ";
-    public static final String ENTER_COMMENT_NAME_MESSAGE =
+    public static final String ENTER_COMMENT_MESSAGE =
             "Please enter the comment you would like to add or 'cancel' if you want to exit:";
     public static final String PARSING_ERROR_MESSAGE =
             "Invalid input, must be a number! Please try again or enter 'cancel' if you want to exit:";
+    public static final String COMMENT_ADDED_MESSAGE = "%sWas added to task with ID: %d";
+
     public static final String INVALID_INPUT =
             "Command is terminated. Please enter a new command:";
 
@@ -73,7 +74,7 @@ public class AddCommentToTaskCommand implements Command {
             }
         }
 
-        System.out.println(ENTER_COMMENT_NAME_MESSAGE);
+        System.out.println(ENTER_COMMENT_MESSAGE);
         comment = scanner.nextLine();
         if (comment.equalsIgnoreCase("cancel")) {
             repository.isItCancel(author, INVALID_INPUT);

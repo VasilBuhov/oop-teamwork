@@ -15,7 +15,7 @@ public class MemberImpl implements Member {
     public static final String TASK_ERROR_MESSAGE =
             "No such task founded!";
     private static final String TASK_ADDED_TO_MEMBER_MESSAGE =
-            "Task with title: %s was created by %s and added %s's tasks!";
+            "Task with title: %s was added %s's tasks!";
     private static final String TASK_REMOVED_FROM_MEMBER_MESSAGE =
             "Task with title: %s is removed from %s's tasks!";
     private String name;
@@ -51,7 +51,7 @@ public class MemberImpl implements Member {
     @Override
     public void addTask(Task task) {
         tasks.add(task);
-        logEvent(new EventLogImpl(String.format(TASK_ADDED_TO_MEMBER_MESSAGE, task.getTitle(), name, name)));
+        logEvent(new EventLogImpl(String.format(TASK_ADDED_TO_MEMBER_MESSAGE, task.getTitle(), name)));
     }
 
     @Override

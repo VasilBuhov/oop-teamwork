@@ -17,7 +17,7 @@ public class CreateNewPersonCommand implements Command {
     private String name;
 
     private final TaskManagementRepository repository;
-    public CreateNewPersonCommand(TaskManagementRepositoryImpl taskManagementRepository) {
+    public CreateNewPersonCommand(TaskManagementRepository taskManagementRepository) {
         this.repository = taskManagementRepository;
     }
 
@@ -42,7 +42,7 @@ public class CreateNewPersonCommand implements Command {
 
             if (!name.equals("")) {
                 try{
-                    if (repository.getMembers().stream().anyMatch(member -> member.getName().equals(name))) {
+                    if (repository.getPeople().stream().anyMatch(member -> member.getName().equals(name))) {
                         throw new IllegalArgumentException("A person with the same name already exists. Please enter another name or 'cancel' if you want to exit:");
                     }
                 }catch (IllegalArgumentException e){

@@ -43,6 +43,7 @@ public class FilterBugsByAssigneeCommand implements Command {
             }
 
             if (!assigneeName.equals("")) {
+                nameIsValid = true;
                 filteredBugs = repository.getBugs().stream().filter(bug -> bug.getAssignee().equals(assigneeName)).collect(Collectors.toList());
                 if (filteredBugs.size() == 0) {
                     return String.format("No bugs assigned to this person.");

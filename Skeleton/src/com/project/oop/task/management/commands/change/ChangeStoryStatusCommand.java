@@ -62,9 +62,9 @@ public class ChangeStoryStatusCommand implements Command{
             String newStatus = scanner.nextLine();
             try {
                 if (!newStatus.equalsIgnoreCase("Done")
-                        && (!newStatus.equalsIgnoreCase("NotDone"))
-                        && (!newStatus.equalsIgnoreCase("InProgress"))){
-                    throw new IllegalArgumentException("Status is not valid. Please choose between NotDone, InProgress and Done or cancel if you want to exit:");
+                        && (!newStatus.equalsIgnoreCase("Not_Done"))
+                        && (!newStatus.equalsIgnoreCase("In_Progress"))){
+                    throw new IllegalArgumentException("Status is not valid. Please choose between Not_Done, In_Progress and Done or cancel if you want to exit:");
                 }
             }catch (IllegalArgumentException e){
                 System.out.println(e.getMessage());

@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 public class FilterFeedbackByStatusCommand implements Command {
     private List<Feedback> filteredFeedbacks = new ArrayList<>();
     private String status;
+    private String result;
 
     private final TaskManagementRepositoryImpl repository;
     public FilterFeedbackByStatusCommand(TaskManagementRepositoryImpl taskManagementRepository) {
@@ -46,14 +47,17 @@ public class FilterFeedbackByStatusCommand implements Command {
             }
 
             if (!status.equals("")) {
+                statusIsValid = true;
                 filteredFeedbacks = repository.getFeedback().stream().filter(feedback -> feedback.getStatus().equalsIgnoreCase(status)).collect(Collectors.toList());
                 if (filteredFeedbacks.size() == 0) {
                     return String.format("No feedbacks with this status");
+                } else {
+                    result = ListingHelpers.feedbacksToString(filteredFeedbacks);
                 }
-                System.out.println(ListingHelpers.feedbacksToString(filteredFeedbacks));
+
             }
         }
 
-        return ListingHelpers.feedbacksToString(filteredFeedbacks);
+        return result;
     }
 }

@@ -77,7 +77,6 @@ public class StoryImpl extends TaskImpl implements Story {
     }
 
     private void setStatus(StoryStatus status) {
-        logEvent(new EventLogImpl(String.format(CHANGED_STATUS_MESSAGE, getStatus(), status)));
         this.status = status;
     }
 

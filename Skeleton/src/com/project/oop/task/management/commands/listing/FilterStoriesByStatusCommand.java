@@ -45,11 +45,11 @@ public class FilterStoriesByStatusCommand implements Command {
             }
 
             if (!status.equals("")) {
+                statusIsValid = true;
                 filteredStories = repository.getStories().stream().filter(story -> story.getStatus().equalsIgnoreCase(status)).collect(Collectors.toList());
                 if (filteredStories.size() == 0) {
                     return String.format("No stories with this status");
                 }
-                System.out.println(ListingHelpers.storiesToString(filteredStories));
             }
         }
 

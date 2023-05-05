@@ -42,6 +42,7 @@ public class FilterStoriesByAssigneeCommand implements Command {
             }
 
             if (!assigneeName.equals("")) {
+                nameIsValid = true;
                 filteredStories = repository.getStories().stream().filter(story -> story.getAssignee().equals(assigneeName)).collect(Collectors.toList());
                 if (filteredStories.size() == 0) {
                     return String.format("No stories assigned to this person.");

@@ -44,11 +44,11 @@ public class FilterBugsByStatusCommand implements Command {
             }
 
             if (!status.equals("")) {
+                statusIsValid = true;
                 filteredBugs = repository.getBugs().stream().filter(bug -> bug.getStatus().equalsIgnoreCase(status)).collect(Collectors.toList());
                 if (filteredBugs.size() == 0) {
                     return String.format("No bugs with this status");
                 }
-                System.out.println(ListingHelpers.bugsToString(filteredBugs));
             }
         }
 

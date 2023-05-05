@@ -46,7 +46,7 @@ public class ShowAllTeamBoardsCommand implements Command {
             } else {
                 tasks.stream()
                         .map(Task::getTitle)
-                        .forEach(title -> result.append(String.format("\t- %s%n", title)));
+                        .forEach(title -> result.append(String.format("\tTitle- %s%n", title)));
             }
         });
 

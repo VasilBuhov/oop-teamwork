@@ -16,7 +16,9 @@ public class ListFeedbackCommand implements Command {
 
     @Override
     public String execute(List<String> parameters) {
-        return repository.getFeedback().stream().map(feedback-> feedback.getTitle()).
-                collect(Collectors.toList()).toString();
+        return repository.getFeedback().stream()
+                .map(bug -> bug.getId() + " - " + bug.getTitle())
+                .collect(Collectors.toList())
+                .toString();
     }
 }

@@ -28,7 +28,7 @@ public class CreateNewPersonCommandTests {
     }
 
     @Test
-    public void shouldThrowExceptionWhenNameLessThanFiveSymbols(){
+    public void execute_Should_ThrowException_When_NameLengthNotValid(){
         List<String> params = new ArrayList<>();
         String name = "T";
 
@@ -39,7 +39,7 @@ public class CreateNewPersonCommandTests {
     }
 
     @Test
-    public void shouldThrowExceptionWhenInputIsCancel(){
+    public void execute_Should_ThrowException_When_InputIsEqualToCancel(){
         List<String> params = new ArrayList<>();
         String name = "cancel";
 
@@ -50,7 +50,7 @@ public class CreateNewPersonCommandTests {
     }
 
     @Test
-    public void shouldThrowExceptionWhenNameAlreadyExists(){
+    public void execute_Should_ThrowException_When_NameAlreadyExists(){
         Member person = new MemberImpl("IvanIvanov");
         repository.createNewPerson(person.getName());
         List<String> params = new ArrayList<>();
@@ -63,7 +63,7 @@ public class CreateNewPersonCommandTests {
     }
 
     @Test
-    public void shouldCreatePerson_WhenNameIsValid(){
+    public void execute_Should_CreatePerson_When_NameIsValid(){
         List<String> params = new ArrayList<>();
         String name = "Margarita";
         InputStream in = new ByteArrayInputStream(name.getBytes());

@@ -29,28 +29,33 @@ public class CreateNewPersonCommandTests {
 
     @Test
     public void execute_Should_ThrowException_When_NameLengthNotValid(){
+        //Arrange
         List<String> params = new ArrayList<>();
         String name = "T";
 
         InputStream in = new ByteArrayInputStream(name.getBytes());
         System.setIn(in);
 
+        //Act, Assert
         Assertions.assertThrows(NoSuchElementException.class, () -> command.execute(params));
     }
 
     @Test
     public void execute_Should_ThrowException_When_InputIsEqualToCancel(){
+        //Arrange
         List<String> params = new ArrayList<>();
         String name = "cancel";
 
         InputStream in = new ByteArrayInputStream(name.getBytes());
         System.setIn(in);
 
+        //Act, Assert
         Assertions.assertThrows(IllegalArgumentException.class, () -> command.execute(params));
     }
 
     @Test
     public void execute_Should_ThrowException_When_NameAlreadyExists(){
+        //Arrange
         Member person = new MemberImpl("IvanIvanov");
         repository.createNewPerson(person.getName());
         List<String> params = new ArrayList<>();
@@ -59,17 +64,22 @@ public class CreateNewPersonCommandTests {
         InputStream in = new ByteArrayInputStream(name.getBytes());
         System.setIn(in);
 
+        //Act, Assert
         Assertions.assertThrows(NoSuchElementException.class, () -> command.execute(params));
     }
 
     @Test
     public void execute_Should_CreatePerson_When_NameIsValid(){
+        //Arrange
         List<String> params = new ArrayList<>();
         String name = "Margarita";
         InputStream in = new ByteArrayInputStream(name.getBytes());
         System.setIn(in);
+
+        //Act
         command.execute(params);
 
+        //Assert
         Assertions.assertEquals(1, repository.getPeople().size());
     }
 }

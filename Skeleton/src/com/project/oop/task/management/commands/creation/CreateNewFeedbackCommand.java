@@ -27,7 +27,7 @@ public class CreateNewFeedbackCommand implements Command {
 
     private final TaskManagementRepository repository;
 
-    public CreateNewFeedbackCommand(TaskManagementRepositoryImpl taskManagementRepository) {
+    public CreateNewFeedbackCommand(TaskManagementRepository taskManagementRepository) {
         this.repository = taskManagementRepository;
     }
 
@@ -35,10 +35,6 @@ public class CreateNewFeedbackCommand implements Command {
     public String execute(List<String> parameters) {
         Scanner scanner = new Scanner(System.in);
         boolean allParamsValid = false;
-        //String title;
-        //String description;
-        //int rating;
-
 
         System.out.println("Please enter a team name for your feedback:");
         boolean teamIsValid = false;
@@ -57,6 +53,7 @@ public class CreateNewFeedbackCommand implements Command {
                         .collect(Collectors.toList())
                         .get(0);
                 teamIsValid = true;
+                //parameters.add(teamName);
             }else {
                 System.out.println("Team is not found. Please enter a valid team name or 'cancel' if you want to exit");
             }
@@ -79,6 +76,7 @@ public class CreateNewFeedbackCommand implements Command {
                             .collect(Collectors.toList())
                             .get(0);
                     boardIsValid = true;
+                    //parameters.add(boardName);
                 }else {
                     System.out.println("Board is not found. Please enter a valid board name:");
                 }
@@ -102,7 +100,7 @@ public class CreateNewFeedbackCommand implements Command {
                     }
                     if (!title.equals("")) {
                         titleIsValid = true;
-                        parameters.add(title);
+                        //parameters.add(title);
                     }
                 }
                 System.out.println("Please enter feedback description or 'cancel' if you want to exit:");
@@ -140,15 +138,15 @@ public class CreateNewFeedbackCommand implements Command {
                     }
                     if (rating != 0) {
                         ratingIsValid = true;
-                        parameters.add(rating + "");
+                        //parameters.add(rating + "");
                     }
                 }
                 allParamsValid = true;
             }
 
-            title = parameters.get(0);
-            description = parameters.get(1);
-            rating = Integer.parseInt(parameters.get(2));
+            //title = parameters.get(0);
+            //description = parameters.get(1);
+            //rating = Integer.parseInt(parameters.get(2));
 
 
             Feedback createdFeedback = repository.createFeedback(title, description, rating);

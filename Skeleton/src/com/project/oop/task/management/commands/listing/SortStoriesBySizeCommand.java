@@ -2,19 +2,26 @@ package com.project.oop.task.management.commands.listing;
 
 import com.project.oop.task.management.commands.contracts.Command;
 import com.project.oop.task.management.core.TaskManagementRepositoryImpl;
+import com.project.oop.task.management.models.contracts.Story;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class SortStoriesBySizeCommand implements Command {
-    public static int EXPECTED_NUMBER_OF_ARGUMENTS;
-
     private final TaskManagementRepositoryImpl repository;
-    public SortStoriesBySizeCommand(TaskManagementRepositoryImpl taskManagementRepository) {
-        this.repository = new TaskManagementRepositoryImpl();
+    public SortStoriesBySizeCommand(TaskManagementRepositoryImpl repository) {
+        this.repository = repository;
     }
 
     @Override
     public String execute(List<String> parameters) {
-        return null;
+        List<Story> sortedBySize = repository.getStories().stream()
+                .sorted(Comparator.comparing(Story::getSize)).collect(Collectors.toList());
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Story story : sortedBySize) {
+            stringBuilder.append(story.getAsString());
+        }
+        return stringBuilder.toString();
     }
 }

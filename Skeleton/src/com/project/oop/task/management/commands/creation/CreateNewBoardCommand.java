@@ -30,7 +30,6 @@ public class CreateNewBoardCommand implements Command {
     public String execute(List<String> parameters) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please enter your team name or cancel if you want to exit");
-        System.out.println(repository.getTeams().get(0).getName());
         boolean teamIsValid = false;
         while (!teamIsValid) {
             String team = scanner.nextLine();

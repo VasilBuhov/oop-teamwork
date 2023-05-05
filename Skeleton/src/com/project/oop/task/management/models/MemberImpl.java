@@ -88,7 +88,7 @@ public class MemberImpl implements Member {
     }
     public String getActivity() {
         StringBuilder sb = new StringBuilder();
-        sb.append(String.format("======================%n"));
+//        sb.append(String.format("======================%n"));
         sb.append(String.format("Member: %s%n", getName()));
         sb.append(String.format("Activity:%n"));
         if (history.isEmpty()) {

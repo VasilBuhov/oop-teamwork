@@ -10,10 +10,14 @@ import java.util.List;
 public class MemberImpl implements Member {
     public static final int NAME_MIN_LENGTH = 5;
     public static final int NAME_MAX_LENGTH = 15;
-    public static final String MEMBER_CREATED = "Member with name %s was created!";
-    public static final String TASK_ERROR_MESSAGE = "No such task founded!";
-    private static final String TASK_ADDED_TO_MEMBER_MESSAGE = "Task with title: %s is added to %s's tasks!";
-    private static final String TASK_REMOVED_FROM_MEMBER_MESSAGE = "Task with title: %s is removed from %s's tasks!";
+    public static final String MEMBER_CREATED =
+            "Member with name %s was created!";
+    public static final String TASK_ERROR_MESSAGE =
+            "No such task founded!";
+    private static final String TASK_ADDED_TO_MEMBER_MESSAGE =
+            "Task with title: %s was created by %s and added %s's tasks!";
+    private static final String TASK_REMOVED_FROM_MEMBER_MESSAGE =
+            "Task with title: %s is removed from %s's tasks!";
     private String name;
     private final List<Task> tasks;
     private final List<String> history;
@@ -47,7 +51,7 @@ public class MemberImpl implements Member {
     @Override
     public void addTask(Task task) {
         tasks.add(task);
-        logEvent(new EventLogImpl(String.format(TASK_ADDED_TO_MEMBER_MESSAGE, task.getTitle(), name)));
+        logEvent(new EventLogImpl(String.format(TASK_ADDED_TO_MEMBER_MESSAGE, task.getTitle(), name, name)));
     }
 
     @Override

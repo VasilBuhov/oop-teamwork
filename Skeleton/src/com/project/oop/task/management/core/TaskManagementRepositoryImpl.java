@@ -166,6 +166,12 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
     }
 
     @Override
+    public void addCommentToTask(int taskId, Comment comment) {
+        Task task = findTaskById(taskId);
+        task.addComment(comment);
+    }
+
+    @Override
     public Task findTaskById(int taskId) {
         return tasks.stream().filter(task -> task.getId() == taskId).collect(Collectors.toList()).get(0);
     }
@@ -203,8 +209,6 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
         Bug bug = findBugById(id);
         bug.changeSeverity(severity);
     }
-
-
 
     @Override
     public Member findMemberByName(String name) {

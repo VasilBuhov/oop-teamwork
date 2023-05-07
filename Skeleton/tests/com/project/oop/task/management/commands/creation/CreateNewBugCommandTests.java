@@ -13,8 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-
-public class CreateNewStoryCommandTests {
+public class CreateNewBugCommandTests {
     private Command command;
     private Command createTeam;
     private Command createBoard;
@@ -26,7 +25,7 @@ public class CreateNewStoryCommandTests {
     public void before(){
         this.repository = new TaskManagementRepositoryImpl();
         this.createTeam = new CreateNewTeamCommand(repository);
-        this.command = new CreateNewStoryCommand(repository);
+        this.command = new CreateNewBugCommand(repository);
         this.createBoard = new CreateNewBoardCommand(repository);
         this.createPerson = new CreateNewPersonCommand(repository);
         this.addPersonToTeam = new AddPersonToTeamCommand(repository);
@@ -56,7 +55,7 @@ public class CreateNewStoryCommandTests {
         System.setIn(in3);
         addPersonToTeam.execute(params3);
 
-        InputStream in4 = new ByteArrayInputStream(("Team1\nBoard1\nValid\nShort\nValidDescription\nHigh\nLarge\n").getBytes());
+        InputStream in4 = new ByteArrayInputStream(("Team1\nBoard1\nShort\nValidDescription\nHigh\nMinor\nValid\n").getBytes());
         System.setIn(in4);
 
         //Act, Assert
@@ -64,7 +63,7 @@ public class CreateNewStoryCommandTests {
     }
 
     @Test
-    public void execute_Should_CreateNewStory_When_AllParametersValid(){
+    public void execute_Should_CreateNewBug_When_AllParametersValid(){
         //Arrange
         List<String> params = new ArrayList<>();
 
@@ -88,12 +87,12 @@ public class CreateNewStoryCommandTests {
         addPersonToTeam.execute(params3);
 
         List<String> params4 = new ArrayList<>();
-        InputStream in4 = new ByteArrayInputStream(("Team1\nBoard1\nValid\nValidTitle\nValidDescription\nHigh\nLarge\n").getBytes());
+        InputStream in4 = new ByteArrayInputStream(("Team1\nBoard1\nValidTitle\nValidDescription\nHigh\nMinor\nValid\n").getBytes());
         System.setIn(in4);
         command.execute(params4);
 
         //Act, Assert
-        Assertions.assertEquals(1, repository.getStories().size());
+        Assertions.assertEquals(1, repository.getBugs().size());
     }
     @Test
     public void execute_Should_ThrowException_When_AssigneeIsNotValid(){
@@ -120,12 +119,12 @@ public class CreateNewStoryCommandTests {
         addPersonToTeam.execute(params3);
 
         List<String> params4 = new ArrayList<>();
-        InputStream in4 = new ByteArrayInputStream(("Team1\nBoard1\nNikol\nValidTitle\nValidDescription\nHigh\nLarge\n").getBytes());
+        InputStream in4 = new ByteArrayInputStream(("Team1\nBoard1\nValidTitle\nValidDescription\nHigh\nMinor\nNikol\n").getBytes());
         System.setIn(in4);
 
         //Act, Assert
         Assertions.assertThrows(NoSuchElementException.class, () -> command.execute(params4));
-   }
+    }
 
     @Test
     public void execute_Should_ThrowException_When_PriorityNotValid(){
@@ -151,7 +150,7 @@ public class CreateNewStoryCommandTests {
         System.setIn(in3);
         addPersonToTeam.execute(params3);
 
-        InputStream in4 = new ByteArrayInputStream(("Team1\nBoard1\nValid\nValidTitle\nValidDescription\nInvalid\nLarge\n").getBytes());
+        InputStream in4 = new ByteArrayInputStream(("Team1\nBoard1\nValidTitle\nValidDescription\nInvalid\nMinor\nValid\n").getBytes());
         System.setIn(in4);
 
         //Act, Assert
@@ -159,7 +158,7 @@ public class CreateNewStoryCommandTests {
     }
 
     @Test
-    public void execute_Should_ThrowException_When_SizeNotValid(){
+    public void execute_Should_ThrowException_When_SeverityNotValid(){
         //Arrange
         List<String> params = new ArrayList<>();
 
@@ -182,7 +181,7 @@ public class CreateNewStoryCommandTests {
         System.setIn(in3);
         addPersonToTeam.execute(params3);
 
-        InputStream in4 = new ByteArrayInputStream(("Team1\nBoard1\nValid\nValidTitle\nValidDescription\nHigh\nInvalid\n").getBytes());
+        InputStream in4 = new ByteArrayInputStream(("Team1\nBoard1\nValidTitle\nValidDescription\nHigh\nInvalid\nValid\n").getBytes());
         System.setIn(in4);
 
         //Act, Assert
@@ -213,7 +212,7 @@ public class CreateNewStoryCommandTests {
         System.setIn(in3);
         addPersonToTeam.execute(params3);
 
-        InputStream in4 = new ByteArrayInputStream(("Team2\nBoard1\nValid\nValidTitle\nValidDescription\nHigh\nLarge\n").getBytes());
+        InputStream in4 = new ByteArrayInputStream(("Team2\nBoard1\nValidTitle\nValidDescription\nHigh\nMinor\nValid\n").getBytes());
         System.setIn(in4);
 
         //Act, Assert
@@ -244,7 +243,7 @@ public class CreateNewStoryCommandTests {
         System.setIn(in3);
         addPersonToTeam.execute(params3);
 
-        InputStream in4 = new ByteArrayInputStream(("Team1\nBoard2\nValid\nValidTitle\nValidDescription\nHigh\nLarge\n").getBytes());
+        InputStream in4 = new ByteArrayInputStream(("Team1\nBoard2\nValidTitle\nValidDescription\nHigh\nMinor\nValid\n").getBytes());
         System.setIn(in4);
 
         //Act, Assert

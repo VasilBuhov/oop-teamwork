@@ -2,6 +2,7 @@ package com.project.oop.task.management.commands;
 
 import com.project.oop.task.management.commands.contracts.Command;
 import com.project.oop.task.management.core.TaskManagementRepositoryImpl;
+import com.project.oop.task.management.utils.MessageHelper;
 import com.project.oop.task.management.utils.ParsingHelpers;
 
 import java.util.List;
@@ -40,29 +41,29 @@ public class AssignTaskCommand implements Command {
     public String execute(List<String> parameters) {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println(ENTER_ID_MESSAGE);
+        System.out.println(MessageHelper.ENTER_TASK_ID_MESSAGE);
         boolean isValidId = false;
         while (!isValidId) {
             String input = scanner.nextLine();
-            repository.isItCancel(input, INVALID_INPUT);
+            repository.isItCancel(input, MessageHelper.INVALID_INPUT);
             try {
-                id = ParsingHelpers.tryParseInt(input, PARSING_ERROR_MESSAGE);
+                id = ParsingHelpers.tryParseInt(input, MessageHelper.PARSING_ERROR_MESSAGE);
                 if (repository.getTasks().stream().anyMatch(task -> task.getId() == id)) {
                     if (repository.getAssignedTasks().contains(repository.findTaskById(id))) {
-                        System.out.println(TASK_ALREADY_ASSIGNED);
+                        System.out.printf((MessageHelper.TASK_ALREADY_ASSIGNED) + "%n", id);
                     } else {
                         isValidId = true;
                         parameters.add(String.valueOf(id));
                     }
                 } else {
-                    System.out.printf((TASK_NOT_FOUND_MESSAGE) + "%n", id);
+                    System.out.printf((MessageHelper.TASK_NOT_FOUND_MESSAGE) + "%n", id);
                 }
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }
         }
 
-        System.out.println(ENTER_PERSON_NAME_MESSAGE);
+        System.out.println(MessageHelper.ENTER_PERSON_NAME_MESSAGE);
         boolean nameIsValid = false;
         while (!nameIsValid) {
             name = scanner.nextLine();
@@ -70,12 +71,12 @@ public class AssignTaskCommand implements Command {
                 nameIsValid = true;
                 parameters.add(name);
             } else {
-                repository.isItCancel(name, INVALID_INPUT);
-                System.out.println(MEMBER_IS_NOT_FOUND_MESSAGE);
+                repository.isItCancel(name, MessageHelper.INVALID_INPUT);
+                System.out.println(MessageHelper.PERSON_IS_NOT_FOUND_MESSAGE);
             }
         }
         repository.assignTask(id, name);
 
-        return String.format(TASK_ASSIGNED_MESSAGE, id, repository.findTaskById(id).getTitle(), name);
+        return String.format(MessageHelper.TASK_ASSIGNED_MESSAGE, id, repository.findTaskById(id).getTitle(), name);
     }
 }

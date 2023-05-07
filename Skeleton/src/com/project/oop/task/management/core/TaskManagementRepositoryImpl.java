@@ -14,6 +14,7 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
     private int nextId;
 
     private final List<Task> tasks = new ArrayList<>();
+    private final List<Task> assignedTasks = new ArrayList<>();
     private final List<Bug> bugs = new ArrayList<>();
     private final List<Feedback> feedbacks = new ArrayList<>();
     private final List<Story> stories = new ArrayList<>();
@@ -41,6 +42,10 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
     @Override
     public List<Task> getTasks() {
         return new ArrayList<>(tasks);
+    }
+    @Override
+    public List<Task> getAssignedTasks() {
+        return new ArrayList<>(assignedTasks);
     }
 
     @Override
@@ -85,6 +90,7 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
 
         stories.add(story);
         tasks.add(story);
+        assignedTasks.add(story);
         findMemberByName(assignee).addTask(story);
 
         return story;
@@ -95,6 +101,7 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
 
         bugs.add(bug);
         tasks.add(bug);
+        assignedTasks.add(bug);
         findMemberByName(assignee).addTask(bug);
 
         return bug;
@@ -204,8 +211,6 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
         bug.changeSeverity(severity);
     }
 
-
-
     @Override
     public Member findMemberByName(String name) {
         return getMembers().stream().filter(member -> member.getName().equals(name)).collect(Collectors.toList()).get(0);
@@ -224,4 +229,21 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
             throw new IllegalArgumentException(errorMessage);
         }
     }
+    public void assignTask(int taskId, String name) {
+        Task task = this.findTaskById(taskId);
+        assignedTasks.add(task);
+        Member member = this.findMemberByName(name);
+        member.addTask(task);
+    }
+    public void unassignTask(int taskId, String name) {
+        Task task = this.findTaskById(taskId);
+        assignedTasks.remove(task);
+        Member member = this.findMemberByName(name);
+        member.removeTask(task);
+    }
+    public void addCommentToTask(int taskId, Comment comment) {
+        Task task = this.findTaskById(taskId);
+        task.addComment(comment);
+    }
+
 }

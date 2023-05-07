@@ -13,6 +13,7 @@ public interface TaskManagementRepository {
     List<Member> getPeople();
     List<Team> getTeams();
     List<Task> getTasks();
+    List<Task> getAssignedTasks();
     List<Story> getStories();
     List<Feedback> getFeedback();
     List<Bug> getBugs();
@@ -26,6 +27,9 @@ public interface TaskManagementRepository {
     void changeFeedbackRating(int id, int newRating);
     void changeFeedbackStatus(int id, String direction);
     void addNewPersonToTeam(String name, String team);
+    void addCommentToTask(int taskId, Comment comment);
+    void assignTask(int taskId, String name);
+    void unassignTask(int taskId, String name);
     public Task findTaskById(int taskId);
     Task findFeedbackById(int taskId);
     Story findStoryById(int storyId);
@@ -37,7 +41,6 @@ public interface TaskManagementRepository {
     void isItCancel(String string, String errorMessage);
     Bug findBugById(int id);
     void changeBugSeverity(int id, Severity severity);
-
-    void changeBugStatus(int id, String directio);
+    void changeBugStatus(int id, String direction);
 }
 

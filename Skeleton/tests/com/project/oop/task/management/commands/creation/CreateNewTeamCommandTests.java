@@ -1,7 +1,6 @@
 package com.project.oop.task.management.commands.creation;
 
 import com.project.oop.task.management.commands.contracts.Command;
-import com.project.oop.task.management.commands.creation.CreateNewTeamCommand;
 import com.project.oop.task.management.core.TaskManagementRepositoryImpl;
 import com.project.oop.task.management.models.TeamImpl;
 import com.project.oop.task.management.models.contracts.Team;

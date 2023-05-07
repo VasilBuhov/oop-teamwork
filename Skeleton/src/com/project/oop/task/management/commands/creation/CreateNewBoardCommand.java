@@ -16,9 +16,9 @@ public class CreateNewBoardCommand implements Command {
     public static final String INVALID_INPUT = "Invalid input! Enter a new command, please:";
     public static final String TEAM_IS_NOT_FOUNDED =
             "There is no team with this name. Please enter a valid team name:";
-    public static final String INVALID_BOARD_NAME ="Invalid Board name! Please enter a valid board name or cancel";
+    public static final String INVALID_BOARD_NAME = "Invalid Board name! Please enter a valid board name or cancel";
     String teamName = "";
-    String name="";
+    String name = "";
     private final TaskManagementRepositoryImpl repository;
 
     public CreateNewBoardCommand(TaskManagementRepositoryImpl taskManagementRepository) {
@@ -30,7 +30,6 @@ public class CreateNewBoardCommand implements Command {
     public String execute(List<String> parameters) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please enter your team name or cancel if you want to exit");
-        System.out.println(repository.getTeams().get(0).getName());
         boolean teamIsValid = false;
         while (!teamIsValid) {
             String team = scanner.nextLine();
@@ -44,25 +43,26 @@ public class CreateNewBoardCommand implements Command {
                 if (team.equals("cancel")) {
                     throw new IllegalArgumentException(INVALID_INPUT);
                 }
-            }System.out.println(TEAM_IS_NOT_FOUNDED);
+            }
+            System.out.println(TEAM_IS_NOT_FOUNDED);
         }
         System.out.println("Please enter board name or 'cancel' if you want to exit");
-        boolean validName= false;
-        while(!validName) {
+        boolean validName = false;
+        while (!validName) {
             name = scanner.nextLine();
             try {
                 ValidationHelper.ValidateStringLength(name,
                         BoardImpl.NAME_MIN_LENGTH,
                         BoardImpl.NAME_MAX_LENGTH);
-            } catch (IllegalArgumentException e ) {
+            } catch (IllegalArgumentException e) {
                 System.out.println(INVALID_BOARD_NAME);
                 name = "";
             }
-                if (name.equals("cancel")) {
-                    throw new IllegalArgumentException(INVALID_INPUT);
-                }
-            if(!name.equals("")){
-                validName=true;
+            if (name.equals("cancel")) {
+                throw new IllegalArgumentException(INVALID_INPUT);
+            }
+            if (!name.equals("")) {
+                validName = true;
                 break;
             }
         }

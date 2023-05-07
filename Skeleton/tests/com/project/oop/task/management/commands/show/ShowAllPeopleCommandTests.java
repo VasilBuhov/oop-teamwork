@@ -1,19 +1,10 @@
 package com.project.oop.task.management.commands.show;
 
 import com.project.oop.task.management.commands.contracts.Command;
-import com.project.oop.task.management.commands.creation.CreateNewPersonCommand;
 import com.project.oop.task.management.commands.creation.CreateNewTeamCommand;
 import com.project.oop.task.management.core.TaskManagementRepositoryImpl;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.junit.Assert.assertEquals;
 
 
 public class ShowAllPeopleCommandTests {

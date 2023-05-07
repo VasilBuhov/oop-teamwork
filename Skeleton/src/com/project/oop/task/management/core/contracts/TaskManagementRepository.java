@@ -28,6 +28,7 @@ public interface TaskManagementRepository {
     void addNewPersonToTeam(String name, String team);
     void addCommentToTask(int taskId, Comment comment);
     void assignTask(int taskId, String name);
+    void unassignTask(int taskId, String name);
     public Task findTaskById(int taskId);
     Task findFeedbackById(int taskId);
     Story findStoryById(int storyId);

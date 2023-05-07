@@ -229,6 +229,11 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
         Member member = this.findMemberByName(name);
         member.addTask(task);
     }
+    public void unassignTask(int taskId, String name) {
+        Task task = this.findTaskById(taskId);
+        Member member = this.findMemberByName(name);
+        member.removeTask(task);
+    }
     public void addCommentToTask(int taskId, Comment comment) {
         Task task = this.findTaskById(taskId);
         task.addComment(comment);

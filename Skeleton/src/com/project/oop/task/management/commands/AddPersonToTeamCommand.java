@@ -15,7 +15,7 @@ public class AddPersonToTeamCommand implements Command {
             "Please enter the name of the person or 'cancel' if you want to exit:";
     public static final String MEMBER_IS_NOT_FOUND_MESSAGE =
             "Person with this name is not found! " +
-                    "Please enter a valid assignee or 'cancel' if you want to exit: ";
+                    "Please enter a valid name or 'cancel' if you want to exit: ";
     public static final String ENTER_TEAM_NAME_MESSAGE =
             "Please enter team name or 'cancel' if you want to exit:";
     public static final String TEAM_IS_NOT_FOUNDED =

@@ -20,7 +20,10 @@ public class AssignTaskCommand implements Command {
                     "Please enter a valid assignee or 'cancel' if you want to exit: ";
     public static final String PARSING_ERROR_MESSAGE =
             "Invalid input, must be a number! Please try again or enter 'cancel' if you want to exit:";
-    public static final String TASK_ASSIGNED_MESSAGE = "Task with id: %d and title: %s is assign to %s.";
+    public static final String TASK_ALREADY_ASSIGNED =
+            "Task with id: %d is already assigned. Try with another task ID or enter 'cancel' if you want to exit:";
+    public static final String TASK_ASSIGNED_MESSAGE =
+            "Task with id: %d and title: %s is assign to %s.";
 
     public static final String INVALID_INPUT =
             "Command is terminated. Please enter a new command:";
@@ -28,6 +31,7 @@ public class AssignTaskCommand implements Command {
     private String name;
 
     private final TaskManagementRepositoryImpl repository;
+
     public AssignTaskCommand(TaskManagementRepositoryImpl repository) {
         this.repository = repository;
     }
@@ -44,8 +48,12 @@ public class AssignTaskCommand implements Command {
             try {
                 id = ParsingHelpers.tryParseInt(input, PARSING_ERROR_MESSAGE);
                 if (repository.getTasks().stream().anyMatch(task -> task.getId() == id)) {
-                    isValidId = true;
-                    parameters.add(String.valueOf(id));
+                    if (repository.getAssignedTasks().contains(repository.findTaskById(id))) {
+                        System.out.println(TASK_ALREADY_ASSIGNED);
+                    } else {
+                        isValidId = true;
+                        parameters.add(String.valueOf(id));
+                    }
                 } else {
                     System.out.printf((TASK_NOT_FOUND_MESSAGE) + "%n", id);
                 }

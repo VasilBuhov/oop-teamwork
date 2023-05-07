@@ -10,7 +10,6 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class AddPersonToTeamCommand implements Command {
-
     public static final String ENTER_PERSON_NAME_MESSAGE =
             "Please enter the name of the person or 'cancel' if you want to exit:";
     public static final String MEMBER_IS_NOT_FOUND_MESSAGE =
@@ -31,13 +30,14 @@ public class AddPersonToTeamCommand implements Command {
     private String teamName;
 
     private final TaskManagementRepository repository;
+
     public AddPersonToTeamCommand(TaskManagementRepository repository) {
         this.repository = repository;
     }
 
     @Override
     public String execute(List<String> parameters) {
-         Scanner scanner = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
 
         System.out.println(ENTER_PERSON_NAME_MESSAGE);
         boolean nameIsValid = false;

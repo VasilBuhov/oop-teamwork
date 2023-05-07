@@ -18,10 +18,10 @@ public class UnassignTaskCommand implements Command {
     public static final String MEMBER_IS_NOT_FOUND_MESSAGE =
             "Person with this name is not found! " +
                     "Please enter a valid assignee or 'cancel' if you want to exit: ";
-
     public static final String PARSING_ERROR_MESSAGE =
             "Invalid input, must be a number! Please try again or enter 'cancel' if you want to exit:";
-    public static final String TASK_UNASSIGNED_MESSAGE = "Task with id: %d and title: %s is unassigned from %s.";
+    public static final String TASK_UNASSIGNED_MESSAGE =
+            "Task with id: %d and title: %s is unassigned from %s.";
 
     public static final String INVALID_INPUT =
             "Command is terminated. Please enter a new command:";
@@ -30,6 +30,7 @@ public class UnassignTaskCommand implements Command {
     private String name;
 
     private final TaskManagementRepositoryImpl repository;
+
     public UnassignTaskCommand(TaskManagementRepositoryImpl repository) {
         this.repository = repository;
     }

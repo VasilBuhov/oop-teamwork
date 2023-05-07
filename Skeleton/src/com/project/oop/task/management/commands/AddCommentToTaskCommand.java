@@ -35,6 +35,7 @@ public class AddCommentToTaskCommand implements Command {
     private String author;
 
     private final TaskManagementRepositoryImpl repository;
+
     public AddCommentToTaskCommand(TaskManagementRepositoryImpl repository) {
         this.repository = repository;
     }

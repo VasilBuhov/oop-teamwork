@@ -13,6 +13,7 @@ public interface TaskManagementRepository {
     List<Member> getPeople();
     List<Team> getTeams();
     List<Task> getTasks();
+    List<Task> getAssignedTasks();
     List<Story> getStories();
     List<Feedback> getFeedback();
     List<Bug> getBugs();

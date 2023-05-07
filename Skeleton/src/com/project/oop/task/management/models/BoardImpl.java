@@ -78,7 +78,7 @@ public class BoardImpl implements Board {
     }
     public String getActivity() {
         StringBuilder sb = new StringBuilder();
-        sb.append(String.format("======================%n"));
+//        sb.append(String.format("======================%n"));
         sb.append(String.format("Board: %s%n", getName()));
         sb.append(String.format("Activity:%n"));
         if (history.isEmpty()) {

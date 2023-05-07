@@ -224,4 +224,14 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
             throw new IllegalArgumentException(errorMessage);
         }
     }
+    public void assignTask(int taskId, String name) {
+        Task task = this.findTaskById(taskId);
+        Member member = this.findMemberByName(name);
+        member.addTask(task);
+    }
+    public void addCommentToTask(int taskId, Comment comment) {
+        Task task = this.findTaskById(taskId);
+        task.addComment(comment);
+    }
+
 }

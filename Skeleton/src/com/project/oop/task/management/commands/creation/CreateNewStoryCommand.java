@@ -54,7 +54,7 @@ public class CreateNewStoryCommand implements Command{
     private String assignee;
     private String targetBoard;
 
-    public CreateNewStoryCommand(TaskManagementRepositoryImpl repository) {
+    public CreateNewStoryCommand(TaskManagementRepository repository) {
         this.repository = repository;
     }
     @Override

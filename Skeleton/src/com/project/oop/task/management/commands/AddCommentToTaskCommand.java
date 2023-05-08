@@ -61,7 +61,7 @@ public class AddCommentToTaskCommand implements Command {
         System.out.println(MessageHelper.ENTER_COMMENT_MESSAGE);
         comment = scanner.nextLine();
         if (comment.equalsIgnoreCase("cancel")) {
-            repository.isItCancel(author, MessageHelper.INVALID_INPUT);
+            repository.isItCancel(comment, MessageHelper.INVALID_INPUT);
         } else {
             parameters.add(comment);
         }

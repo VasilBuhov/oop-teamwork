@@ -29,7 +29,7 @@ public class FilterStoriesByAssigneeCommand implements Command {
 
         while (!nameIsValid) {
             assigneeName = scanner.nextLine();
-            if (assigneeName.equals("cancel")) {
+            if (assigneeName.equalsIgnoreCase("cancel")) {
                 throw new IllegalArgumentException("Command is terminated. Please enter a new command:");
             }
             try {

@@ -30,16 +30,11 @@ public class FilterTasksByTitleCommand implements Command {
             if (title.equals("cancel")) {
                 throw new IllegalArgumentException("Command is terminated. Please enter a new command:");
             }
-            try {
-                if (!repository.getTasks().stream().anyMatch(task -> task.getTitle().equals(title))) {
-                    throw new IllegalArgumentException("No task with this title");
-                }
-            } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
-                title = "";
+
+            if (!repository.getTasks().stream().anyMatch(task -> task.getTitle().equals(title))) {
+                return String.format("No task with this title");
             }
 
-            if (!title.equals("")) {
                 titleIsValid = true;
                 filteredTasks = repository
                         .getTasks()
@@ -47,11 +42,7 @@ public class FilterTasksByTitleCommand implements Command {
                         .filter(task -> task.getTitle().equals(title))
                         .collect(Collectors.toList());
 
-                if (filteredTasks.size() == 0) {
-                    return String.format("No tasks with this title.");
-                }
             }
-        }
 
         return ListingHelpers.tasksToString(filteredTasks);
     }

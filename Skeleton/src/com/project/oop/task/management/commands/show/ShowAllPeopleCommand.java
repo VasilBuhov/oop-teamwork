@@ -16,12 +16,12 @@ public class ShowAllPeopleCommand implements Command {
 
     @Override
     public String execute(List<String> parameters){
-      return  repository.getPeople().
-              stream().
-              map(name->name.getName().
-                      toString()).
-              collect(Collectors.toList()).
-              toString();
+        return  repository.getPeople().
+                stream().
+                map(name->name.getName().
+                        toString()).
+                collect(Collectors.toList()).
+                toString();
 
     }
 }

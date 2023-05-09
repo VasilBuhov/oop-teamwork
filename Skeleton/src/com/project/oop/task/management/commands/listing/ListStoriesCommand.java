@@ -16,7 +16,9 @@ public class ListStoriesCommand implements Command {
 
     @Override
     public String execute(List<String> parameters) {
-        return repository.getStories().stream().map(story -> story.getTitle()).
-                collect(Collectors.toList()).toString();
+        return repository.getStories().stream()
+                .map(bug -> bug.getId() + " - " + bug.getTitle())
+                .collect(Collectors.toList())
+                .toString();
     }
 }

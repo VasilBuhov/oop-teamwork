@@ -16,7 +16,9 @@ public class ListTasksCommand implements Command {
 
     @Override
     public String execute(List<String> parameters) {
-        return repository.getTasks().stream().map(task -> task.getTitle()).
-                collect(Collectors.toList()).toString();
+        return repository.getTasks().stream()
+                .map(bug -> bug.getId() + " - " + bug.getTitle())
+                .collect(Collectors.toList())
+                .toString();
     }
 }

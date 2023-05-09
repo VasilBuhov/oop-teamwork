@@ -10,24 +10,6 @@ import java.util.Scanner;
 
 public class AssignTaskCommand implements Command {
     public static int EXPECTED_NUMBER_OF_ARGUMENTS = 2;
-    public static final String ENTER_ID_MESSAGE =
-            "Please enter a valid ID or 'cancel' if you want to exit:";
-    public static final String TASK_NOT_FOUND_MESSAGE = "Task with id: %d is not found! " +
-            "Please enter a valid id or 'cancel' if you want to exit:";
-    public static final String ENTER_PERSON_NAME_MESSAGE =
-            "Please the name of the person or 'cancel' if you want to exit:";
-    public static final String MEMBER_IS_NOT_FOUND_MESSAGE =
-            "Person with this name is not found! " +
-                    "Please enter a valid assignee or 'cancel' if you want to exit: ";
-    public static final String PARSING_ERROR_MESSAGE =
-            "Invalid input, must be a number! Please try again or enter 'cancel' if you want to exit:";
-    public static final String TASK_ALREADY_ASSIGNED =
-            "Task with id: %d is already assigned. Try with another task ID or enter 'cancel' if you want to exit:";
-    public static final String TASK_ASSIGNED_MESSAGE =
-            "Task with id: %d and title: %s is assign to %s.";
-
-    public static final String INVALID_INPUT =
-            "Command is terminated. Please enter a new command:";
     private int id;
     private String name;
 

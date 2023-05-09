@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-public class FilterStoriesByStatusCommandTests {
+public class FilterStoriesByStatusAndAssigneeCommandTests {
     private Command command1;
     private Command command2;
     private Command command3;
@@ -23,14 +23,14 @@ public class FilterStoriesByStatusCommandTests {
     @BeforeEach
     public void before(){
         this.repository = new TaskManagementRepositoryImpl();
-        this.command1 = new FilterStoriesByStatusCommand(repository);
+        this.command1 = new FilterStoriesByStatusAndAssigneeCommand(repository);
         this.command2 = new CreateNewBoardCommand(repository);
         this.command3 = new CreateNewStoryCommand(repository);
 
     }
 
     @Test
-    public void execute_Should_ThrowException_When_InputIsEqualToCancel(){
+    public void execute_Should_ThrowException_When_CancelEnteredInsteadOfStatus(){
         //Arrange
         List<String> params = new ArrayList<>();
         repository.createNewTeam("Team1");
@@ -46,7 +46,32 @@ public class FilterStoriesByStatusCommandTests {
         System.setIn(in2);
         command3.execute(params);
 
-        InputStream in3 = new ByteArrayInputStream(("cancel").getBytes());
+        InputStream in3 = new ByteArrayInputStream(("cancel\nMargarita\n").getBytes());
+        System.setIn(in3);
+
+        //Act, Assert
+        Assertions.assertThrows(IllegalArgumentException.class, () -> command1.execute(params));
+    }
+
+
+    @Test
+    public void execute_Should_ThrowException_When_CancelEnteredInsteadOfAssignee(){
+        //Arrange
+        List<String> params = new ArrayList<>();
+        repository.createNewTeam("Team1");
+        repository.createBoard("Board1");
+        repository.createNewPerson("Margarita");
+        repository.addNewPersonToTeam("Margarita", "Team1");
+        InputStream in1 = new ByteArrayInputStream(("Team1\nBoard1\n").getBytes());
+        System.setIn(in1);
+        command2.execute(params);
+        params.remove(0);
+
+        InputStream in2 = new ByteArrayInputStream(("Team1\nBoard1\nMargarita\nStoryTitle1\nStoryDescription1\nlow\nsmall\n").getBytes());
+        System.setIn(in2);
+        command3.execute(params);
+
+        InputStream in3 = new ByteArrayInputStream(("NotDone\ncancel\n").getBytes());
         System.setIn(in3);
 
         //Act, Assert
@@ -70,7 +95,33 @@ public class FilterStoriesByStatusCommandTests {
 
         command3.execute(params);
 
-        InputStream in3 = new ByteArrayInputStream(("new").getBytes());
+        InputStream in3 = new ByteArrayInputStream(("New\nMargarita").getBytes());
+        System.setIn(in3);
+
+        //Act, Assert
+        Assertions.assertThrows(NoSuchElementException.class, () -> command1.execute(params));
+    }
+
+
+    @Test
+    public void execute_Should_ThrowException_When_EnteredAssigneeNotExist(){
+        //Arrange
+        List<String> params = new ArrayList<>();
+        repository.createNewTeam("Team1");
+        repository.createBoard("Board1");
+        repository.createNewPerson("Margarita");
+        repository.addNewPersonToTeam("Margarita", "Team1");
+        InputStream in1 = new ByteArrayInputStream(("Team1\nBoard1\n").getBytes());
+        System.setIn(in1);
+        command2.execute(params);
+        params.remove(0);
+
+        InputStream in2 = new ByteArrayInputStream(("Team1\nBoard1\nMargarita\nStoryTitle1\nStoryDescription1\nlow\nsmall\n").getBytes());
+        System.setIn(in2);
+
+        command3.execute(params);
+
+        InputStream in3 = new ByteArrayInputStream(("NotDone\nTatyana").getBytes());
         System.setIn(in3);
 
         //Act, Assert
@@ -78,7 +129,7 @@ public class FilterStoriesByStatusCommandTests {
     }
 
     @Test
-    public void execute_Should_DisplayFilteredStories_When_ValidStatusEntered(){
+    public void execute_Should_DisplayFilteredStories_When_ValidStatusAndAssigneeEntered(){
         //Arrange
         List<String> params = new ArrayList<>();
         repository.createNewTeam("Team1");
@@ -94,7 +145,7 @@ public class FilterStoriesByStatusCommandTests {
         System.setIn(in2);
         command3.execute(params);
 
-        InputStream in3 = new ByteArrayInputStream(("notDone").getBytes());
+        InputStream in3 = new ByteArrayInputStream(("notDone\nMargarita\n").getBytes());
         System.setIn(in3);
 
         //Act
@@ -128,14 +179,50 @@ public class FilterStoriesByStatusCommandTests {
         command2.execute(params);
         params.remove(0);
 
+        InputStream in2 = new ByteArrayInputStream(("Team1\nBoard1\nMargarita\nStoryTitle1\nStoryDescription1\nlow\nsmall\n").getBytes());
+        System.setIn(in2);
+        command3.execute(params);
 
-        InputStream in3 = new ByteArrayInputStream(("notDone").getBytes());
+
+        InputStream in3 = new ByteArrayInputStream(("InProgress\nMargarita").getBytes());
         System.setIn(in3);
 
         //Act
         String filteredStories = command1.execute(params).trim();
 
         String result = String.format("No stories with this status");
+
+        //Assert
+        Assertions.assertEquals(result,filteredStories);
+    }
+
+    @Test
+    public void execute_Should_DisplayNoStories_When_NoStoriesWithEnteredAssigneeExist(){
+        //Arrange
+        List<String> params = new ArrayList<>();
+        repository.createNewTeam("Team1");
+        repository.createBoard("Board1");
+        repository.createNewPerson("Margarita");
+        repository.addNewPersonToTeam("Margarita", "Team1");
+        repository.createNewPerson("Tatyana");
+        repository.addNewPersonToTeam("Tatyana", "Team1");
+        InputStream in1 = new ByteArrayInputStream(("Team1\nBoard1\n").getBytes());
+        System.setIn(in1);
+        command2.execute(params);
+        params.remove(0);
+
+        InputStream in2 = new ByteArrayInputStream(("Team1\nBoard1\nMargarita\nStoryTitle1\nStoryDescription1\nlow\nsmall\n").getBytes());
+        System.setIn(in2);
+        command3.execute(params);
+
+
+        InputStream in3 = new ByteArrayInputStream(("NotDone\nTatyana").getBytes());
+        System.setIn(in3);
+
+        //Act
+        String filteredStories = command1.execute(params).trim();
+
+        String result = String.format("No stories assigned to this person");
 
         //Assert
         Assertions.assertEquals(result,filteredStories);

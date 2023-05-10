@@ -11,7 +11,12 @@ import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -176,15 +181,18 @@ public class ShowBoardActivityCommandTests {
         System.setIn(in4);
         String actualResult = command1.execute(params);
 
+        LocalDateTime currentLocalDateTime = LocalDateTime.now();
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MMM-yyyy HH:mm:ss");
+        String formattedDateTime = currentLocalDateTime.format(dateTimeFormatter);
         String expectedResult = String.format("Board: Board1%n" +
                 "Activity:%n" +
-                "[10-May-2023 12:10:55] Board with name Board1 was created!%n" +
-                "[10-May-2023 12:11:57] Task: FeedbackTitle1 is added to board: Board1!%n" +
-                "[10-May-2023 12:12:36] Task: StoryTitle1 is added to board: Board1!%n" +
-                "======================%n");
+                "[%s] Board with name Board1 was created!%n" +
+                "[%s] Task: FeedbackTitle1 is added to board: Board1!%n" +
+                "[%s] Task: StoryTitle1 is added to board: Board1!%n" +
+                "======================%n", formattedDateTime, formattedDateTime, formattedDateTime);
 
 
         //Assert
-        //Assertions.assertEquals(expectedResult, actualResult);
+        Assertions.assertEquals(expectedResult, actualResult);
     }
 }

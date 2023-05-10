@@ -23,6 +23,9 @@ public class SortTasksByTitleCommand implements Command {
         for (Task task : sortedByTitle) {
             stringBuilder.append(task.getAsString());
         }
+        if (sortedByTitle.isEmpty()) {
+            return "No task created yet.";
+        }
         return stringBuilder.toString();
     }
 }

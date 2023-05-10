@@ -23,6 +23,9 @@ public class SortBugsByTitleCommand implements Command {
         for (Bug bug : sortedByTitle) {
             stringBuilder.append(bug.getAsString());
         }
+        if (sortedByTitle.isEmpty()) {
+            return "No bugs created yet.";
+        }
         return stringBuilder.toString();
     }
 }

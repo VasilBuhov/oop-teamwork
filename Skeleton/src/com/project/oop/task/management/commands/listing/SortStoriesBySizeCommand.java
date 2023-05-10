@@ -3,6 +3,7 @@ package com.project.oop.task.management.commands.listing;
 import com.project.oop.task.management.commands.contracts.Command;
 import com.project.oop.task.management.core.TaskManagementRepositoryImpl;
 import com.project.oop.task.management.models.contracts.Story;
+import com.project.oop.task.management.models.enums.Size;
 
 import java.util.Comparator;
 import java.util.List;
@@ -20,7 +21,22 @@ public class SortStoriesBySizeCommand implements Command {
                 .sorted(Comparator.comparing(Story::getSize)).collect(Collectors.toList());
         StringBuilder stringBuilder = new StringBuilder();
         for (Story story : sortedBySize) {
-            stringBuilder.append(story.getAsString());
+            if (story.getSize().equals(Size.SMALL)) {
+                stringBuilder.append(story.getAsString());
+            }
+        }
+        for (Story story : sortedBySize) {
+            if (story.getSize().equals(Size.MEDIUM)) {
+                stringBuilder.append(story.getAsString());
+            }
+        }
+        for (Story story : sortedBySize) {
+            if (story.getSize().equals(Size.LARGE)) {
+                stringBuilder.append(story.getAsString());
+            }
+        }
+        if (sortedBySize.isEmpty()) {
+            return "No story created yet.";
         }
         return stringBuilder.toString();
     }

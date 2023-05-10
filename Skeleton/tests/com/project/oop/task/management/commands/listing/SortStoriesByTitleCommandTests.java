@@ -3,11 +3,11 @@ package com.project.oop.task.management.commands.listing;
 import com.project.oop.task.management.commands.AddPersonToTeamCommand;
 import com.project.oop.task.management.commands.contracts.Command;
 import com.project.oop.task.management.commands.creation.CreateNewBoardCommand;
-import com.project.oop.task.management.commands.creation.CreateNewBugCommand;
 import com.project.oop.task.management.commands.creation.CreateNewPersonCommand;
+import com.project.oop.task.management.commands.creation.CreateNewStoryCommand;
 import com.project.oop.task.management.commands.creation.CreateNewTeamCommand;
 import com.project.oop.task.management.core.TaskManagementRepositoryImpl;
-import com.project.oop.task.management.models.enums.BugStatus;
+import com.project.oop.task.management.models.enums.StoryStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,12 +17,11 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-
-public class SortBugsByTitleCommandTests {
+public class SortStoriesByTitleCommandTests {
     private TaskManagementRepositoryImpl repository;
     private Command command;
     private Command createTeam;
-    private Command createBug;
+    private Command createStory;
     private Command createBoard;
     private Command createPerson;
     private Command addPersonToTeam;
@@ -30,16 +29,16 @@ public class SortBugsByTitleCommandTests {
     @BeforeEach
     public void before() {
         this.repository = new TaskManagementRepositoryImpl();
-        this.command = new SortBugsByTitleCommand(repository);
+        this.command = new SortStoriesByTitleCommand(repository);
         this.createTeam = new CreateNewTeamCommand(repository);
-        this.createBug = new CreateNewBugCommand(repository);
+        this.createStory = new CreateNewStoryCommand(repository);
         this.createBoard = new CreateNewBoardCommand(repository);
         this.createPerson = new CreateNewPersonCommand(repository);
         this.addPersonToTeam = new AddPersonToTeamCommand(repository);
     }
 
     @Test
-    public void execute_Should_DisplayAllBugs_SortedByTitle_OrderedAlphabetically() {
+    public void execute_Should_DisplayAllStories_SortedByPriority() {
         //Arrange
         List<String> params = new ArrayList<>();
 
@@ -62,53 +61,73 @@ public class SortBugsByTitleCommandTests {
         System.setIn(in3);
         addPersonToTeam.execute(params3);
 
-        InputStream in4 = new ByteArrayInputStream(("Team1\nBoard1\nA.ValidTitle\nValidDescription\nHigh\nMinor\nValid\n").getBytes());
+        List<String> params4 = new ArrayList<>();
+        InputStream in4 = new ByteArrayInputStream(("Team1\nBoard1\nValid\nA.ValidTitle\nValidDescription\nHigh\nLarge\n").getBytes());
         System.setIn(in4);
-        createBug.execute(params);
+        createStory.execute(params4);
 
-        InputStream in5 = new ByteArrayInputStream(("Team1\nBoard1\nB.ValidTitle\nValidDescription\nHigh\nMinor\nValid\n").getBytes());
+        List<String> params5 = new ArrayList<>();
+        InputStream in5 = new ByteArrayInputStream(("Team1\nBoard1\nValid\nB.ValidTitle\nValidDescription\nHigh\nLarge\n").getBytes());
         System.setIn(in5);
-        createBug.execute(params);
+        createStory.execute(params5);
+
+        List<String> params6 = new ArrayList<>();
+        InputStream in6 = new ByteArrayInputStream(("Team1\nBoard1\nValid\nC.ValidTitle\nValidDescription\nHigh\nLarge\n").getBytes());
+        System.setIn(in6);
+        createStory.execute(params6);
 
         String sb = String.format("*********************%n" +
-                "Bug:%n") +
+                "Story:%n") +
                 String.format("Title: %s%n" +
                         "Description: %s%n" +
                         "Comments: %n", "A.ValidTitle", "ValidDescription") +
                 String.format("Status: %s%n" +
                                 "Priority: %s%n" +
-                                "Severity: %s%n" +
+                                "Size: %s%n" +
                                 "Assignee: %s%n" +
                                 "*********************%n",
-                        BugStatus.ACTIVE,
+                        StoryStatus.NOT_DONE,
                         "High",
-                        "Minor",
+                        "Large",
                         "Valid") +
                 String.format("*********************%n" +
-                        "Bug:%n") +
+                        "Story:%n") +
                 String.format("Title: %s%n" +
                         "Description: %s%n" +
                         "Comments: %n", "B.ValidTitle", "ValidDescription") +
                 String.format("Status: %s%n" +
                                 "Priority: %s%n" +
-                                "Severity: %s%n" +
+                                "Size: %s%n" +
                                 "Assignee: %s%n" +
                                 "*********************%n",
-                        BugStatus.ACTIVE,
+                        StoryStatus.NOT_DONE,
                         "High",
-                        "Minor",
+                        "Large",
+                        "Valid") +
+                String.format("*********************%n" +
+                        "Story:%n") +
+                String.format("Title: %s%n" +
+                        "Description: %s%n" +
+                        "Comments: %n", "C.ValidTitle", "ValidDescription") +
+                String.format("Status: %s%n" +
+                                "Priority: %s%n" +
+                                "Size: %s%n" +
+                                "Assignee: %s%n" +
+                                "*********************%n",
+                        StoryStatus.NOT_DONE,
+                        "High",
+                        "Large",
                         "Valid");
 
 
         //Act, Assert
         Assertions.assertEquals(sb, command.execute(params));
     }
-
     @Test
-    public void execute_DisplayNoBugsMessage_WhenListIsEmpty() {
+    public void execute_DisplayNoStoriesMessage_WhenListIsEmpty() {
         //Arrange
         List<String> params = new ArrayList<>();
-        String expected = "No bugs created yet.";
+        String expected = "No story created yet.";
 
         //Act, Assert
         Assertions.assertEquals(expected, command.execute(params));

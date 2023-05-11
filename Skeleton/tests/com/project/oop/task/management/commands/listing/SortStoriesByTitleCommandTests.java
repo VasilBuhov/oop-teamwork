@@ -38,7 +38,7 @@ public class SortStoriesByTitleCommandTests {
     }
 
     @Test
-    public void execute_Should_DisplayAllStories_SortedByPriority() {
+    public void execute_Should_DisplayAllStories_SortedByTitle() {
         //Arrange
         List<String> params = new ArrayList<>();
 

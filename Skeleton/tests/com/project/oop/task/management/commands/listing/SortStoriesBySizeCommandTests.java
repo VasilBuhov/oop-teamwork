@@ -38,7 +38,7 @@ public class SortStoriesBySizeCommandTests {
     }
 
     @Test
-    public void execute_Should_DisplayAllStories_SortedByPriority() {
+    public void execute_Should_DisplayAllStories_SortedBySize() {
         //Arrange
         List<String> params = new ArrayList<>();
 
@@ -122,5 +122,15 @@ public class SortStoriesBySizeCommandTests {
 
         //Act, Assert
         Assertions.assertEquals(sb, command.execute(params));
+    }
+
+    @Test
+    public void execute_DisplayNoStoriesMessage_WhenListIsEmpty() {
+        //Arrange
+        List<String> params = new ArrayList<>();
+        String expected = "No story created yet.";
+
+        //Act, Assert
+        Assertions.assertEquals(expected, command.execute(params));
     }
 }

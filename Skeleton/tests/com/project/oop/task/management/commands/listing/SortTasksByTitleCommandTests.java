@@ -4,8 +4,8 @@ import com.project.oop.task.management.commands.AddPersonToTeamCommand;
 import com.project.oop.task.management.commands.contracts.Command;
 import com.project.oop.task.management.commands.creation.*;
 import com.project.oop.task.management.core.TaskManagementRepositoryImpl;
-import com.project.oop.task.management.models.contracts.Story;
 import com.project.oop.task.management.models.enums.BugStatus;
+import com.project.oop.task.management.models.enums.FeedbackStatus;
 import com.project.oop.task.management.models.enums.StoryStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,11 +16,14 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SortStoriesByPriorityCommandTests {
+public class SortTasksByTitleCommandTests {
     private TaskManagementRepositoryImpl repository;
     private Command command;
     private Command createTeam;
+    private Command createBug;
+
     private Command createStory;
+    private Command createFeedback;
     private Command createBoard;
     private Command createPerson;
     private Command addPersonToTeam;
@@ -28,8 +31,10 @@ public class SortStoriesByPriorityCommandTests {
     @BeforeEach
     public void before() {
         this.repository = new TaskManagementRepositoryImpl();
-        this.command = new SortStoriesByPriorityCommand(repository);
+        this.command = new SortTasksByTitleCommand(repository);
         this.createTeam = new CreateNewTeamCommand(repository);
+        this.createBug = new CreateNewBugCommand(repository);
+        this.createFeedback = new CreateNewFeedbackCommand(repository);
         this.createStory = new CreateNewStoryCommand(repository);
         this.createBoard = new CreateNewBoardCommand(repository);
         this.createPerson = new CreateNewPersonCommand(repository);
@@ -37,7 +42,7 @@ public class SortStoriesByPriorityCommandTests {
     }
 
     @Test
-    public void execute_Should_DisplayAllStories_SortedByPriority() {
+    public void execute_Should_DisplayAllTasks_SortedByTitle_OrderedAlphabetically() {
         //Arrange
         List<String> params = new ArrayList<>();
 
@@ -61,25 +66,25 @@ public class SortStoriesByPriorityCommandTests {
         addPersonToTeam.execute(params3);
 
         List<String> params4 = new ArrayList<>();
-        InputStream in4 = new ByteArrayInputStream(("Team1\nBoard1\nValid\nValidTitle\nValidDescription\nHigh\nLarge\n").getBytes());
+        InputStream in4 = new ByteArrayInputStream(("Team1\nBoard1\nC.ValidTitle\nValidDescription\nHigh\nMinor\nValid\n").getBytes());
         System.setIn(in4);
-        createStory.execute(params4);
+        createBug.execute(params4);
 
         List<String> params5 = new ArrayList<>();
-        InputStream in5 = new ByteArrayInputStream(("Team1\nBoard1\nValid\nValidTitle\nValidDescription\nLow\nLarge\n").getBytes());
+        InputStream in5 = new ByteArrayInputStream(("Team1\nBoard1\nValid\nA.ValidTitle\nValidDescription\nHigh\nLarge\n").getBytes());
         System.setIn(in5);
         createStory.execute(params5);
 
         List<String> params6 = new ArrayList<>();
-        InputStream in6 = new ByteArrayInputStream(("Team1\nBoard1\nValid\nValidTitle\nValidDescription\nMedium\nLarge\n").getBytes());
+        InputStream in6 = new ByteArrayInputStream(("Team1\nBoard1\nB.ValidTitle\nValidDescription\n1\n").getBytes());
         System.setIn(in6);
-        createStory.execute(params6);
+        createFeedback.execute(params6);
 
         String sb = String.format("*********************%n" +
                 "Story:%n") +
                 String.format("Title: %s%n" +
                         "Description: %s%n" +
-                        "Comments: %n", "ValidTitle", "ValidDescription") +
+                        "Comments: %n", "A.ValidTitle", "ValidDescription") +
                 String.format("Status: %s%n" +
                                 "Priority: %s%n" +
                                 "Size: %s%n" +
@@ -90,32 +95,28 @@ public class SortStoriesByPriorityCommandTests {
                         "Large",
                         "Valid") +
                 String.format("*********************%n" +
-                        "Story:%n") +
+                        "Feedback:%n") +
                 String.format("Title: %s%n" +
                         "Description: %s%n" +
-                        "Comments: %n", "ValidTitle", "ValidDescription") +
+                        "Comments: %n", "B.ValidTitle", "ValidDescription") +
                 String.format("Status: %s%n" +
-                                "Priority: %s%n" +
-                                "Size: %s%n" +
-                                "Assignee: %s%n" +
+                                "Rating: %d%n" +
                                 "*********************%n",
-                        StoryStatus.NOT_DONE,
-                        "Medium",
-                        "Large",
-                        "Valid") +
+                        FeedbackStatus.NEW,
+                        1) +
                 String.format("*********************%n" +
-                        "Story:%n") +
+                        "Bug:%n") +
                 String.format("Title: %s%n" +
                         "Description: %s%n" +
-                        "Comments: %n", "ValidTitle", "ValidDescription") +
+                        "Comments: %n", "C.ValidTitle", "ValidDescription") +
                 String.format("Status: %s%n" +
                                 "Priority: %s%n" +
-                                "Size: %s%n" +
+                                "Severity: %s%n" +
                                 "Assignee: %s%n" +
                                 "*********************%n",
-                        StoryStatus.NOT_DONE,
-                        "Low",
-                        "Large",
+                        BugStatus.ACTIVE,
+                        "High",
+                        "Minor",
                         "Valid");
 
 
@@ -124,13 +125,12 @@ public class SortStoriesByPriorityCommandTests {
     }
 
     @Test
-    public void execute_DisplayNoStoriesMessage_WhenListIsEmpty() {
+    public void execute_DisplayNoTaskMessage_WhenListIsEmpty() {
         //Arrange
         List<String> params = new ArrayList<>();
-        String expected = "No story created yet.";
+        String expected = "No task created yet.";
 
         //Act, Assert
         Assertions.assertEquals(expected, command.execute(params));
     }
-
 }

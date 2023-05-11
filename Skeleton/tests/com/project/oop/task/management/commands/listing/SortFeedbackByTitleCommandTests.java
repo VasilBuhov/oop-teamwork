@@ -32,7 +32,7 @@ public class SortFeedbackByTitleCommandTests {
     }
 
     @Test
-    public void execute_Should_DisplayAllFeedback_SortedByRating() {
+    public void execute_Should_DisplayAllFeedback_SortedByTitle() {
         //Arrange
         List<String> params = new ArrayList<>();
 

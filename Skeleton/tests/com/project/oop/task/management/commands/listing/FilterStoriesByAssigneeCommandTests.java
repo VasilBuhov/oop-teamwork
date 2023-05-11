@@ -21,7 +21,7 @@ public class FilterStoriesByAssigneeCommandTests {
     private TaskManagementRepositoryImpl repository;
 
     @BeforeEach
-    public void before(){
+    public void before() {
         this.repository = new TaskManagementRepositoryImpl();
         this.command1 = new FilterStoriesByAssigneeCommand(repository);
         this.command2 = new CreateNewBoardCommand(repository);
@@ -30,7 +30,7 @@ public class FilterStoriesByAssigneeCommandTests {
     }
 
     @Test
-    public void execute_Should_ThrowException_When_InputIsEqualToCancel(){
+    public void execute_Should_ThrowException_When_InputIsEqualToCancel() {
         //Arrange
         List<String> params = new ArrayList<>();
         repository.createNewTeam("Team1");
@@ -52,8 +52,9 @@ public class FilterStoriesByAssigneeCommandTests {
         //Act, Assert
         Assertions.assertThrows(IllegalArgumentException.class, () -> command1.execute(params));
     }
+
     @Test
-    public void execute_Should_ThrowException_When_EnteredAssigneeNameNotFound(){
+    public void execute_Should_ThrowException_When_EnteredAssigneeNameNotFound() {
         //Arrange
         List<String> params = new ArrayList<>();
         repository.createNewTeam("Team1");
@@ -78,7 +79,7 @@ public class FilterStoriesByAssigneeCommandTests {
     }
 
     @Test
-    public void execute_Should_DisplayFilteredStories_When_ExistingAssigneeNameEntered(){
+    public void execute_Should_DisplayFilteredStories_When_ExistingAssigneeNameEntered() {
         //Arrange
         List<String> params = new ArrayList<>();
         repository.createNewTeam("Team1");
@@ -112,11 +113,11 @@ public class FilterStoriesByAssigneeCommandTests {
                 "*********************");
 
         //Assert
-        Assertions.assertEquals(result,filteredStories);
+        Assertions.assertEquals(result, filteredStories);
     }
 
     @Test
-    public void execute_Should_DisplayNoStory_When_AssigneeHasNoStories(){
+    public void execute_Should_DisplayNoStory_When_AssigneeHasNoStories() {
         //Arrange
         List<String> params = new ArrayList<>();
         repository.createNewTeam("Team1");
@@ -138,6 +139,6 @@ public class FilterStoriesByAssigneeCommandTests {
         String result = String.format("No stories assigned to this person.");
 
         //Assert
-        Assertions.assertEquals(result,filteredStories);
+        Assertions.assertEquals(result, filteredStories);
     }
 }

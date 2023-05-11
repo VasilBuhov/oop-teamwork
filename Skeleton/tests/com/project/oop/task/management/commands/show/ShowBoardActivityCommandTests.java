@@ -11,12 +11,9 @@ import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -29,7 +26,7 @@ public class ShowBoardActivityCommandTests {
     private Command command4;
 
     @BeforeEach
-    public void before(){
+    public void before() {
         this.repository = new TaskManagementRepositoryImpl();
         this.command1 = new ShowBoardActivityCommand(repository);
         this.command2 = new CreateNewBoardCommand(repository);
@@ -39,7 +36,7 @@ public class ShowBoardActivityCommandTests {
 
 
     @Test
-    public void execute_Should_ThrowException_When_CancelEnteredInsteadOfTeamName(){
+    public void execute_Should_ThrowException_When_CancelEnteredInsteadOfTeamName() {
         //Arrange
         List<String> params = new ArrayList<>();
         repository.createNewTeam("Team1");
@@ -69,7 +66,7 @@ public class ShowBoardActivityCommandTests {
 
 
     @Test
-    public void execute_Should_ThrowException_When_CancelEnteredInsteadOfBoardName(){
+    public void execute_Should_ThrowException_When_CancelEnteredInsteadOfBoardName() {
         //Arrange
         List<String> params = new ArrayList<>();
         repository.createNewTeam("Team1");
@@ -98,7 +95,7 @@ public class ShowBoardActivityCommandTests {
     }
 
     @Test
-    public void execute_Should_ThrowException_When_EnteredTeamNotExist(){
+    public void execute_Should_ThrowException_When_EnteredTeamNotExist() {
         //Arrange
         List<String> params = new ArrayList<>();
         repository.createNewTeam("Team1");
@@ -127,7 +124,7 @@ public class ShowBoardActivityCommandTests {
     }
 
     @Test
-    public void execute_Should_ThrowException_When_EnteredBoardNotExist(){
+    public void execute_Should_ThrowException_When_EnteredBoardNotExist() {
         //Arrange
         List<String> params = new ArrayList<>();
         repository.createNewTeam("Team1");
@@ -154,8 +151,9 @@ public class ShowBoardActivityCommandTests {
         //Act, Assert
         Assertions.assertThrows(NoSuchElementException.class, () -> command1.execute(params));
     }
+
     @Test
-    public void should_DisplayBoardActivity(){
+    public void should_DisplayBoardActivity() {
         //Arrange
         List<String> params = new ArrayList<>();
         repository.createNewTeam("Team1");

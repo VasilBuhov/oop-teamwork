@@ -30,7 +30,7 @@ public class AddPersonToTeamCommand implements Command {
         boolean nameIsValid = false;
         while (!nameIsValid) {
             personName = scanner.nextLine();
-            if (repository.getPeople().stream().anyMatch(member -> member.getName().equals(personName))) {
+            if (repository.getNotMembers().stream().anyMatch(member -> member.getName().equals(personName))) {
                 nameIsValid = true;
                 parameters.add(personName);
             } else {

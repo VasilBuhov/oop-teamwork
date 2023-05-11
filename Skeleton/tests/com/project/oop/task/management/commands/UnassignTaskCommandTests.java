@@ -23,7 +23,7 @@ public class UnassignTaskCommandTests {
     private TaskManagementRepositoryImpl repository;
 
     @BeforeEach
-    public void before(){
+    public void before() {
         this.repository = new TaskManagementRepositoryImpl();
         this.createTeam = new CreateNewTeamCommand(repository);
         this.command = new UnassignTaskCommand(repository);
@@ -34,7 +34,7 @@ public class UnassignTaskCommandTests {
     }
 
     @Test
-    public void execute_Should_UnassignTask_When_AllParametersValid(){
+    public void execute_Should_UnassignTask_When_AllParametersValid() {
         //Arrange
         List<String> params = new ArrayList<>();
 
@@ -72,7 +72,7 @@ public class UnassignTaskCommandTests {
     }
 
     @Test
-    public void execute_Should_ThrowException_When_InvalidID(){
+    public void execute_Should_ThrowException_When_InvalidID() {
         //Arrange
         List<String> params = new ArrayList<>();
 

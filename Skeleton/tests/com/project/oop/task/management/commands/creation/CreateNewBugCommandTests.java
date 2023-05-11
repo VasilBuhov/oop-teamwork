@@ -22,7 +22,7 @@ public class CreateNewBugCommandTests {
     private TaskManagementRepositoryImpl repository;
 
     @BeforeEach
-    public void before(){
+    public void before() {
         this.repository = new TaskManagementRepositoryImpl();
         this.createTeam = new CreateNewTeamCommand(repository);
         this.command = new CreateNewBugCommand(repository);
@@ -32,7 +32,7 @@ public class CreateNewBugCommandTests {
     }
 
     @Test
-    public void execute_Should_ThrowException_When_TitleLengthNotValid(){
+    public void execute_Should_ThrowException_When_TitleLengthNotValid() {
         //Arrange
         List<String> params = new ArrayList<>();
 
@@ -63,7 +63,7 @@ public class CreateNewBugCommandTests {
     }
 
     @Test
-    public void execute_Should_CreateNewBug_When_AllParametersValid(){
+    public void execute_Should_CreateNewBug_When_AllParametersValid() {
         //Arrange
         List<String> params = new ArrayList<>();
 
@@ -94,8 +94,9 @@ public class CreateNewBugCommandTests {
         //Act, Assert
         Assertions.assertEquals(1, repository.getBugs().size());
     }
+
     @Test
-    public void execute_Should_ThrowException_When_AssigneeIsNotValid(){
+    public void execute_Should_ThrowException_When_AssigneeIsNotValid() {
         //Arrange
         List<String> params = new ArrayList<>();
 
@@ -127,7 +128,7 @@ public class CreateNewBugCommandTests {
     }
 
     @Test
-    public void execute_Should_ThrowException_When_PriorityNotValid(){
+    public void execute_Should_ThrowException_When_PriorityNotValid() {
         //Arrange
         List<String> params = new ArrayList<>();
 
@@ -158,7 +159,7 @@ public class CreateNewBugCommandTests {
     }
 
     @Test
-    public void execute_Should_ThrowException_When_SeverityNotValid(){
+    public void execute_Should_ThrowException_When_SeverityNotValid() {
         //Arrange
         List<String> params = new ArrayList<>();
 
@@ -189,7 +190,7 @@ public class CreateNewBugCommandTests {
     }
 
     @Test
-    public void execute_Should_ThrowException_When_EnteredTeamNameNotExit(){
+    public void execute_Should_ThrowException_When_EnteredTeamNameNotExit() {
         //Arrange
         List<String> params = new ArrayList<>();
 
@@ -220,7 +221,7 @@ public class CreateNewBugCommandTests {
     }
 
     @Test
-    public void execute_Should_ThrowException_When_EnteredBoardNameNotExit(){
+    public void execute_Should_ThrowException_When_EnteredBoardNameNotExit() {
         //Arrange
         List<String> params = new ArrayList<>();
 
@@ -249,6 +250,7 @@ public class CreateNewBugCommandTests {
         //Act, Assert
         Assertions.assertThrows(NoSuchElementException.class, () -> command.execute(params));
     }
+
     @Test
     public void execute_Should_ThrowException_When_BoardEqualsCancel() {
         //Arrange
@@ -310,6 +312,7 @@ public class CreateNewBugCommandTests {
         //Act, Assert
         Assertions.assertThrows(IllegalArgumentException.class, () -> command.execute(params));
     }
+
     @Test
     public void execute_Should_ThrowException_When_TitleEqualsCancel() {
         //Arrange
@@ -340,6 +343,7 @@ public class CreateNewBugCommandTests {
         //Act, Assert
         Assertions.assertThrows(IllegalArgumentException.class, () -> command.execute(params));
     }
+
     @Test
     public void execute_Should_ThrowException_When_DescriptionEqualsCancel() {
         //Arrange
@@ -401,6 +405,7 @@ public class CreateNewBugCommandTests {
         //Act, Assert
         Assertions.assertThrows(IllegalArgumentException.class, () -> command.execute(params));
     }
+
     @Test
     public void execute_Should_ThrowException_When_PriorityEqualsCancel() {
         //Arrange

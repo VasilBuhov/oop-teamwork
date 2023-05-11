@@ -1,7 +1,6 @@
 package com.project.oop.task.management.commands.creation;
 
 import com.project.oop.task.management.commands.contracts.Command;
-import com.project.oop.task.management.commands.creation.CreateNewPersonCommand;
 import com.project.oop.task.management.core.TaskManagementRepositoryImpl;
 import com.project.oop.task.management.core.contracts.TaskManagementRepository;
 import com.project.oop.task.management.models.MemberImpl;
@@ -15,20 +14,19 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Scanner;
 
 public class CreateNewPersonCommandTests {
     private Command command;
     private TaskManagementRepository repository;
 
     @BeforeEach
-    public void before(){
+    public void before() {
         this.repository = new TaskManagementRepositoryImpl();
         this.command = new CreateNewPersonCommand(repository);
     }
 
     @Test
-    public void execute_Should_ThrowException_When_NameLengthNotValid(){
+    public void execute_Should_ThrowException_When_NameLengthNotValid() {
         //Arrange
         List<String> params = new ArrayList<>();
         String name = "T";
@@ -41,7 +39,7 @@ public class CreateNewPersonCommandTests {
     }
 
     @Test
-    public void execute_Should_ThrowException_When_InputIsEqualToCancel(){
+    public void execute_Should_ThrowException_When_InputIsEqualToCancel() {
         //Arrange
         List<String> params = new ArrayList<>();
         String name = "cancel";
@@ -54,7 +52,7 @@ public class CreateNewPersonCommandTests {
     }
 
     @Test
-    public void execute_Should_ThrowException_When_NameAlreadyExists(){
+    public void execute_Should_ThrowException_When_NameAlreadyExists() {
         //Arrange
         Member person = new MemberImpl("IvanIvanov");
         repository.createNewPerson(person.getName());
@@ -69,7 +67,7 @@ public class CreateNewPersonCommandTests {
     }
 
     @Test
-    public void execute_Should_CreatePerson_When_NameIsValid(){
+    public void execute_Should_CreatePerson_When_NameIsValid() {
         //Arrange
         List<String> params = new ArrayList<>();
         String name = "Margarita";
@@ -80,6 +78,6 @@ public class CreateNewPersonCommandTests {
         command.execute(params);
 
         //Assert
-        Assertions.assertEquals(1, repository.getPeople().size());
+        Assertions.assertEquals(1, repository.getAllPeople().size());
     }
 }

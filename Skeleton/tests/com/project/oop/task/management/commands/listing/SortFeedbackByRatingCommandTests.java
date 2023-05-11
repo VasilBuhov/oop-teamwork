@@ -23,7 +23,7 @@ public class SortFeedbackByRatingCommandTests {
     private TaskManagementRepositoryImpl repository;
 
     @BeforeEach
-    public void before(){
+    public void before() {
         this.repository = new TaskManagementRepositoryImpl();
         this.command = new SortFeedbackByRatingCommand(repository);
         this.createBoard = new CreateNewBoardCommand(repository);

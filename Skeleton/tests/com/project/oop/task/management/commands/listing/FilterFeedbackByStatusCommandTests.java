@@ -2,7 +2,6 @@ package com.project.oop.task.management.commands.listing;
 
 import com.project.oop.task.management.commands.contracts.Command;
 import com.project.oop.task.management.commands.creation.CreateNewBoardCommand;
-import com.project.oop.task.management.commands.creation.CreateNewBugCommand;
 import com.project.oop.task.management.commands.creation.CreateNewFeedbackCommand;
 import com.project.oop.task.management.core.TaskManagementRepositoryImpl;
 import org.junit.jupiter.api.Assertions;
@@ -22,7 +21,7 @@ public class FilterFeedbackByStatusCommandTests {
     private TaskManagementRepositoryImpl repository;
 
     @BeforeEach
-    public void before(){
+    public void before() {
         this.repository = new TaskManagementRepositoryImpl();
         this.command1 = new FilterFeedbackByStatusCommand(repository);
         this.command2 = new CreateNewBoardCommand(repository);
@@ -31,7 +30,7 @@ public class FilterFeedbackByStatusCommandTests {
     }
 
     @Test
-    public void execute_Should_ThrowException_When_InputIsEqualToCancel(){
+    public void execute_Should_ThrowException_When_InputIsEqualToCancel() {
         //Arrange
         List<String> params = new ArrayList<>();
         repository.createNewTeam("Team1");
@@ -50,8 +49,9 @@ public class FilterFeedbackByStatusCommandTests {
         //Act, Assert
         Assertions.assertThrows(IllegalArgumentException.class, () -> command1.execute(params));
     }
+
     @Test
-    public void execute_Should_ThrowException_When_EnteredStatusNotValid(){
+    public void execute_Should_ThrowException_When_EnteredStatusNotValid() {
         //Arrange
         List<String> params = new ArrayList<>();
         repository.createNewTeam("Team1");
@@ -72,7 +72,7 @@ public class FilterFeedbackByStatusCommandTests {
     }
 
     @Test
-    public void execute_Should_DisplayFilteredFeedbacks_When_ValidStatusEntered(){
+    public void execute_Should_DisplayFilteredFeedbacks_When_ValidStatusEntered() {
         //Arrange
         List<String> params = new ArrayList<>();
         repository.createNewTeam("Team1");
@@ -101,11 +101,11 @@ public class FilterFeedbackByStatusCommandTests {
                 "*********************");
 
         //Assert
-        Assertions.assertEquals(result,filteredFeedbacks);
+        Assertions.assertEquals(result, filteredFeedbacks);
     }
 
     @Test
-    public void execute_Should_DisplayNoFeedback_When_NoFeedbacksWithEnteredStatusExist(){
+    public void execute_Should_DisplayNoFeedback_When_NoFeedbacksWithEnteredStatusExist() {
         //Arrange
         List<String> params = new ArrayList<>();
         repository.createNewTeam("Team1");
@@ -124,6 +124,6 @@ public class FilterFeedbackByStatusCommandTests {
         String result = String.format("No feedbacks with this status");
 
         //Assert
-        Assertions.assertEquals(result,filteredBugs);
+        Assertions.assertEquals(result, filteredBugs);
     }
 }

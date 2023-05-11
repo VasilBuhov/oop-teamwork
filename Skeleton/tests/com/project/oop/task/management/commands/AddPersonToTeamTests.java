@@ -22,7 +22,7 @@ public class AddPersonToTeamTests {
     private TaskManagementRepositoryImpl repository;
 
     @BeforeEach
-    public void before(){
+    public void before() {
         this.repository = new TaskManagementRepositoryImpl();
         this.createTeam = new CreateNewTeamCommand(repository);
         this.command = new CreateNewBugCommand(repository);

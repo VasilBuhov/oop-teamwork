@@ -123,6 +123,7 @@ public class SortStoriesByTitleCommandTests {
         //Act, Assert
         Assertions.assertEquals(sb, command.execute(params));
     }
+
     @Test
     public void execute_DisplayNoStoriesMessage_WhenListIsEmpty() {
         //Arrange

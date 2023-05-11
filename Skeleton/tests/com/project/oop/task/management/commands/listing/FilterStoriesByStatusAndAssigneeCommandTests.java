@@ -21,7 +21,7 @@ public class FilterStoriesByStatusAndAssigneeCommandTests {
     private TaskManagementRepositoryImpl repository;
 
     @BeforeEach
-    public void before(){
+    public void before() {
         this.repository = new TaskManagementRepositoryImpl();
         this.command1 = new FilterStoriesByStatusAndAssigneeCommand(repository);
         this.command2 = new CreateNewBoardCommand(repository);
@@ -30,7 +30,7 @@ public class FilterStoriesByStatusAndAssigneeCommandTests {
     }
 
     @Test
-    public void execute_Should_ThrowException_When_CancelEnteredInsteadOfStatus(){
+    public void execute_Should_ThrowException_When_CancelEnteredInsteadOfStatus() {
         //Arrange
         List<String> params = new ArrayList<>();
         repository.createNewTeam("Team1");
@@ -55,7 +55,7 @@ public class FilterStoriesByStatusAndAssigneeCommandTests {
 
 
     @Test
-    public void execute_Should_ThrowException_When_CancelEnteredInsteadOfAssignee(){
+    public void execute_Should_ThrowException_When_CancelEnteredInsteadOfAssignee() {
         //Arrange
         List<String> params = new ArrayList<>();
         repository.createNewTeam("Team1");
@@ -77,8 +77,9 @@ public class FilterStoriesByStatusAndAssigneeCommandTests {
         //Act, Assert
         Assertions.assertThrows(IllegalArgumentException.class, () -> command1.execute(params));
     }
+
     @Test
-    public void execute_Should_ThrowException_When_EnteredStatusNotValid(){
+    public void execute_Should_ThrowException_When_EnteredStatusNotValid() {
         //Arrange
         List<String> params = new ArrayList<>();
         repository.createNewTeam("Team1");
@@ -104,7 +105,7 @@ public class FilterStoriesByStatusAndAssigneeCommandTests {
 
 
     @Test
-    public void execute_Should_ThrowException_When_EnteredAssigneeNotExist(){
+    public void execute_Should_ThrowException_When_EnteredAssigneeNotExist() {
         //Arrange
         List<String> params = new ArrayList<>();
         repository.createNewTeam("Team1");
@@ -129,7 +130,7 @@ public class FilterStoriesByStatusAndAssigneeCommandTests {
     }
 
     @Test
-    public void execute_Should_DisplayFilteredStories_When_ValidStatusAndAssigneeEntered(){
+    public void execute_Should_DisplayFilteredStories_When_ValidStatusAndAssigneeEntered() {
         //Arrange
         List<String> params = new ArrayList<>();
         repository.createNewTeam("Team1");
@@ -163,11 +164,11 @@ public class FilterStoriesByStatusAndAssigneeCommandTests {
                 "*********************");
 
         //Assert
-        Assertions.assertEquals(result,filteredStories);
+        Assertions.assertEquals(result, filteredStories);
     }
 
     @Test
-    public void execute_Should_DisplayNoStories_When_NoStoriesWithEnteredStatusExist(){
+    public void execute_Should_DisplayNoStories_When_NoStoriesWithEnteredStatusExist() {
         //Arrange
         List<String> params = new ArrayList<>();
         repository.createNewTeam("Team1");
@@ -193,11 +194,11 @@ public class FilterStoriesByStatusAndAssigneeCommandTests {
         String result = String.format("No stories with this status");
 
         //Assert
-        Assertions.assertEquals(result,filteredStories);
+        Assertions.assertEquals(result, filteredStories);
     }
 
     @Test
-    public void execute_Should_DisplayNoStories_When_NoStoriesWithEnteredAssigneeExist(){
+    public void execute_Should_DisplayNoStories_When_NoStoriesWithEnteredAssigneeExist() {
         //Arrange
         List<String> params = new ArrayList<>();
         repository.createNewTeam("Team1");
@@ -225,6 +226,6 @@ public class FilterStoriesByStatusAndAssigneeCommandTests {
         String result = String.format("No stories assigned to this person");
 
         //Assert
-        Assertions.assertEquals(result,filteredStories);
+        Assertions.assertEquals(result, filteredStories);
     }
 }

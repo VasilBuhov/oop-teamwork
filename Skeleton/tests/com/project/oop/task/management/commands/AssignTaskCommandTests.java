@@ -3,7 +3,6 @@ package com.project.oop.task.management.commands;
 import com.project.oop.task.management.commands.contracts.Command;
 import com.project.oop.task.management.commands.creation.*;
 import com.project.oop.task.management.core.TaskManagementRepositoryImpl;
-import com.project.oop.task.management.utils.MessageHelper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,7 +23,7 @@ public class AssignTaskCommandTests {
     private TaskManagementRepositoryImpl repository;
 
     @BeforeEach
-    public void before(){
+    public void before() {
         this.repository = new TaskManagementRepositoryImpl();
         this.createTeam = new CreateNewTeamCommand(repository);
         this.command = new AssignTaskCommand(repository);
@@ -35,7 +34,7 @@ public class AssignTaskCommandTests {
     }
 
     @Test
-    public void execute_Should_AssignTask_When_AllParametersValid(){
+    public void execute_Should_AssignTask_When_AllParametersValid() {
         //Arrange
         List<String> params = new ArrayList<>();
 
@@ -73,7 +72,7 @@ public class AssignTaskCommandTests {
     }
 
     @Test
-    public void execute_Should_ThrowException_When_InvalidID(){
+    public void execute_Should_ThrowException_When_InvalidID() {
         //Arrange
         List<String> params = new ArrayList<>();
 

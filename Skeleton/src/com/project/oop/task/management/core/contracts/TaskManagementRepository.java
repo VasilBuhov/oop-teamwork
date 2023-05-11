@@ -10,7 +10,8 @@ import java.util.List;
 
 public interface TaskManagementRepository {
     List<Member> getMembers();
-    List<Member> getPeople();
+    List<Member> getNotMembers();
+    List<Member> getAllPeople();
     List<Team> getTeams();
     List<Task> getTasks();
     List<Task> getAssignedTasks();

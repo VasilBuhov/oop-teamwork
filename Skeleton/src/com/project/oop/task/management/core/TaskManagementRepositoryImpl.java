@@ -18,7 +18,8 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
     private final List<Bug> bugs = new ArrayList<>();
     private final List<Feedback> feedbacks = new ArrayList<>();
     private final List<Story> stories = new ArrayList<>();
-    private final List<Member> people = new ArrayList<>();
+    private final List<Member> notMembers = new ArrayList<>();
+    private final List<Member> allPeople = new ArrayList<>();
     private final List<Member> members = new ArrayList<>();
     private final List<Team> teams = new ArrayList<>();
 
@@ -30,10 +31,12 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
         return new ArrayList<>(members);
     }
     @Override
-    public List<Member> getPeople() {
-        return new ArrayList<>(people);
+    public List<Member> getAllPeople() {
+        return new ArrayList<>(allPeople);
     }
-
+    @Override
+    public List<Member> getNotMembers() {return new ArrayList<>(notMembers);
+    }
     @Override
     public List<Team> getTeams() {
         return new ArrayList<>(teams);
@@ -47,7 +50,6 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
     public List<Task> getAssignedTasks() {
         return new ArrayList<>(assignedTasks);
     }
-
     @Override
     public List<Story> getStories() {
         return new ArrayList<>(stories);
@@ -66,7 +68,8 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
     @Override
     public Member createNewPerson(String name) {
         Member person = new MemberImpl(name);
-        people.add(person);
+        allPeople.add(person);
+        notMembers.add(person);
 
         return person;
     }
@@ -169,7 +172,7 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
         Member person = findPersonByName(name);
         members.add(person);
         findTeamByName(team).addMember(person);
-        this.people.remove(person);
+        this.notMembers.remove(person);
     }
 
     @Override
@@ -216,7 +219,7 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
         return getMembers().stream().filter(member -> member.getName().equals(name)).collect(Collectors.toList()).get(0);
     }
     public Member findPersonByName(String name) {
-        return people.stream().filter(person -> person.getName().equals(name)).collect(Collectors.toList()).get(0);
+        return allPeople.stream().filter(person -> person.getName().equals(name)).collect(Collectors.toList()).get(0);
     }
     @Override
     public boolean isAssigneeMemberOfTheTeam(String assignee, String teamName) {

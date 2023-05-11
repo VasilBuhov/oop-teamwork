@@ -23,7 +23,7 @@ public class ChangeFeedbackRatingCommandTests {
     private TaskManagementRepositoryImpl repository;
 
     @BeforeEach
-    public void before(){
+    public void before() {
         this.repository = new TaskManagementRepositoryImpl();
         this.command = new ChangeFeedbackRatingCommand(repository);
         this.createBoard = new CreateNewBoardCommand(repository);
@@ -32,7 +32,7 @@ public class ChangeFeedbackRatingCommandTests {
     }
 
     @Test
-    public void execute_Should_ChangeTheStatus_When_AllParametersValid(){
+    public void execute_Should_ChangeTheStatus_When_AllParametersValid() {
         //Arrange
         List<String> params1 = new ArrayList<>();
         InputStream in1 = new ByteArrayInputStream(("Team1\n").getBytes());
@@ -57,8 +57,9 @@ public class ChangeFeedbackRatingCommandTests {
         //Act, Assert
         Assertions.assertEquals(2, repository.getFeedback().get(0).getRating());
     }
+
     @Test
-    public void execute_Should_ThrowException_When_IdDoNotExist(){
+    public void execute_Should_ThrowException_When_IdDoNotExist() {
         //Arrange
         List<String> params1 = new ArrayList<>();
         InputStream in1 = new ByteArrayInputStream(("Team1\n").getBytes());
@@ -80,11 +81,11 @@ public class ChangeFeedbackRatingCommandTests {
         System.setIn(in4);
 
         //Act, Assert
-       Assertions.assertThrows(NoSuchElementException.class, () -> command.execute(params4));
+        Assertions.assertThrows(NoSuchElementException.class, () -> command.execute(params4));
     }
 
     @Test
-    public void execute_Should_ThrowException_When_InvalidNewRating(){
+    public void execute_Should_ThrowException_When_InvalidNewRating() {
         //Arrange
         List<String> params1 = new ArrayList<>();
         InputStream in1 = new ByteArrayInputStream(("Team1\n").getBytes());
@@ -110,7 +111,7 @@ public class ChangeFeedbackRatingCommandTests {
     }
 
     @Test
-    public void execute_Should_ThrowException_When_InvalidID(){
+    public void execute_Should_ThrowException_When_InvalidID() {
         //Arrange
         List<String> params1 = new ArrayList<>();
         InputStream in1 = new ByteArrayInputStream(("Team1\n").getBytes());

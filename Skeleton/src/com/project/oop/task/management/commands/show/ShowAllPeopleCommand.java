@@ -16,7 +16,7 @@ public class ShowAllPeopleCommand implements Command {
 
     @Override
     public String execute(List<String> parameters){
-        return  repository.getPeople().
+        return  repository.getAllPeople().
                 stream().
                 map(name->name.getName().
                         toString()).

@@ -17,8 +17,8 @@ public class MemberImplTests {
         Task story = initializeTestStory();
 
         // Act
-       member.addTask(story);
-       member.getTasks().clear();
+        member.addTask(story);
+        member.getTasks().clear();
 
         // Assert
         assertEquals(1, member.getTasks().size());
@@ -66,6 +66,7 @@ public class MemberImplTests {
                 Size.LARGE,
                 "Nikol");
     }
+
     public static MemberImpl initializeTestMember() {
         return new MemberImpl("valid");
     }

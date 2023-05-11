@@ -1,14 +1,7 @@
 package com.project.oop.task.management.commands.creation;
 
 import com.project.oop.task.management.commands.contracts.Command;
-import com.project.oop.task.management.commands.creation.CreateNewBoardCommand;
-import com.project.oop.task.management.commands.creation.CreateNewFeedbackCommand;
 import com.project.oop.task.management.core.TaskManagementRepositoryImpl;
-import com.project.oop.task.management.core.contracts.TaskManagementRepository;
-import com.project.oop.task.management.models.MemberImpl;
-import com.project.oop.task.management.models.TeamImpl;
-import com.project.oop.task.management.models.contracts.Member;
-import com.project.oop.task.management.models.contracts.Team;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,14 +18,14 @@ public class CreateNewFeedbackCommandTests {
     private TaskManagementRepositoryImpl repository;
 
     @BeforeEach
-    public void before(){
+    public void before() {
         this.repository = new TaskManagementRepositoryImpl();
         this.command = new CreateNewFeedbackCommand(repository);
         this.command2 = new CreateNewBoardCommand(repository);
     }
 
     @Test
-    public void execute_Should_ThrowException_When_TitleLengthNotValid(){
+    public void execute_Should_ThrowException_When_TitleLengthNotValid() {
         //Arrange
         List<String> params = new ArrayList<>();
         repository.createNewTeam("Team1");
@@ -50,7 +43,7 @@ public class CreateNewFeedbackCommandTests {
     }
 
     @Test
-    public void execute_Should_ThrowException_When_DescriptionLengthNotValid(){
+    public void execute_Should_ThrowException_When_DescriptionLengthNotValid() {
         //Arrange
         List<String> params = new ArrayList<>();
         repository.createNewTeam("Team1");
@@ -67,7 +60,7 @@ public class CreateNewFeedbackCommandTests {
     }
 
     @Test
-    public void execute_Should_ThrowException_When_RatingNotNumber(){
+    public void execute_Should_ThrowException_When_RatingNotNumber() {
         //Arrange
         List<String> params = new ArrayList<>();
         repository.createNewTeam("Team1");
@@ -84,7 +77,7 @@ public class CreateNewFeedbackCommandTests {
     }
 
     @Test
-    public void execute_Should_CreateNewFeedback_When_AllParametersValid(){
+    public void execute_Should_CreateNewFeedback_When_AllParametersValid() {
         //Arrange
         List<String> params = new ArrayList<>();
         repository.createNewTeam("Team1");
@@ -102,7 +95,7 @@ public class CreateNewFeedbackCommandTests {
     }
 
     @Test
-    public void execute_Should_ThrowException_When_EnteredTeamNameNotExit(){
+    public void execute_Should_ThrowException_When_EnteredTeamNameNotExit() {
         //Arrange
         List<String> params = new ArrayList<>();
         repository.createNewTeam("Team1");
@@ -119,7 +112,7 @@ public class CreateNewFeedbackCommandTests {
     }
 
     @Test
-    public void execute_Should_ThrowException_When_EnteredBoardNameNotExit(){
+    public void execute_Should_ThrowException_When_EnteredBoardNameNotExit() {
         //Arrange
         List<String> params = new ArrayList<>();
         repository.createNewTeam("Team1");

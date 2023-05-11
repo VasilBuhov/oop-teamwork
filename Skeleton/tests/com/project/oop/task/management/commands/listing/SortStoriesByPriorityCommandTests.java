@@ -4,8 +4,6 @@ import com.project.oop.task.management.commands.AddPersonToTeamCommand;
 import com.project.oop.task.management.commands.contracts.Command;
 import com.project.oop.task.management.commands.creation.*;
 import com.project.oop.task.management.core.TaskManagementRepositoryImpl;
-import com.project.oop.task.management.models.contracts.Story;
-import com.project.oop.task.management.models.enums.BugStatus;
 import com.project.oop.task.management.models.enums.StoryStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

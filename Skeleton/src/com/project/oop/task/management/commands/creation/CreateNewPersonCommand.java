@@ -41,11 +41,11 @@ public class CreateNewPersonCommand implements Command {
 
 
             if (!name.equals("")) {
-                try{
-                    if (repository.getPeople().stream().anyMatch(member -> member.getName().equals(name))) {
+                try {
+                    if (repository.getAllPeople().stream().anyMatch(member -> member.getName().equals(name))) {
                         throw new IllegalArgumentException("A person with the same name already exists. Please enter another name or 'cancel' if you want to exit:");
                     }
-                }catch (IllegalArgumentException e){
+                } catch (IllegalArgumentException e){
                     System.out.println(e.getMessage());
                     name = "";
                 }

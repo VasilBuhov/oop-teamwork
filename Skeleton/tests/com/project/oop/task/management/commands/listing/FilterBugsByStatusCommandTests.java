@@ -21,7 +21,7 @@ public class FilterBugsByStatusCommandTests {
     private TaskManagementRepositoryImpl repository;
 
     @BeforeEach
-    public void before(){
+    public void before() {
         this.repository = new TaskManagementRepositoryImpl();
         this.command1 = new FilterBugsByStatusCommand(repository);
         this.command2 = new CreateNewBoardCommand(repository);
@@ -30,7 +30,7 @@ public class FilterBugsByStatusCommandTests {
     }
 
     @Test
-    public void execute_Should_ThrowException_When_InputIsEqualToCancel(){
+    public void execute_Should_ThrowException_When_InputIsEqualToCancel() {
         //Arrange
         List<String> params = new ArrayList<>();
         repository.createNewTeam("Team1");
@@ -51,8 +51,9 @@ public class FilterBugsByStatusCommandTests {
         //Act, Assert
         Assertions.assertThrows(IllegalArgumentException.class, () -> command1.execute(params));
     }
+
     @Test
-    public void execute_Should_ThrowException_When_EnteredStatusNotValid(){
+    public void execute_Should_ThrowException_When_EnteredStatusNotValid() {
         //Arrange
         List<String> params = new ArrayList<>();
         repository.createNewTeam("Team1");
@@ -75,7 +76,7 @@ public class FilterBugsByStatusCommandTests {
     }
 
     @Test
-    public void execute_Should_DisplayFilteredTasks_When_ValidTitleEntered(){
+    public void execute_Should_DisplayFilteredTasks_When_ValidTitleEntered() {
         //Arrange
         List<String> params = new ArrayList<>();
         repository.createNewTeam("Team1");
@@ -108,11 +109,11 @@ public class FilterBugsByStatusCommandTests {
                 "*********************");
 
         //Assert
-        Assertions.assertEquals(result,filteredBugs);
+        Assertions.assertEquals(result, filteredBugs);
     }
 
     @Test
-    public void execute_Should_DisplayNoBug_When_NoBugsWithEnteredStatusExist(){
+    public void execute_Should_DisplayNoBug_When_NoBugsWithEnteredStatusExist() {
         //Arrange
         List<String> params = new ArrayList<>();
         repository.createNewTeam("Team1");
@@ -136,6 +137,6 @@ public class FilterBugsByStatusCommandTests {
         String result = String.format("No bugs with this status");
 
         //Assert
-        Assertions.assertEquals(result,filteredBugs);
+        Assertions.assertEquals(result, filteredBugs);
     }
 }

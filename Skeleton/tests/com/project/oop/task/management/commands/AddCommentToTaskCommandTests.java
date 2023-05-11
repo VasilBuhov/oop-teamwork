@@ -26,7 +26,7 @@ public class AddCommentToTaskCommandTests {
     private TaskManagementRepositoryImpl repository;
 
     @BeforeEach
-    public void before(){
+    public void before() {
         this.repository = new TaskManagementRepositoryImpl();
         this.createTeam = new CreateNewTeamCommand(repository);
         this.command = new AddCommentToTaskCommand(repository);
@@ -37,7 +37,7 @@ public class AddCommentToTaskCommandTests {
     }
 
     @Test
-    public void execute_Should_AddComment_When_AllParametersValid(){
+    public void execute_Should_AddComment_When_AllParametersValid() {
         //Arrange
         List<String> params = new ArrayList<>();
 
@@ -75,7 +75,7 @@ public class AddCommentToTaskCommandTests {
     }
 
     @Test
-    public void execute_Should_ThrowException_When_EnteredIDNotExit(){
+    public void execute_Should_ThrowException_When_EnteredIDNotExit() {
         //Arrange
         List<String> params = new ArrayList<>();
 

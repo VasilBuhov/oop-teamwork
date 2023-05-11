@@ -5,9 +5,7 @@ import com.project.oop.task.management.commands.creation.CreateNewBoardCommand;
 import com.project.oop.task.management.commands.creation.CreateNewFeedbackCommand;
 import com.project.oop.task.management.commands.creation.CreateNewTeamCommand;
 import com.project.oop.task.management.core.TaskManagementRepositoryImpl;
-import com.project.oop.task.management.models.MemberImpl;
 import com.project.oop.task.management.models.enums.FeedbackStatus;
-import com.project.oop.task.management.utils.MessageHelper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,7 +24,7 @@ public class ChangeFeedbackStatusCommandTests {
     private TaskManagementRepositoryImpl repository;
 
     @BeforeEach
-    public void before(){
+    public void before() {
         this.repository = new TaskManagementRepositoryImpl();
         this.command = new ChangeFeedbackStatusCommand(repository);
         this.createBoard = new CreateNewBoardCommand(repository);
@@ -35,7 +33,7 @@ public class ChangeFeedbackStatusCommandTests {
     }
 
     @Test
-    public void execute_Should_AdvanceTheStatus_When_AllParametersValid(){
+    public void execute_Should_AdvanceTheStatus_When_AllParametersValid() {
         //Arrange
         List<String> params1 = new ArrayList<>();
         InputStream in1 = new ByteArrayInputStream(("Team1\n").getBytes());
@@ -64,7 +62,7 @@ public class ChangeFeedbackStatusCommandTests {
     }
 
     @Test
-    public void execute_Should_RevertTheStatus_When_AllParametersValid(){
+    public void execute_Should_RevertTheStatus_When_AllParametersValid() {
         //Arrange
         List<String> params1 = new ArrayList<>();
         InputStream in1 = new ByteArrayInputStream(("Team1\n").getBytes());
@@ -92,7 +90,7 @@ public class ChangeFeedbackStatusCommandTests {
     }
 
     @Test
-    public void execute_Should_ThrowException_When_CannotChangeTheStatus(){
+    public void execute_Should_ThrowException_When_CannotChangeTheStatus() {
         //Arrange
         List<String> params1 = new ArrayList<>();
         InputStream in1 = new ByteArrayInputStream(("Team1\n").getBytes());
@@ -128,7 +126,7 @@ public class ChangeFeedbackStatusCommandTests {
     }
 
     @Test
-    public void execute_Should_ThrowException_When_IdDoNotExist(){
+    public void execute_Should_ThrowException_When_IdDoNotExist() {
         //Arrange
         List<String> params1 = new ArrayList<>();
         InputStream in1 = new ByteArrayInputStream(("Team1\n").getBytes());

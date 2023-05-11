@@ -3,10 +3,7 @@ package com.project.oop.task.management.commands.listing;
 import com.project.oop.task.management.commands.contracts.Command;
 import com.project.oop.task.management.commands.creation.CreateNewBoardCommand;
 import com.project.oop.task.management.commands.creation.CreateNewBugCommand;
-import com.project.oop.task.management.commands.creation.CreateNewFeedbackCommand;
 import com.project.oop.task.management.core.TaskManagementRepositoryImpl;
-import com.project.oop.task.management.models.contracts.Bug;
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,7 +21,7 @@ public class FilterBugsByAssigneeCommandTests {
     private TaskManagementRepositoryImpl repository;
 
     @BeforeEach
-    public void before(){
+    public void before() {
         this.repository = new TaskManagementRepositoryImpl();
         this.command1 = new FilterBugsByAssigneeCommand(repository);
         this.command2 = new CreateNewBoardCommand(repository);
@@ -33,7 +30,7 @@ public class FilterBugsByAssigneeCommandTests {
     }
 
     @Test
-    public void execute_Should_ThrowException_When_InputIsEqualToCancel(){
+    public void execute_Should_ThrowException_When_InputIsEqualToCancel() {
         //Arrange
         List<String> params = new ArrayList<>();
         repository.createNewTeam("Team1");
@@ -54,8 +51,9 @@ public class FilterBugsByAssigneeCommandTests {
         //Act, Assert
         Assertions.assertThrows(IllegalArgumentException.class, () -> command1.execute(params));
     }
+
     @Test
-    public void execute_Should_ThrowException_When_EnteredAssigneeNameNotFound(){
+    public void execute_Should_ThrowException_When_EnteredAssigneeNameNotFound() {
         //Arrange
         List<String> params = new ArrayList<>();
         repository.createNewTeam("Team1");
@@ -78,7 +76,7 @@ public class FilterBugsByAssigneeCommandTests {
     }
 
     @Test
-    public void execute_Should_DisplayFilteredBugs_When_ExistingAssigneeNameEntered(){
+    public void execute_Should_DisplayFilteredBugs_When_ExistingAssigneeNameEntered() {
         //Arrange
         List<String> params = new ArrayList<>();
         repository.createNewTeam("Team1");
@@ -100,22 +98,22 @@ public class FilterBugsByAssigneeCommandTests {
         String filteredBugs = command1.execute(params).trim();
 
         String result = String.format("*********************%n" +
-        "Bug:%n" +
-        "Title: LongBugTitle1%n" +
-        "Description: LongBugDescription1%n" +
-        "Comments: %n" +
-        "Status: Active%n" +
-        "Priority: Low%n" +
-        "Severity: Minor%n" +
-        "Assignee: Margarita%n" +
+                "Bug:%n" +
+                "Title: LongBugTitle1%n" +
+                "Description: LongBugDescription1%n" +
+                "Comments: %n" +
+                "Status: Active%n" +
+                "Priority: Low%n" +
+                "Severity: Minor%n" +
+                "Assignee: Margarita%n" +
                 "*********************");
 
         //Assert
-        Assertions.assertEquals(result,filteredBugs);
+        Assertions.assertEquals(result, filteredBugs);
     }
 
     @Test
-    public void execute_Should_DisplayNoBug_When_AssigneeHasNoBugs(){
+    public void execute_Should_DisplayNoBug_When_AssigneeHasNoBugs() {
         //Arrange
         List<String> params = new ArrayList<>();
         repository.createNewTeam("Team1");
@@ -136,6 +134,6 @@ public class FilterBugsByAssigneeCommandTests {
         String result = String.format("No bugs assigned to this person.");
 
         //Assert
-        Assertions.assertEquals(result,filteredBugs);
+        Assertions.assertEquals(result, filteredBugs);
     }
 }

@@ -8,6 +8,7 @@ import com.project.oop.task.management.commands.creation.CreateNewPersonCommand;
 import com.project.oop.task.management.commands.creation.CreateNewTeamCommand;
 import com.project.oop.task.management.core.TaskManagementRepositoryImpl;
 import com.project.oop.task.management.models.enums.BugStatus;
+import com.project.oop.task.management.models.enums.Severity;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

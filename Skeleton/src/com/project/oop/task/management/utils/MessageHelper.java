@@ -9,14 +9,11 @@ public class MessageHelper {
             "Task with id: %d is already assigned. Try with another task ID or enter 'cancel' if you want to exit:";
     public static final String TASK_UNASSIGNED_MESSAGE =
             "Task with id: %d and title: %s is unassigned from %s.";
-
     public static final String ENTER_PERSON_NAME_MESSAGE =
             "Please enter person name or 'cancel' if you want to exit:";
     public static final String PERSON_IS_NOT_FOUND_MESSAGE =
             "Person with this name is not found! " +
                     "Please enter a valid assignee or 'cancel' if you want to exit: ";
-
-
     public static final String ENTER_TEAM_NAME_MESSAGE =
             "Please enter team name or 'cancel' if you want to exit:";
     public static final String TEAM_ALREADY_EXIST =
@@ -28,19 +25,15 @@ public class MessageHelper {
             "Team with name %s was created!";
     public static final String MEMBER_ADDED_MESSAGE =
             "Member with name: %s was added to team: %s!";
-
-
     public static final String ENTER_COMMENT_MESSAGE =
             "Please enter the comment you would like to add or 'cancel' if you want to exit:";
     public static final String COMMENT_ADDED_MESSAGE =
             "%sWas added to task with ID: %d";
-
     public static final String ENTER_BOARD_NAME_MESSAGE =
             "Please enter a board where you would like to add this story or 'cancel' if you want to exit:";
     public static final String BOARD_IS_NOT_FOUNDED =
             "This board is not founded in your team! " +
                     "Please enter a valid board name or 'cancel' if you want to exit:";
-
     public static final String CANNOT_ASSIGN_STORY =
             "You are not part of the team and cannot create a new story! " +
                     "Please enter a valid assignee or 'cancel' if you want to exit: ";
@@ -54,7 +47,6 @@ public class MessageHelper {
                     "Please enter a valid assignee or 'cancel' if you want to exit: ";
     public static final String BUG_CREATED =
             "Bug with id: %d and title: %s was created.";
-
     public static final String ENTER_TITLE_MESSAGE =
             "Please enter a valid title or 'cancel' if you want to exit:";
     public static final String ENTER_DESCRIPTION_MESSAGE =
@@ -67,9 +59,23 @@ public class MessageHelper {
             "Please enter a valid size or 'cancel' if you want to exit:";
     public static final String TASK_ASSIGNED_MESSAGE =
             "Task with id: %d and title: %s is assign to %s.";
-
     public static final String PARSING_ERROR_MESSAGE =
             "Invalid input, must be a number! Please try again or enter 'cancel' if you want to exit:";
     public static final String INVALID_INPUT =
             "Command is terminated. Please enter a new command:";
+    public static final String FEEDBACK_NOT_FOUND_MESSAGE =
+            "Feedback with id: %d is not found! Please enter a valid id or 'cancel if you want to exit:";
+    public static final String ENTER_RATING_MESSAGE =
+            "Please enter a new rating or 'cancel' if you want to exit:";
+    public static final String CHANGED_RATING =
+            "Rating to feedback with id: %d was changed to %d.";
+    public static final String ENTER_DIRECTION_MESSAGE =
+            "Please enter a valid direction (advance or revert) or 'cancel' if you want to exit:";
+    public static final String INVALID_DIRECTION_MESSAGE =
+            "Invalid direction! Please enter a valid direction (advance or revert) or 'cancel' if you want to exit:";
+    public static final String CHANGED_STATUS =
+            "Status of feedback with id: %d was changed from %s to %s.";
+    public static final String STATUS_IS_NOT_CHANGED =
+            "Status remains the same - %s!";
+
 }

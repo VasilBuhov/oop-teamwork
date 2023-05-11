@@ -13,7 +13,6 @@ import java.util.Scanner;
 public class ShowPersonActivityCommand implements Command {
 
     public static int EXPECTED_NUMBER_OF_ARGUMENTS = 1;
-
     private String personName;
     private final TaskManagementRepository repository;
 

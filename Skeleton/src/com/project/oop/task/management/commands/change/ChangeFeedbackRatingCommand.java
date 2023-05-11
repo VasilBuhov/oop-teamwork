@@ -3,6 +3,7 @@ package com.project.oop.task.management.commands.change;
 import com.project.oop.task.management.commands.contracts.Command;
 import com.project.oop.task.management.core.TaskManagementRepositoryImpl;
 import com.project.oop.task.management.core.contracts.TaskManagementRepository;
+import com.project.oop.task.management.utils.MessageHelper;
 import com.project.oop.task.management.utils.ParsingHelpers;
 import com.project.oop.task.management.utils.ValidationHelper;
 
@@ -10,20 +11,6 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ChangeFeedbackRatingCommand implements Command {
-    public static final String ENTER_ID_MESSAGE =
-            "Please enter a valid ID or 'cancel' if you want to exit:";
-    public static final String FEEDBACK_NOT_FOUND_MESSAGE =
-            "Feedback with id: %d is not found! Please enter a valid id or 'cancel if you want to exit:";
-    public static final String ENTER_RATING_MESSAGE =
-            "Please enter a new rating or 'cancel' if you want to exit:";
-    public static final String PARSING_ERROR_MESSAGE =
-            "Invalid input, must be a number! Please try again or enter 'cancel' if you want to exit:";
-    public static final String CHANGED_RATING =
-            "Rating to feedback with id: %d was changed to %d.";
-    public static final String INVALID_INPUT =
-            "Command is terminated. Please enter a new command:";
-
-
     public static int EXPECTED_NUMBER_OF_ARGUMENTS = 2;
     private int id;
     private int newRating;
@@ -35,33 +22,33 @@ public class ChangeFeedbackRatingCommand implements Command {
 
     @Override
     public String execute(List<String> parameters) {
-         Scanner scanner = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
 
-        System.out.println(ENTER_ID_MESSAGE);
+        System.out.println(MessageHelper.ENTER_TASK_ID_MESSAGE);
         boolean isValidId = false;
         while (!isValidId) {
             String input = scanner.nextLine();
-            repository.isItCancel(input, INVALID_INPUT);
+            repository.isItCancel(input, MessageHelper.INVALID_INPUT);
             try {
-                id = ParsingHelpers.tryParseInt(input, PARSING_ERROR_MESSAGE);
+                id = ParsingHelpers.tryParseInt(input, MessageHelper.PARSING_ERROR_MESSAGE);
                 if (repository.getFeedback().stream().anyMatch(feedback -> feedback.getId() == id)) {
                     isValidId = true;
                     parameters.add(String.valueOf(id));
                 } else {
-                    System.out.printf((FEEDBACK_NOT_FOUND_MESSAGE) + "%n", id);
+                    System.out.printf((MessageHelper.FEEDBACK_NOT_FOUND_MESSAGE) + "%n", id);
                 }
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }
         }
 
-        System.out.println(ENTER_RATING_MESSAGE);
+        System.out.println(MessageHelper.ENTER_RATING_MESSAGE);
         boolean isValidRating = false;
         while (!isValidRating) {
             String input = scanner.nextLine();
-            repository.isItCancel(input, INVALID_INPUT);
+            repository.isItCancel(input, MessageHelper.INVALID_INPUT);
             try {
-                newRating = ParsingHelpers.tryParseInt(input, PARSING_ERROR_MESSAGE);
+                newRating = ParsingHelpers.tryParseInt(input, MessageHelper.PARSING_ERROR_MESSAGE);
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage() + " Try again or enter 'cancel' to exit:");
             }
@@ -75,7 +62,7 @@ public class ChangeFeedbackRatingCommand implements Command {
 
         repository.changeFeedbackRating(id, newRating);
 
-        return String.format(CHANGED_RATING, id, newRating);
+        return String.format(MessageHelper.CHANGED_RATING, id, newRating);
     }
 
 }

@@ -271,6 +271,6 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
 
     @Override
     public boolean isPersonAlreadyCreated(String personName) {
-        return getPeople().stream().anyMatch(member -> member.getName().equals(personName));
+        return getAllPeople().stream().anyMatch(member -> member.getName().equals(personName));
     }
 }

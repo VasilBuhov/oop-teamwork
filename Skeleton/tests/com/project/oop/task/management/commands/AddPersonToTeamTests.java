@@ -91,6 +91,7 @@ public class AddPersonToTeamTests {
         InputStream in2 = new ByteArrayInputStream(("Valid\nTeam2").getBytes());
         System.setIn(in2);
 
+
         //Act, Assert
         Assertions.assertThrows(NoSuchElementException.class, () -> command.execute(params2));
     }
@@ -116,4 +117,5 @@ public class AddPersonToTeamTests {
         //Act, Assert
         Assertions.assertThrows(NoSuchElementException.class, () -> command.execute(params2));
     }
+
 }

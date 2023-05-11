@@ -42,5 +42,10 @@ public interface TaskManagementRepository {
     Bug findBugById(int id);
     void changeBugSeverity(int id, Severity severity);
     void changeBugStatus(int id, String direction);
+    boolean isTeamAlreadyCreated(String teamName);
+    boolean isBoardAlreadyCreated(String teamName, String boardName);
+    boolean isTaskAlreadyCreated(int taskId);
+
+    boolean isPersonAlreadyCreated(String personName);
 }
 

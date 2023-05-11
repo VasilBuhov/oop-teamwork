@@ -7,6 +7,7 @@ import com.project.oop.task.management.models.TaskImpl;
 import com.project.oop.task.management.models.contracts.Board;
 import com.project.oop.task.management.models.contracts.Feedback;
 import com.project.oop.task.management.models.contracts.Team;
+import com.project.oop.task.management.utils.MessageHelper;
 import com.project.oop.task.management.utils.ParsingHelpers;
 import com.project.oop.task.management.utils.ValidationHelper;
 
@@ -42,20 +43,12 @@ public class CreateNewFeedbackCommand implements Command {
 
         while (!teamIsValid) {
             teamName = scanner.nextLine();
-            if (teamName.equals("cancel")){
-                throw new IllegalArgumentException("Command is terminated. Please enter a new command:");
-            }
-            if (repository.getTeams().stream().anyMatch(team -> team.getName().equals(teamName))){
-                teamToAddFeedback = repository
-                        .getTeams()
-                        .stream()
-                        .filter(team -> team.getName().equals(teamName))
-                        .collect(Collectors.toList())
-                        .get(0);
+            repository.isItCancel(teamName, MessageHelper.INVALID_INPUT);
+            if (repository.isTeamAlreadyCreated(teamName)){
+                teamToAddFeedback = repository.findTeamByName(teamName);
                 teamIsValid = true;
-                //parameters.add(teamName);
             }else {
-                System.out.println("Team is not found. Please enter a valid team name or 'cancel' if you want to exit");
+                System.out.println(MessageHelper.TEAM_IS_NOT_FOUNDED);
             }
         }
 
@@ -65,33 +58,21 @@ public class CreateNewFeedbackCommand implements Command {
 
             while (!boardIsValid) {
                 boardName = scanner.nextLine();
-                if (boardName.equals("cancel")){
-                    throw new IllegalArgumentException("Command is terminated. Please enter a new command:");
-                }
-                if (teamToAddFeedback.getBoards().stream().anyMatch(board -> board.getName().equals(boardName))){
-                    boardToAddFeedback = teamToAddFeedback
-                            .getBoards()
-                            .stream()
-                            .filter(board -> board.getName().equals(boardName))
-                            .collect(Collectors.toList())
-                            .get(0);
+                repository.isItCancel(boardName, MessageHelper.INVALID_INPUT);
+                if (repository.isBoardAlreadyCreated(teamName, boardName)){
+                    boardToAddFeedback = repository.findBoardByName(boardName, teamName);
                     boardIsValid = true;
-                    //parameters.add(boardName);
                 }else {
-                    System.out.println("Board is not found. Please enter a valid board name:");
+                    System.out.println(MessageHelper.BOARD_IS_NOT_FOUNDED);
                 }
-
             }
-
 
             while (!allParamsValid) {
                 System.out.println("Please enter feedback title or 'cancel' if you want to exit:");
                 boolean titleIsValid = false;
                 while (!titleIsValid) {
                     title = scanner.nextLine();
-                    if (title.equals("cancel")){
-                        throw new IllegalArgumentException("Command is terminated. Please enter a new command:");
-                    }
+                    repository.isItCancel(title, MessageHelper.INVALID_INPUT);
                     try {
                         TaskImpl.validateTitle(title);
                     } catch (IllegalArgumentException e) {
@@ -100,7 +81,6 @@ public class CreateNewFeedbackCommand implements Command {
                     }
                     if (!title.equals("")) {
                         titleIsValid = true;
-                        //parameters.add(title);
                     }
                 }
                 System.out.println("Please enter feedback description or 'cancel' if you want to exit:");
@@ -108,9 +88,7 @@ public class CreateNewFeedbackCommand implements Command {
                 while (!descriptionIsValid) {
 
                     description = scanner.nextLine();
-                    if (description.equals("cancel")){
-                        throw new IllegalArgumentException("Command is terminated. Please enter a new command:");
-                    }
+                    repository.isItCancel(description, MessageHelper.INVALID_INPUT);
                     try {
                         TaskImpl.validateDescription(description);
                     } catch (IllegalArgumentException e) {
@@ -127,35 +105,26 @@ public class CreateNewFeedbackCommand implements Command {
                 boolean ratingIsValid = false;
                 while (!ratingIsValid) {
                     String input = scanner.nextLine();
-                    if (input.equals("cancel")){
-                        throw new IllegalArgumentException("Command is terminated. Please enter a new command:");
-                    }
+                    repository.isItCancel(input, MessageHelper.INVALID_INPUT);
                     try {
-                        rating = ParsingHelpers.tryParseInt(input, "Rating is not valid");
+                        rating = ParsingHelpers.tryParseInt(input, MessageHelper.RATING_NOT_VALID);
                     } catch (IllegalArgumentException e) {
                         System.out.println(e.getMessage());
                         rating = 0;
                     }
                     if (rating != 0) {
                         ratingIsValid = true;
-                        //parameters.add(rating + "");
                     }
                 }
                 allParamsValid = true;
             }
 
-            //title = parameters.get(0);
-            //description = parameters.get(1);
-            //rating = Integer.parseInt(parameters.get(2));
-
-
             Feedback createdFeedback = repository.createFeedback(title, description, rating);
             boardToAddFeedback.addTask(createdFeedback);
 
-            return String.format("Feedback with ID %d was created and added to board %s of team %s.",
+            return String.format(MessageHelper.FEEDBACK_CREATED,
                     createdFeedback.getId(), boardToAddFeedback.getName(), teamToAddFeedback.getName());
         }
-
     }
 
 

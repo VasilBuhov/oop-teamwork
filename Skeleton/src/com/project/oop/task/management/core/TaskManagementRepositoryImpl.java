@@ -4,6 +4,7 @@ import com.project.oop.task.management.core.contracts.TaskManagementRepository;
 import com.project.oop.task.management.models.*;
 import com.project.oop.task.management.models.contracts.*;
 import com.project.oop.task.management.models.enums.*;
+import com.project.oop.task.management.utils.MessageHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,6 +66,9 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
 
     @Override
     public Member createNewPerson(String name) {
+        if (isPersonAlreadyCreated(name)){
+            throw new IllegalArgumentException(String.format(MessageHelper.PERSON_EXISTS));
+        }
         Member person = new MemberImpl(name);
         people.add(person);
 
@@ -246,4 +250,24 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
         task.addComment(comment);
     }
 
+    @Override
+    public boolean isTeamAlreadyCreated(String teamName) {
+        return getTeams().stream().anyMatch(team -> team.getName().equals(teamName));
+    }
+
+    @Override
+    public boolean isBoardAlreadyCreated(String teamName, String boardName) {
+        Team teamToAddBoard = findTeamByName(teamName);
+        return teamToAddBoard.getBoards().stream().anyMatch(board -> board.getName().equals(boardName));
+    }
+
+    @Override
+    public boolean isTaskAlreadyCreated(int taskId) {
+        return tasks.stream().anyMatch(task -> task.getId() == taskId);
+    }
+
+    @Override
+    public boolean isPersonAlreadyCreated(String personName) {
+        return getPeople().stream().anyMatch(member -> member.getName().equals(personName));
+    }
 }

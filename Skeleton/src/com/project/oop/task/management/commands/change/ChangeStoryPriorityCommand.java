@@ -4,6 +4,7 @@ import com.project.oop.task.management.commands.contracts.Command;
 import com.project.oop.task.management.core.TaskManagementRepositoryImpl;
 import com.project.oop.task.management.core.contracts.TaskManagementRepository;
 import com.project.oop.task.management.models.enums.Priority;
+import com.project.oop.task.management.utils.MessageHelper;
 import com.project.oop.task.management.utils.ParsingHelpers;
 import com.project.oop.task.management.utils.ValidationHelper;
 
@@ -32,20 +33,17 @@ public class ChangeStoryPriorityCommand implements Command {
         System.out.println("Please enter story ID or 'cancel' if you want to exit:");
         while (!idIsValid){
             String input = scanner.nextLine();
-            if (input.equals("cancel")){
-                throw new IllegalArgumentException("Command is terminated. Please enter a new command:");
-            }
+            repository.isItCancel(input, MessageHelper.INVALID_INPUT);
             try{
-                storyId = ParsingHelpers.tryParseInt(input,
-                        "ID is not valid. Please enter a number or 'cancel' if you want to exit:");
+                storyId = ParsingHelpers.tryParseInt(input, MessageHelper.PARSING_ERROR_MESSAGE);
             }catch (IllegalArgumentException e){
                 System.out.println(e.getMessage());
             }
 
             if (storyId != 0){
                 try{
-                    if (!repository.getTasks().stream().anyMatch(task -> task.getId() == storyId)) {
-                        throw new IllegalArgumentException("Story with this ID not found. Please enter another ID or 'cancel' if you want to exit:");
+                    if (!repository.isTaskAlreadyCreated(storyId)) {
+                        throw new IllegalArgumentException(String.format(MessageHelper.TASK_NOT_FOUND_MESSAGE, storyId));
                     }
                 }catch (IllegalArgumentException e){
                     System.out.println(e.getMessage());
@@ -56,17 +54,17 @@ public class ChangeStoryPriorityCommand implements Command {
             if (storyId != 0){
                 idIsValid = true;
             }
-
         }
         boolean priorityIsValid = false;
         System.out.println("Please enter the new priority of the story:");
         while (!priorityIsValid){
             String newPriority = scanner.nextLine();
+            repository.isItCancel(newPriority, MessageHelper.INVALID_INPUT);
             try {
                 if (!newPriority.equalsIgnoreCase("low")
                 && (!newPriority.equalsIgnoreCase("medium"))
                 && (!newPriority.equalsIgnoreCase("high"))){
-                    throw new IllegalArgumentException("Priority is not valid. Please choose between Low, Medium and High or cancel if you want to exit:");
+                    throw new IllegalArgumentException(MessageHelper.STORY_PRIORITY_NOT_VALID);
                 }
             }catch (IllegalArgumentException e){
                 System.out.println(e.getMessage());
@@ -81,7 +79,7 @@ public class ChangeStoryPriorityCommand implements Command {
 
         repository.changeStoryPriority(storyId, priority);
 
-        return String.format("Story priority was changed to %s", priority.name());
+        return String.format(MessageHelper.STORY_PRIORITY_CHANGED, priority.name());
     }
 
 }

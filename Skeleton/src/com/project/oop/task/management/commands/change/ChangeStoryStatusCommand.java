@@ -6,6 +6,7 @@ import com.project.oop.task.management.core.contracts.TaskManagementRepository;
 import com.project.oop.task.management.models.enums.Priority;
 import com.project.oop.task.management.models.enums.Size;
 import com.project.oop.task.management.models.enums.StoryStatus;
+import com.project.oop.task.management.utils.MessageHelper;
 import com.project.oop.task.management.utils.ParsingHelpers;
 import com.project.oop.task.management.utils.ValidationHelper;
 
@@ -30,20 +31,17 @@ public class ChangeStoryStatusCommand implements Command{
         System.out.println("Please enter story ID or 'cancel' if you want to exit:");
         while (!idIsValid){
             String input = scanner.nextLine();
-            if (input.equals("cancel")){
-                throw new IllegalArgumentException("Command is terminated. Please enter a new command:");
-            }
+            repository.isItCancel(input, MessageHelper.INVALID_INPUT);
             try{
-                storyId = ParsingHelpers.tryParseInt(input,
-                        "ID is not valid. Please enter a number or 'cancel' if you want to exit:");
+                storyId = ParsingHelpers.tryParseInt(input, MessageHelper.PARSING_ERROR_MESSAGE);
             }catch (IllegalArgumentException e){
                 System.out.println(e.getMessage());
             }
 
             if (storyId != 0){
                 try{
-                    if (!repository.getTasks().stream().anyMatch(task -> task.getId() == storyId)) {
-                        throw new IllegalArgumentException("Story with this ID not found. Please enter another ID or 'cancel' if you want to exit:");
+                    if (!repository.isTaskAlreadyCreated(storyId)) {
+                        throw new IllegalArgumentException(String.format(MessageHelper.TASK_NOT_FOUND_MESSAGE, storyId));
                     }
                 }catch (IllegalArgumentException e){
                     System.out.println(e.getMessage());
@@ -64,7 +62,7 @@ public class ChangeStoryStatusCommand implements Command{
                 if (!newStatus.equalsIgnoreCase("Done")
                         && (!newStatus.equalsIgnoreCase("Not_Done"))
                         && (!newStatus.equalsIgnoreCase("In_Progress"))){
-                    throw new IllegalArgumentException("Status is not valid. Please choose between Not_Done, In_Progress and Done or cancel if you want to exit:");
+                    throw new IllegalArgumentException(MessageHelper.STORY_STATUS_NOT_VALID);
                 }
             }catch (IllegalArgumentException e){
                 System.out.println(e.getMessage());
@@ -79,6 +77,6 @@ public class ChangeStoryStatusCommand implements Command{
 
         repository.changeStoryStatus(storyId, status);
 
-        return String.format("Story status was changed to %s", status.name());
+        return String.format(MessageHelper.STORY_STATUS_CHANGED, status.name());
     }
 }

@@ -72,4 +72,28 @@ public class MessageHelper {
             "Invalid input, must be a number! Please try again or enter 'cancel' if you want to exit:";
     public static final String INVALID_INPUT =
             "Command is terminated. Please enter a new command:";
+
+    public static final String RATING_NOT_VALID = "Rating is not valid. Please enter a number:";
+
+    public static final String STORY_PRIORITY_NOT_VALID =
+            "Priority is not valid. Please choose between Low, Medium and High or cancel if you want to exit:";
+    public static final String STORY_SIZE_NOT_VALID =
+            "Size is not valid. Please choose between SMALL, MEDIUM and LARGE or cancel if you want to exit:";
+
+    public static final String STORY_STATUS_NOT_VALID = "Status is not valid. Please choose between Not_Done, In_Progress and Done or cancel if you want to exit:";
+    public static final String STORY_PRIORITY_CHANGED = "Story priority was changed to %s";
+    public static final String STORY_SIZE_CHANGED = "Story size was changed to %s";
+
+    public static final String STORY_STATUS_CHANGED = "Story status was changed to %s";
+
+    public static final String PERSON_CREATED = "Person %s was created.";
+    public static final String PERSON_EXISTS =
+            "A person with the same name already exists. Please enter another name or 'cancel' if you want to exit:";
+    public static final String FEEDBACK_CREATED = "Feedback with ID %d was created and added to board %s of team %s.";
+    public static final String PROMPT_MESSAGE = "Please enter %s or `cancel` if you want to exit";
+    public static void printPromptMessage(String type){
+        System.out.println(String.format(PROMPT_MESSAGE, type));
+    }
+
+
 }

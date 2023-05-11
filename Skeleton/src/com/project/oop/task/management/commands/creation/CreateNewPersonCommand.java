@@ -6,16 +6,14 @@ import com.project.oop.task.management.core.contracts.TaskManagementRepository;
 import com.project.oop.task.management.models.MemberImpl;
 import com.project.oop.task.management.models.TaskImpl;
 import com.project.oop.task.management.models.contracts.Member;
+import com.project.oop.task.management.utils.MessageHelper;
 import com.project.oop.task.management.utils.ValidationHelper;
 
 import java.util.List;
 import java.util.Scanner;
 
 public class CreateNewPersonCommand implements Command {
-    public static final int EXPECTED_NUMBER_OF_ARGUMENTS = 1;
-
     private String name;
-
     private final TaskManagementRepository repository;
     public CreateNewPersonCommand(TaskManagementRepository taskManagementRepository) {
         this.repository = taskManagementRepository;
@@ -24,14 +22,11 @@ public class CreateNewPersonCommand implements Command {
     @Override
     public String execute( List<String> parameters) {
         Scanner scanner = new Scanner(System.in);
-
-        System.out.println("Please enter person name or 'cancel' if you want to exit:");
+        MessageHelper.printPromptMessage("person name");
         boolean nameIsValid = false;
         while (!nameIsValid) {
             name = scanner.nextLine();
-            if (name.equals("cancel")){
-                throw new IllegalArgumentException("Command is terminated. Please enter a new command:");
-            }
+            repository.isItCancel(name, MessageHelper.INVALID_INPUT);
             try {
                 MemberImpl.validateName(name);
             } catch (IllegalArgumentException e) {
@@ -39,12 +34,9 @@ public class CreateNewPersonCommand implements Command {
                 name = "";
             }
 
-
             if (!name.equals("")) {
                 try{
-                    if (repository.getPeople().stream().anyMatch(member -> member.getName().equals(name))) {
-                        throw new IllegalArgumentException("A person with the same name already exists. Please enter another name or 'cancel' if you want to exit:");
-                    }
+                    repository.createNewPerson(name);
                 }catch (IllegalArgumentException e){
                     System.out.println(e.getMessage());
                     name = "";
@@ -52,14 +44,9 @@ public class CreateNewPersonCommand implements Command {
             }
             if (!name.equals("")){
                 nameIsValid = true;
-                parameters.add(name);
             }
         }
 
-        name = parameters.get(0);
-
-        Member createdMember = repository.createNewPerson(name);
-
-        return String.format("Person %s was created.", name);
+        return String.format(MessageHelper.PERSON_CREATED, name);
     }
 }

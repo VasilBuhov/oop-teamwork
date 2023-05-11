@@ -63,6 +63,7 @@ public class TaskImplTests {
                 "valid description",
                 10);
     }
+
     public static CommentImpl initializeTestComment() {
         return new CommentImpl(
                 "This is test.",

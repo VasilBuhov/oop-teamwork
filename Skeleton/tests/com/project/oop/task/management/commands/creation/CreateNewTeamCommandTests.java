@@ -20,13 +20,13 @@ public class CreateNewTeamCommandTests {
     private TaskManagementRepositoryImpl repository;
 
     @BeforeEach
-    public void before(){
+    public void before() {
         this.repository = new TaskManagementRepositoryImpl();
         this.command = new CreateNewTeamCommand(repository);
     }
 
     @Test
-    public void execute_Should_ThrowException_When_NameLengthNotValid(){
+    public void execute_Should_ThrowException_When_NameLengthNotValid() {
         List<String> params = new ArrayList<>();
         String name = "Test";
 
@@ -37,7 +37,7 @@ public class CreateNewTeamCommandTests {
     }
 
     @Test
-    public void execute_Should_ThrowException_When_InputIsEqualToCancel(){
+    public void execute_Should_ThrowException_When_InputIsEqualToCancel() {
         List<String> params = new ArrayList<>();
         String name = "cancel";
 
@@ -48,7 +48,7 @@ public class CreateNewTeamCommandTests {
     }
 
     @Test
-    public void execute_Should_ThrowException_When_NameAlreadyExists(){
+    public void execute_Should_ThrowException_When_NameAlreadyExists() {
         Team team = new TeamImpl("IntelliNinjas");
         repository.createNewTeam(team.getName());
         List<String> params = new ArrayList<>();
@@ -61,7 +61,7 @@ public class CreateNewTeamCommandTests {
     }
 
     @Test
-    public void execute_Should_CreatePerson_When_NameIsValid(){
+    public void execute_Should_CreatePerson_When_NameIsValid() {
         List<String> params = new ArrayList<>();
         String teamName = "IntelliNinjas";
         InputStream in = new ByteArrayInputStream(teamName.getBytes());

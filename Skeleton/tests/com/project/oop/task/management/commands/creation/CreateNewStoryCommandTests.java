@@ -23,7 +23,7 @@ public class CreateNewStoryCommandTests {
     private TaskManagementRepositoryImpl repository;
 
     @BeforeEach
-    public void before(){
+    public void before() {
         this.repository = new TaskManagementRepositoryImpl();
         this.createTeam = new CreateNewTeamCommand(repository);
         this.command = new CreateNewStoryCommand(repository);
@@ -33,7 +33,7 @@ public class CreateNewStoryCommandTests {
     }
 
     @Test
-    public void execute_Should_ThrowException_When_TitleLengthNotValid(){
+    public void execute_Should_ThrowException_When_TitleLengthNotValid() {
         //Arrange
         List<String> params = new ArrayList<>();
 
@@ -64,7 +64,7 @@ public class CreateNewStoryCommandTests {
     }
 
     @Test
-    public void execute_Should_CreateNewStory_When_AllParametersValid(){
+    public void execute_Should_CreateNewStory_When_AllParametersValid() {
         //Arrange
         List<String> params = new ArrayList<>();
 
@@ -95,8 +95,9 @@ public class CreateNewStoryCommandTests {
         //Act, Assert
         Assertions.assertEquals(1, repository.getStories().size());
     }
+
     @Test
-    public void execute_Should_ThrowException_When_AssigneeIsNotValid(){
+    public void execute_Should_ThrowException_When_AssigneeIsNotValid() {
         //Arrange
         List<String> params = new ArrayList<>();
 
@@ -125,10 +126,10 @@ public class CreateNewStoryCommandTests {
 
         //Act, Assert
         Assertions.assertThrows(NoSuchElementException.class, () -> command.execute(params4));
-   }
+    }
 
     @Test
-    public void execute_Should_ThrowException_When_PriorityNotValid(){
+    public void execute_Should_ThrowException_When_PriorityNotValid() {
         //Arrange
         List<String> params = new ArrayList<>();
 
@@ -159,7 +160,7 @@ public class CreateNewStoryCommandTests {
     }
 
     @Test
-    public void execute_Should_ThrowException_When_SizeNotValid(){
+    public void execute_Should_ThrowException_When_SizeNotValid() {
         //Arrange
         List<String> params = new ArrayList<>();
 
@@ -190,7 +191,7 @@ public class CreateNewStoryCommandTests {
     }
 
     @Test
-    public void execute_Should_ThrowException_When_EnteredTeamNameNotExit(){
+    public void execute_Should_ThrowException_When_EnteredTeamNameNotExit() {
         //Arrange
         List<String> params = new ArrayList<>();
 
@@ -221,7 +222,7 @@ public class CreateNewStoryCommandTests {
     }
 
     @Test
-    public void execute_Should_ThrowException_When_EnteredBoardNameNotExit(){
+    public void execute_Should_ThrowException_When_EnteredBoardNameNotExit() {
         //Arrange
         List<String> params = new ArrayList<>();
 

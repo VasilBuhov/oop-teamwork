@@ -72,6 +72,21 @@ public class MessageHelper {
             "Invalid input, must be a number! Please try again or enter 'cancel' if you want to exit:";
     public static final String INVALID_INPUT =
             "Command is terminated. Please enter a new command:";
+    public static final String FEEDBACK_NOT_FOUND_MESSAGE =
+            "Feedback with id: %d is not found! Please enter a valid id or 'cancel if you want to exit:";
+    public static final String ENTER_RATING_MESSAGE =
+            "Please enter a new rating or 'cancel' if you want to exit:";
+    public static final String CHANGED_RATING =
+            "Rating to feedback with id: %d was changed to %d.";
+    public static final String ENTER_DIRECTION_MESSAGE =
+            "Please enter a valid direction (advance or revert) or 'cancel' if you want to exit:";
+    public static final String INVALID_DIRECTION_MESSAGE =
+            "Invalid direction! Please enter a valid direction (advance or revert) or 'cancel' if you want to exit:";
+    public static final String CHANGED_STATUS =
+            "Status of feedback with id: %d was changed from %s to %s.";
+    public static final String STATUS_IS_NOT_CHANGED =
+            "Status remains the same - %s!";
+
 
     public static final String RATING_NOT_VALID = "Rating is not valid. Please enter a number:";
 

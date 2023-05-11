@@ -22,6 +22,9 @@ public class SortFeedbackByRatingCommand implements Command {
         for (Feedback feedback : sortedByRating) {
             stringBuilder.append(feedback.getAsString());
         }
+        if (sortedByRating.isEmpty()) {
+            return "No feedback created yet.";
+        }
         return stringBuilder.toString();
     }
 }

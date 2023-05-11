@@ -2,7 +2,6 @@ package com.project.oop.task.management.commands.show;
 
 import com.project.oop.task.management.commands.contracts.Command;
 import com.project.oop.task.management.commands.creation.CreateNewBoardCommand;
-import com.project.oop.task.management.commands.creation.CreateNewFeedbackCommand;
 import com.project.oop.task.management.core.TaskManagementRepositoryImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,22 +20,23 @@ public class ShowAllTeamsCommandTests {
     private Command command3;
 
     @BeforeEach
-    public void before(){
+    public void before() {
         this.repository = new TaskManagementRepositoryImpl();
         this.command1 = new ShowAllTeamsCommand(repository);
         this.command2 = new CreateNewBoardCommand(repository);
     }
 
     @Test
-    public void should_ThrowException_WhenNoTeamsCreatedInSystem(){
+    public void should_ThrowException_WhenNoTeamsCreatedInSystem() {
         //Arrange
         List<String> params = new ArrayList<>();
 
         //Act, Assert
         Assertions.assertThrows(IllegalArgumentException.class, () -> command1.execute(params));
     }
+
     @Test
-    public void should_DisplayTeamInfo(){
+    public void should_DisplayTeamInfo() {
 
         //Arrange
         repository.createNewTeam("Team1");
@@ -83,7 +83,7 @@ public class ShowAllTeamsCommandTests {
                 "Team boards: %n" +
                 "No boards created for this team%n" +
                 "======================"
-                );
+        );
 
         //Act
         String actualResult = command1.execute(params);

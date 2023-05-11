@@ -13,7 +13,6 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 public class FilterTasksByTitleCommandTests {
     private Command command1;
@@ -23,7 +22,7 @@ public class FilterTasksByTitleCommandTests {
     private TaskManagementRepositoryImpl repository;
 
     @BeforeEach
-    public void before(){
+    public void before() {
         this.repository = new TaskManagementRepositoryImpl();
         this.command1 = new FilterTasksByTitleCommand(repository);
         this.command2 = new CreateNewBoardCommand(repository);
@@ -33,7 +32,7 @@ public class FilterTasksByTitleCommandTests {
     }
 
     @Test
-    public void execute_Should_ThrowException_When_InputIsEqualToCancel(){
+    public void execute_Should_ThrowException_When_InputIsEqualToCancel() {
         //Arrange
         List<String> params = new ArrayList<>();
         repository.createNewTeam("Team1");
@@ -54,8 +53,9 @@ public class FilterTasksByTitleCommandTests {
         //Act, Assert
         Assertions.assertThrows(IllegalArgumentException.class, () -> command1.execute(params));
     }
+
     @Test
-    public void execute_Should_ThrowException_When_EnteredTitleNotFound(){
+    public void execute_Should_ThrowException_When_EnteredTitleNotFound() {
         //Arrange
         List<String> params = new ArrayList<>();
         repository.createNewTeam("Team1");
@@ -79,11 +79,11 @@ public class FilterTasksByTitleCommandTests {
         String result = String.format("No task with this title");
 
         //Assert
-        Assertions.assertEquals(result,foundTasks);
+        Assertions.assertEquals(result, foundTasks);
     }
 
     @Test
-    public void execute_Should_DisplayFilteredTasks_When_TasksWithEnteredTitleEntered(){
+    public void execute_Should_DisplayFilteredTasks_When_TasksWithEnteredTitleEntered() {
         //Arrange
         List<String> params = new ArrayList<>();
         repository.createNewTeam("Team1");
@@ -97,7 +97,6 @@ public class FilterTasksByTitleCommandTests {
         InputStream in2 = new ByteArrayInputStream(("Team1\nBoard1\nTaskTitle1\nLongBugDescription1\nlow\nminor\nMargarita\n").getBytes());
         System.setIn(in2);
         command3.execute(params);
-
 
 
         InputStream in3 = new ByteArrayInputStream(("Team1\nBoard1\nTaskTitle1\nFeedbackDescription\n1\n").getBytes());
@@ -131,11 +130,11 @@ public class FilterTasksByTitleCommandTests {
                 "*********************");
 
         //Assert
-        Assertions.assertEquals(result,filteredBugs);
+        Assertions.assertEquals(result, filteredBugs);
     }
 
     @Test
-    public void execute_Should_DisplayNoTask_When_NoTasksWithEnteredTitleExist(){
+    public void execute_Should_DisplayNoTask_When_NoTasksWithEnteredTitleExist() {
         //Arrange
         List<String> params = new ArrayList<>();
         repository.createNewTeam("Team1");
@@ -160,6 +159,6 @@ public class FilterTasksByTitleCommandTests {
         String result = String.format("No task with this title");
 
         //Assert
-        Assertions.assertEquals(result,filteredTasks);
+        Assertions.assertEquals(result, filteredTasks);
     }
 }

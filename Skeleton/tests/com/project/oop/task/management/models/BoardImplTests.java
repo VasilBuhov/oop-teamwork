@@ -48,8 +48,8 @@ public class BoardImplTests {
         Task task = initializeTestStory();
 
         // Act
-       board.addTask(task);
-       board.getTasks().clear();
+        board.addTask(task);
+        board.getTasks().clear();
 
         // Assert
         assertEquals(1, board.getTasks().size());
@@ -84,6 +84,7 @@ public class BoardImplTests {
     public static BoardImpl initializeTestBoard() {
         return new BoardImpl("valid");
     }
+
     public static Task initializeTestStory() {
         return new StoryImpl(
                 1,

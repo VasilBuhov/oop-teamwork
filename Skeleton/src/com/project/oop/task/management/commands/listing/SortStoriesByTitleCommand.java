@@ -22,6 +22,9 @@ public class SortStoriesByTitleCommand implements Command {
         for (Story story : sortedByTitle) {
             stringBuilder.append(story.getAsString());
         }
+        if (sortedByTitle.isEmpty()) {
+            return "No story created yet.";
+        }
         return stringBuilder.toString();
     }
 }

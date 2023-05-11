@@ -13,7 +13,6 @@ import java.util.Scanner;
 public class ShowPersonActivityCommand implements Command {
 
     public static int EXPECTED_NUMBER_OF_ARGUMENTS = 1;
-
     private String personName;
     private final TaskManagementRepository repository;
 
@@ -29,7 +28,7 @@ public class ShowPersonActivityCommand implements Command {
         boolean nameIsValid = false;
         while (!nameIsValid) {
             personName = scanner.nextLine();
-            if (repository.getMembers().stream().anyMatch(member -> member.getName().equals(personName))) {
+            if (repository.getAllPeople().stream().anyMatch(person -> person.getName().equals(personName))) {
                 nameIsValid = true;
                 parameters.add(personName);
             } else {
@@ -39,6 +38,6 @@ public class ShowPersonActivityCommand implements Command {
         }
 
         ValidationHelper.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
-        return repository.findMemberByName(personName).getActivity();
+        return repository.findPersonByName(personName).getActivity();
     }
 }

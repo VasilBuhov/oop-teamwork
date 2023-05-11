@@ -22,7 +22,7 @@ public class AddPersonToTeamTests {
     private TaskManagementRepositoryImpl repository;
 
     @BeforeEach
-    public void before(){
+    public void before() {
         this.repository = new TaskManagementRepositoryImpl();
         this.createTeam = new CreateNewTeamCommand(repository);
         this.command = new CreateNewBugCommand(repository);
@@ -91,6 +91,7 @@ public class AddPersonToTeamTests {
         InputStream in2 = new ByteArrayInputStream(("Valid\nTeam2").getBytes());
         System.setIn(in2);
 
+
         //Act, Assert
         Assertions.assertThrows(NoSuchElementException.class, () -> command.execute(params2));
     }
@@ -116,4 +117,5 @@ public class AddPersonToTeamTests {
         //Act, Assert
         Assertions.assertThrows(NoSuchElementException.class, () -> command.execute(params2));
     }
+
 }

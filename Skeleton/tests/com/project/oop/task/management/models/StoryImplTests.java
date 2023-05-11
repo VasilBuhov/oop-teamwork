@@ -103,10 +103,10 @@ public class StoryImplTests {
         //Act
         StringBuilder sb = new StringBuilder();
         sb.append(String.format("*********************%n" +
-                        "Story:%n" +
-                        "Title: %s%n" +
-                        "Description: %s%n" +
-                        "Comments: %n", story.getTitle(), story.getDescription()));
+                "Story:%n" +
+                "Title: %s%n" +
+                "Description: %s%n" +
+                "Comments: %n", story.getTitle(), story.getDescription()));
         for (String comment : story.getComments()) {
             sb.append(comment);
         }
@@ -132,6 +132,7 @@ public class StoryImplTests {
         //Assert
         assertEquals(story.viewInfo(), story.getAsString());
     }
+
     public static StoryImpl initializeTestStory() {
         return new StoryImpl(
                 1,

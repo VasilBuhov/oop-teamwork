@@ -194,7 +194,8 @@ public class TeamImplTests {
             for (Task task1 : board.getTasks()) {
                 sb.append(task.getActivity());
             }
-        } sb.append(String.format("*********************%n"));
+        }
+        sb.append(String.format("*********************%n"));
 
         // Assert
         assertEquals(sb.toString(), team.getActivity());
@@ -203,12 +204,15 @@ public class TeamImplTests {
     public static TeamImpl initializeTestTeam() {
         return new TeamImpl("valid");
     }
+
     public static BoardImpl initializeTestBoard() {
         return new BoardImpl("valid");
     }
+
     public static MemberImpl initializeTestMember() {
         return new MemberImpl("valid");
     }
+
     public static Task initializeTestStory() {
         return new StoryImpl(
                 1,

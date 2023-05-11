@@ -21,7 +21,7 @@ public class FilterBugsByStatusAndAssigneeCommandTests {
     private TaskManagementRepositoryImpl repository;
 
     @BeforeEach
-    public void before(){
+    public void before() {
         this.repository = new TaskManagementRepositoryImpl();
         this.command1 = new FilterBugsByStatusAndAssigneeCommand(repository);
         this.command2 = new CreateNewBoardCommand(repository);
@@ -30,7 +30,7 @@ public class FilterBugsByStatusAndAssigneeCommandTests {
     }
 
     @Test
-    public void execute_Should_ThrowException_When_CancelEnteredInsteadOfStatus(){
+    public void execute_Should_ThrowException_When_CancelEnteredInsteadOfStatus() {
         //Arrange
         List<String> params = new ArrayList<>();
         repository.createNewTeam("Team1");
@@ -53,7 +53,7 @@ public class FilterBugsByStatusAndAssigneeCommandTests {
     }
 
     @Test
-    public void execute_Should_ThrowException_When_CancelEnteredInsteadOfAssignee(){
+    public void execute_Should_ThrowException_When_CancelEnteredInsteadOfAssignee() {
         //Arrange
         List<String> params = new ArrayList<>();
         repository.createNewTeam("Team1");
@@ -74,8 +74,9 @@ public class FilterBugsByStatusAndAssigneeCommandTests {
         //Act, Assert
         Assertions.assertThrows(IllegalArgumentException.class, () -> command1.execute(params));
     }
+
     @Test
-    public void execute_Should_ThrowException_When_EnteredStatusNotValid(){
+    public void execute_Should_ThrowException_When_EnteredStatusNotValid() {
         //Arrange
         List<String> params = new ArrayList<>();
         repository.createNewTeam("Team1");
@@ -99,7 +100,7 @@ public class FilterBugsByStatusAndAssigneeCommandTests {
 
 
     @Test
-    public void execute_Should_ThrowException_When_EnteredAssigneeNameNotExist(){
+    public void execute_Should_ThrowException_When_EnteredAssigneeNameNotExist() {
         //Arrange
         List<String> params = new ArrayList<>();
         repository.createNewTeam("Team1");
@@ -122,7 +123,7 @@ public class FilterBugsByStatusAndAssigneeCommandTests {
     }
 
     @Test
-    public void execute_Should_DisplayFilteredBugs_When_ValidStatusAndAssigneeEntered(){
+    public void execute_Should_DisplayFilteredBugs_When_ValidStatusAndAssigneeEntered() {
         //Arrange
         List<String> params = new ArrayList<>();
         repository.createNewTeam("Team1");
@@ -155,11 +156,11 @@ public class FilterBugsByStatusAndAssigneeCommandTests {
                 "*********************");
 
         //Assert
-        Assertions.assertEquals(result,filteredBugs);
+        Assertions.assertEquals(result, filteredBugs);
     }
 
     @Test
-    public void execute_Should_DisplayNoBug_When_NoBugsWithEnteredStatusExist(){
+    public void execute_Should_DisplayNoBug_When_NoBugsWithEnteredStatusExist() {
         //Arrange
         List<String> params = new ArrayList<>();
         repository.createNewTeam("Team1");
@@ -183,11 +184,11 @@ public class FilterBugsByStatusAndAssigneeCommandTests {
         String result = String.format("No bugs with this status");
 
         //Assert
-        Assertions.assertEquals(result,filteredBugs);
+        Assertions.assertEquals(result, filteredBugs);
     }
 
     @Test
-    public void execute_Should_DisplayNoBug_When_NoBugsWithEnteredAssigneeExist(){
+    public void execute_Should_DisplayNoBug_When_NoBugsWithEnteredAssigneeExist() {
         //Arrange
         List<String> params = new ArrayList<>();
         repository.createNewTeam("Team1");
@@ -213,6 +214,6 @@ public class FilterBugsByStatusAndAssigneeCommandTests {
         String result = String.format("No bugs assigned to this person");
 
         //Assert
-        Assertions.assertEquals(result,filteredBugs);
+        Assertions.assertEquals(result, filteredBugs);
     }
 }

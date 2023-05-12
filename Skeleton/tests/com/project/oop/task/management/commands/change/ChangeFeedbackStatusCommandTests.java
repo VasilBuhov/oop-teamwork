@@ -1,9 +1,6 @@
 package com.project.oop.task.management.commands.change;
 
 import com.project.oop.task.management.commands.contracts.Command;
-import com.project.oop.task.management.commands.creation.CreateNewBoardCommand;
-import com.project.oop.task.management.commands.creation.CreateNewFeedbackCommand;
-import com.project.oop.task.management.commands.creation.CreateNewTeamCommand;
 import com.project.oop.task.management.core.TaskManagementRepositoryImpl;
 import com.project.oop.task.management.models.enums.FeedbackStatus;
 import org.junit.jupiter.api.Assertions;
@@ -18,42 +15,24 @@ import java.util.NoSuchElementException;
 
 public class ChangeFeedbackStatusCommandTests {
     private Command command;
-    private Command createTeam;
-    private Command createBoard;
-    private Command createFeedback;
     private TaskManagementRepositoryImpl repository;
 
     @BeforeEach
     public void before() {
         this.repository = new TaskManagementRepositoryImpl();
         this.command = new ChangeFeedbackStatusCommand(repository);
-        this.createBoard = new CreateNewBoardCommand(repository);
-        this.createTeam = new CreateNewTeamCommand(repository);
-        this.createFeedback = new CreateNewFeedbackCommand(repository);
+        repository.createNewTeam("Team1");
+        repository.createBoard("Board1");
+        repository.createFeedback("ValidTitle", "ValidDescription", 1);
     }
 
     @Test
     public void execute_Should_AdvanceTheStatus_When_AllParametersValid() {
         //Arrange
-        List<String> params1 = new ArrayList<>();
-        InputStream in1 = new ByteArrayInputStream(("Team1\n").getBytes());
-        System.setIn(in1);
-        createTeam.execute(params1);
-
-        List<String> params2 = new ArrayList<>();
-        InputStream in2 = new ByteArrayInputStream(("Team1\nBoard1\n").getBytes());
-        System.setIn(in2);
-        createBoard.execute(params2);
-
-        List<String> params3 = new ArrayList<>();
-        InputStream in3 = new ByteArrayInputStream(("Team1\nBoard1\nValidTitle\nValidDescription\n1\n").getBytes());
-        System.setIn(in3);
-        createFeedback.execute(params3);
-
-        List<String> params4 = new ArrayList<>();
-        InputStream in4 = new ByteArrayInputStream(("1\nadvance\n").getBytes());
-        System.setIn(in4);
-        command.execute(params4);
+        List<String> params = new ArrayList<>();
+        InputStream in = new ByteArrayInputStream(("1\nadvance\n").getBytes());
+        System.setIn(in);
+        command.execute(params);
 
         String newStatus = FeedbackStatus.UNSCHEDULED.toString();
 
@@ -64,25 +43,10 @@ public class ChangeFeedbackStatusCommandTests {
     @Test
     public void execute_Should_RevertTheStatus_When_AllParametersValid() {
         //Arrange
-        List<String> params1 = new ArrayList<>();
-        InputStream in1 = new ByteArrayInputStream(("Team1\n").getBytes());
-        System.setIn(in1);
-        createTeam.execute(params1);
-
-        List<String> params2 = new ArrayList<>();
-        InputStream in2 = new ByteArrayInputStream(("Team1\nBoard1\n").getBytes());
-        System.setIn(in2);
-        createBoard.execute(params2);
-
-        List<String> params3 = new ArrayList<>();
-        InputStream in3 = new ByteArrayInputStream(("Team1\nBoard1\nValidTitle\nValidDescription\n1\n").getBytes());
-        System.setIn(in3);
-        createFeedback.execute(params3);
-
-        List<String> params4 = new ArrayList<>();
-        InputStream in4 = new ByteArrayInputStream(("1\nrevert\n").getBytes());
-        System.setIn(in4);
-        command.execute(params4);
+        List<String> params = new ArrayList<>();
+        InputStream in = new ByteArrayInputStream(("1\nrevert\n").getBytes());
+        System.setIn(in);
+        command.execute(params);
 
 
         //Act, Assert
@@ -92,89 +56,44 @@ public class ChangeFeedbackStatusCommandTests {
     @Test
     public void execute_Should_ThrowException_When_CannotChangeTheStatus() {
         //Arrange
-        List<String> params1 = new ArrayList<>();
-        InputStream in1 = new ByteArrayInputStream(("Team1\n").getBytes());
-        System.setIn(in1);
-        createTeam.execute(params1);
-
-        List<String> params2 = new ArrayList<>();
-        InputStream in2 = new ByteArrayInputStream(("Team1\nBoard1\n").getBytes());
-        System.setIn(in2);
-        createBoard.execute(params2);
-
-        List<String> params3 = new ArrayList<>();
-        InputStream in3 = new ByteArrayInputStream(("Team1\nBoard1\nValidTitle\nValidDescription\n1\n").getBytes());
-        System.setIn(in3);
-        createFeedback.execute(params3);
-
-        List<String> params4 = new ArrayList<>();
+        List<String> params = new ArrayList<>();
         InputStream in4 = new ByteArrayInputStream(("1\nadvance\n").getBytes());
         System.setIn(in4);
-        command.execute(params4);
+        command.execute(params);
         InputStream in5 = new ByteArrayInputStream(("1\nadvance\n").getBytes());
         System.setIn(in5);
-        command.execute(params4);
+        command.execute(params);
         InputStream in6 = new ByteArrayInputStream(("1\nadvance\n").getBytes());
         System.setIn(in6);
-        command.execute(params4);
+        command.execute(params);
         InputStream in7 = new ByteArrayInputStream(("1\nadvance\n").getBytes());
         System.setIn(in7);
-        command.execute(params4);
+        command.execute(params);
 
         //Act, Assert
-        Assertions.assertThrows(NoSuchElementException.class, () -> command.execute(params4));
+        Assertions.assertThrows(NoSuchElementException.class, () -> command.execute(params));
     }
 
     @Test
     public void execute_Should_ThrowException_When_IdDoNotExist() {
         //Arrange
-        List<String> params1 = new ArrayList<>();
-        InputStream in1 = new ByteArrayInputStream(("Team1\n").getBytes());
-        System.setIn(in1);
-        createTeam.execute(params1);
-
-        List<String> params2 = new ArrayList<>();
-        InputStream in2 = new ByteArrayInputStream(("Team1\nBoard1\n").getBytes());
-        System.setIn(in2);
-        createBoard.execute(params2);
-
-        List<String> params3 = new ArrayList<>();
-        InputStream in3 = new ByteArrayInputStream(("Team1\nBoard1\nValidTitle\nValidDescription\n1\n").getBytes());
-        System.setIn(in3);
-        createFeedback.execute(params3);
-
-        List<String> params4 = new ArrayList<>();
-        InputStream in4 = new ByteArrayInputStream(("2\nadvance\n").getBytes());
-        System.setIn(in4);
+        List<String> params = new ArrayList<>();
+        InputStream in = new ByteArrayInputStream(("2\nadvance\n").getBytes());
+        System.setIn(in);
 
         //Act, Assert
-        Assertions.assertThrows(NoSuchElementException.class, () -> command.execute(params4));
+        Assertions.assertThrows(NoSuchElementException.class, () -> command.execute(params));
     }
 
     @Test
     public void execute_Should_ThrowException_When_DirectionEqualsCancel() {
         //Arrange
-        List<String> params1 = new ArrayList<>();
-        InputStream in1 = new ByteArrayInputStream(("Team1\n").getBytes());
-        System.setIn(in1);
-        createTeam.execute(params1);
-
-        List<String> params2 = new ArrayList<>();
-        InputStream in2 = new ByteArrayInputStream(("Team1\nBoard1\n").getBytes());
-        System.setIn(in2);
-        createBoard.execute(params2);
-
-        List<String> params3 = new ArrayList<>();
-        InputStream in3 = new ByteArrayInputStream(("Team1\nBoard1\nValidTitle\nValidDescription\n1\n").getBytes());
-        System.setIn(in3);
-        createFeedback.execute(params3);
-
-        List<String> params4 = new ArrayList<>();
-        InputStream in4 = new ByteArrayInputStream(("1\nInvalid\n").getBytes());
-        System.setIn(in4);
+        List<String> params = new ArrayList<>();
+        InputStream in = new ByteArrayInputStream(("1\nInvalid\n").getBytes());
+        System.setIn(in);
 
         //Act, Assert
-        Assertions.assertThrows(NoSuchElementException.class, () -> command.execute(params4));
+        Assertions.assertThrows(NoSuchElementException.class, () -> command.execute(params));
     }
 
 }

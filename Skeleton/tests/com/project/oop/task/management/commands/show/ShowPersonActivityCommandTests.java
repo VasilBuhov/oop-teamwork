@@ -1,7 +1,6 @@
 package com.project.oop.task.management.commands.show;
 
 import com.project.oop.task.management.commands.contracts.Command;
-import com.project.oop.task.management.commands.creation.CreateNewPersonCommand;
 import com.project.oop.task.management.core.TaskManagementRepositoryImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,26 +14,19 @@ import java.util.NoSuchElementException;
 
 public class ShowPersonActivityCommandTests {
     private Command command;
-    private Command createPerson;
     private TaskManagementRepositoryImpl repository;
 
     @BeforeEach
     public void before() {
         this.repository = new TaskManagementRepositoryImpl();
         this.command = new ShowPersonActivityCommand(repository);
-        this.createPerson = new CreateNewPersonCommand(repository);
+        repository.createNewPerson("Valid");
     }
 
     @Test
     public void execute_Should_ShowPersonActivity_When_ArgumentsAreValid() {
         //Arrange
         List<String> params = new ArrayList<>();
-
-        InputStream in = new ByteArrayInputStream(("Valid\n").getBytes());
-        System.setIn(in);
-        createPerson.execute(params);
-
-        List<String> params2 = new ArrayList<>();
         InputStream in2 = new ByteArrayInputStream(("Valid\n").getBytes());
         System.setIn(in2);
 
@@ -47,40 +39,28 @@ public class ShowPersonActivityCommandTests {
         sb.append(String.format("======================%n"));
 
         //Act, Assert
-        Assertions.assertEquals(sb.toString(), command.execute(params2));
+        Assertions.assertEquals(sb.toString(), command.execute(params));
     }
 
     @Test
     public void execute_Should_ThrowException_When_NameEqualsCancel() {
         //Arrange
         List<String> params = new ArrayList<>();
-
-        InputStream in = new ByteArrayInputStream(("Valid\n").getBytes());
-        System.setIn(in);
-        createPerson.execute(params);
-
-        List<String> params2 = new ArrayList<>();
         InputStream in2 = new ByteArrayInputStream(("cancel\n").getBytes());
         System.setIn(in2);
 
         //Act, Assert
-        Assertions.assertThrows(IllegalArgumentException.class, () -> command.execute(params2));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> command.execute(params));
     }
 
     @Test
     public void execute_Should_ThrowException_When_NameIsNotFound() {
         //Arrange
         List<String> params = new ArrayList<>();
-
-        InputStream in = new ByteArrayInputStream(("Valid\n").getBytes());
-        System.setIn(in);
-        createPerson.execute(params);
-
-        List<String> params2 = new ArrayList<>();
         InputStream in2 = new ByteArrayInputStream(("Invalid\n").getBytes());
         System.setIn(in2);
 
         //Act, Assert
-        Assertions.assertThrows(NoSuchElementException.class, () -> command.execute(params2));
+        Assertions.assertThrows(NoSuchElementException.class, () -> command.execute(params));
     }
 }

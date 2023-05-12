@@ -4,6 +4,7 @@ import com.project.oop.task.management.commands.contracts.Command;
 import com.project.oop.task.management.core.TaskManagementRepositoryImpl;
 import com.project.oop.task.management.models.contracts.Task;
 import com.project.oop.task.management.utils.ListingHelpers;
+import com.project.oop.task.management.utils.MessageHelper;
 
 import java.util.List;
 import java.util.Scanner;
@@ -12,8 +13,8 @@ import java.util.stream.Collectors;
 public class FilterTasksByTitleCommand implements Command {
     private List<Task> filteredTasks;
     private String title;
-
     private final TaskManagementRepositoryImpl repository;
+
     public FilterTasksByTitleCommand(TaskManagementRepositoryImpl taskManagementRepository) {
         this.repository = taskManagementRepository;
     }
@@ -21,28 +22,25 @@ public class FilterTasksByTitleCommand implements Command {
     @Override
     public String execute(List<String> parameters) {
         Scanner scanner = new Scanner(System.in);
-
-        System.out.println("Please enter a title to filter by:");
+        MessageHelper.printPromptMessage("title to filter by");
         boolean titleIsValid = false;
 
         while (!titleIsValid) {
             title = scanner.nextLine();
-            if (title.equals("cancel")) {
-                throw new IllegalArgumentException("Command is terminated. Please enter a new command:");
+            repository.isItCancel(title, MessageHelper.INVALID_INPUT);
+
+            try {
+                repository.checkForTaskTitle(title);
+            }catch (IllegalArgumentException e){
+                System.out.println(e.getMessage());
+                title = "";
             }
 
-            if (!repository.getTasks().stream().anyMatch(task -> task.getTitle().equals(title))) {
-                return String.format("No task with this title");
-            }
-
+            if (!title.equals("")){
                 titleIsValid = true;
-                filteredTasks = repository
-                        .getTasks()
-                        .stream()
-                        .filter(task -> task.getTitle().equals(title))
-                        .collect(Collectors.toList());
-
+                filteredTasks = repository.getTasksByTitle(title);
             }
+        }
 
         return ListingHelpers.tasksToString(filteredTasks);
     }

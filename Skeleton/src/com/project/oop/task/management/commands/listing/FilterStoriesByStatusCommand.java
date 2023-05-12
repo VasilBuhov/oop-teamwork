@@ -5,6 +5,7 @@ import com.project.oop.task.management.core.TaskManagementRepositoryImpl;
 import com.project.oop.task.management.models.contracts.Feedback;
 import com.project.oop.task.management.models.contracts.Story;
 import com.project.oop.task.management.utils.ListingHelpers;
+import com.project.oop.task.management.utils.MessageHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,20 +26,14 @@ public class FilterStoriesByStatusCommand implements Command {
     public String execute(List<String> parameters) {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Please enter status to filter by:");
+        MessageHelper.printPromptMessage("status to filter by");
         boolean statusIsValid = false;
 
         while (!statusIsValid) {
             status = scanner.nextLine();
-            if (status.equals("cancel")) {
-                throw new IllegalArgumentException("Command is terminated. Please enter a new command:");
-            }
+            repository.isItCancel(status, MessageHelper.INVALID_INPUT);
             try {
-                if (!status.equalsIgnoreCase("NotDone")
-                        && (!status.equalsIgnoreCase("InProgress"))
-                        && (!status.equalsIgnoreCase("Done"))){
-                    throw new IllegalArgumentException("Status is not valid. Please choose between NotDone, InProgress and Done or cancel if you want to exit:");
-                }
+               repository.checkForStoryStatus(status);
             }catch (IllegalArgumentException e){
                 System.out.println(e.getMessage());
                 status = "";
@@ -46,9 +41,9 @@ public class FilterStoriesByStatusCommand implements Command {
 
             if (!status.equals("")) {
                 statusIsValid = true;
-                filteredStories = repository.getStories().stream().filter(story -> story.getStatus().equalsIgnoreCase(status)).collect(Collectors.toList());
+                filteredStories = repository.getStoriesByStatus(status);
                 if (filteredStories.size() == 0) {
-                    return String.format("No stories with this status");
+                    return MessageHelper.NO_STORY_WITH_THIS_STATUS;
                 }
             }
         }

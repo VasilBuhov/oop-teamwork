@@ -49,6 +49,22 @@ public interface TaskManagementRepository {
 
     boolean isPersonAlreadyCreated(String personName);
 
+    public void checkForAssignee(String assigneeName);
+    public void checkForBugStatus(String status);
+    List<Bug> getBugsByAssignee(String assigneeName);
+    List<Bug> getBugsByStatus(String status);
+    List<Bug> getBugsByStatusAndAssignee(String status, String assignee);
+    List<Feedback> getFeedbacksByStatus(String status);
+    List<Story> getStoriesByAssignee(String assignee);
+    List<Story> getStoriesByStatus(String status);
+    List<Story> getStoriesByStatusAndAssignee(String status, String assignee);
+    List<Task> getTasksByTitle(String title);
+    public void checkForFeedbackStatus(String status);
+    public void checkForStoryStatus(String status);
+    public void checkForStoryPriority(String priority);
+    public void checkForTaskTitle(String title);
+    public void checkForTaskId(int id);
+    public void checkForStorySize(String size);
 
 }
 

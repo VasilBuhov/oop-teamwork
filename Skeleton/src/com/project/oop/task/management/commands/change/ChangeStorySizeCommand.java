@@ -29,7 +29,7 @@ public class ChangeStorySizeCommand implements Command{
         Scanner scanner = new Scanner(System.in);
 
         boolean idIsValid = false;
-        System.out.println("Please enter story ID or 'cancel' if you want to exit:");
+        MessageHelper.printPromptMessage("story ID");
         while (!idIsValid){
             String input = scanner.nextLine();
             repository.isItCancel(input, MessageHelper.INVALID_INPUT);
@@ -41,9 +41,7 @@ public class ChangeStorySizeCommand implements Command{
 
             if (storyId != 0){
                 try{
-                    if (!repository.isTaskAlreadyCreated(storyId)) {
-                        throw new IllegalArgumentException(String.format(MessageHelper.TASK_NOT_FOUND_MESSAGE, storyId));
-                    }
+                    repository.checkForTaskId(storyId);
                 }catch (IllegalArgumentException e){
                     System.out.println(e.getMessage());
                     storyId = 0;
@@ -55,16 +53,12 @@ public class ChangeStorySizeCommand implements Command{
             }
         }
         boolean sizeIsValid = false;
-        System.out.println("Please enter the new size of the story:");
+        MessageHelper.printPromptMessage("new size");
         while (!sizeIsValid){
             String newSize = scanner.nextLine();
             repository.isItCancel(newSize, MessageHelper.INVALID_INPUT);
             try {
-                if (!newSize.equalsIgnoreCase("small")
-                        && (!newSize.equalsIgnoreCase("medium"))
-                        && (!newSize.equalsIgnoreCase("large"))){
-                    throw new IllegalArgumentException(MessageHelper.STORY_SIZE_NOT_VALID);
-                }
+                repository.checkForStorySize(newSize);
             }catch (IllegalArgumentException e){
                 System.out.println(e.getMessage());
                 newSize = "";

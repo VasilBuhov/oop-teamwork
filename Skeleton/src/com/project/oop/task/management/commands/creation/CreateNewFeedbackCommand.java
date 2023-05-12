@@ -25,6 +25,8 @@ public class CreateNewFeedbackCommand implements Command {
     private int rating;
     private String teamName;
     private String boardName;
+    private Team teamToAddFeedback;
+    private Board boardToAddFeedback;
 
     private final TaskManagementRepository repository;
 
@@ -37,9 +39,8 @@ public class CreateNewFeedbackCommand implements Command {
         Scanner scanner = new Scanner(System.in);
         boolean allParamsValid = false;
 
-        System.out.println("Please enter a team name for your feedback:");
+        MessageHelper.printPromptMessage("team name");
         boolean teamIsValid = false;
-        Team teamToAddFeedback = null;
 
         while (!teamIsValid) {
             teamName = scanner.nextLine();
@@ -52,9 +53,8 @@ public class CreateNewFeedbackCommand implements Command {
             }
         }
 
-            System.out.println("Please enter the board name for your feedback:");
+            MessageHelper.printPromptMessage("board name");
             boolean boardIsValid = false;
-            Board boardToAddFeedback = null;
 
             while (!boardIsValid) {
                 boardName = scanner.nextLine();
@@ -68,7 +68,7 @@ public class CreateNewFeedbackCommand implements Command {
             }
 
             while (!allParamsValid) {
-                System.out.println("Please enter feedback title or 'cancel' if you want to exit:");
+                MessageHelper.printPromptMessage("feedback title");
                 boolean titleIsValid = false;
                 while (!titleIsValid) {
                     title = scanner.nextLine();
@@ -83,7 +83,7 @@ public class CreateNewFeedbackCommand implements Command {
                         titleIsValid = true;
                     }
                 }
-                System.out.println("Please enter feedback description or 'cancel' if you want to exit:");
+                MessageHelper.printPromptMessage("feedback description");
                 boolean descriptionIsValid = false;
                 while (!descriptionIsValid) {
 
@@ -101,7 +101,7 @@ public class CreateNewFeedbackCommand implements Command {
                     }
                 }
 
-                System.out.println("Please enter feedback rating or 'cancel' if you want to exit:");
+                MessageHelper.printPromptMessage("feedback rating");
                 boolean ratingIsValid = false;
                 while (!ratingIsValid) {
                     String input = scanner.nextLine();

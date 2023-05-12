@@ -223,7 +223,7 @@ public class FilterStoriesByStatusAndAssigneeCommandTests {
         //Act
         String filteredStories = command1.execute(params).trim();
 
-        String result = String.format("No stories assigned to this person");
+        String result = String.format("No stories assigned to this person.");
 
         //Assert
         Assertions.assertEquals(result, filteredStories);

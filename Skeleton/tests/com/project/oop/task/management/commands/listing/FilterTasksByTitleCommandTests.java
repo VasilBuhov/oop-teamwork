@@ -13,6 +13,7 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class FilterTasksByTitleCommandTests {
     private Command command1;
@@ -54,33 +55,6 @@ public class FilterTasksByTitleCommandTests {
         Assertions.assertThrows(IllegalArgumentException.class, () -> command1.execute(params));
     }
 
-    @Test
-    public void execute_Should_ThrowException_When_EnteredTitleNotFound() {
-        //Arrange
-        List<String> params = new ArrayList<>();
-        repository.createNewTeam("Team1");
-        repository.createBoard("Board1");
-        repository.createNewPerson("Margarita");
-        repository.addNewPersonToTeam("Margarita", "Team1");
-        InputStream in1 = new ByteArrayInputStream(("Team1\nBoard1\n").getBytes());
-        System.setIn(in1);
-        command2.execute(params);
-
-        InputStream in2 = new ByteArrayInputStream(("Team1\nBoard1\nLongBugTitle1\nLongBugDescription1\nlow\nminor\nMargarita\n").getBytes());
-        System.setIn(in2);
-        command3.execute(params);
-
-        InputStream in3 = new ByteArrayInputStream(("NewTaskTitle").getBytes());
-        System.setIn(in3);
-
-        //Act
-        String foundTasks = command1.execute(params).trim();
-
-        String result = String.format("No task with this title");
-
-        //Assert
-        Assertions.assertEquals(result, foundTasks);
-    }
 
     @Test
     public void execute_Should_DisplayFilteredTasks_When_TasksWithEnteredTitleEntered() {
@@ -134,7 +108,7 @@ public class FilterTasksByTitleCommandTests {
     }
 
     @Test
-    public void execute_Should_DisplayNoTask_When_NoTasksWithEnteredTitleExist() {
+    public void execute_Should_ThrowException_When_NoTasksWithEnteredTitleExist() {
         //Arrange
         List<String> params = new ArrayList<>();
         repository.createNewTeam("Team1");
@@ -152,13 +126,7 @@ public class FilterTasksByTitleCommandTests {
         InputStream in3 = new ByteArrayInputStream(("NewBugTitle").getBytes());
         System.setIn(in3);
 
-
-        //Act
-        String filteredTasks = command1.execute(params).trim();
-
-        String result = String.format("No task with this title");
-
-        //Assert
-        Assertions.assertEquals(result, filteredTasks);
+        //Act, Assert
+        Assertions.assertThrows(NoSuchElementException.class, () -> command1.execute(params));
     }
 }

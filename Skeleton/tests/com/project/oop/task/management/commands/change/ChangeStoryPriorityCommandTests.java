@@ -78,7 +78,7 @@ public class ChangeStoryPriorityCommandTests {
         System.setIn(in3);
 
         //Act, Assert
-        Assertions.assertThrows(NoSuchElementException.class, () -> command1.execute(params));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> command1.execute(params));
     }
 
     @Test

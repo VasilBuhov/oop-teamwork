@@ -26,9 +26,8 @@ public class ChangeStoryStatusCommand implements Command{
     @Override
     public String execute(List<String> parameters) {
         Scanner scanner = new Scanner(System.in);
-
         boolean idIsValid = false;
-        System.out.println("Please enter story ID or 'cancel' if you want to exit:");
+        MessageHelper.printPromptMessage("story ID");
         while (!idIsValid){
             String input = scanner.nextLine();
             repository.isItCancel(input, MessageHelper.INVALID_INPUT);
@@ -40,9 +39,7 @@ public class ChangeStoryStatusCommand implements Command{
 
             if (storyId != 0){
                 try{
-                    if (!repository.isTaskAlreadyCreated(storyId)) {
-                        throw new IllegalArgumentException(String.format(MessageHelper.TASK_NOT_FOUND_MESSAGE, storyId));
-                    }
+                    repository.checkForTaskId(storyId);
                 }catch (IllegalArgumentException e){
                     System.out.println(e.getMessage());
                     storyId = 0;
@@ -55,15 +52,11 @@ public class ChangeStoryStatusCommand implements Command{
 
         }
         boolean statusIsValid = false;
-        System.out.println("Please enter the new status of the story:");
+        MessageHelper.printPromptMessage("new status");
         while (!statusIsValid){
             String newStatus = scanner.nextLine();
             try {
-                if (!newStatus.equalsIgnoreCase("Done")
-                        && (!newStatus.equalsIgnoreCase("Not_Done"))
-                        && (!newStatus.equalsIgnoreCase("In_Progress"))){
-                    throw new IllegalArgumentException(MessageHelper.STORY_STATUS_NOT_VALID);
-                }
+                repository.checkForStoryStatus(newStatus);
             }catch (IllegalArgumentException e){
                 System.out.println(e.getMessage());
                 newStatus = "";

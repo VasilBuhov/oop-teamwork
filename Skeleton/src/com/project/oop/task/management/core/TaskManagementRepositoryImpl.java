@@ -273,4 +273,141 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
     public boolean isPersonAlreadyCreated(String personName) {
         return getAllPeople().stream().anyMatch(member -> member.getName().equals(personName));
     }
+
+    @Override
+    public void checkForAssignee(String assigneeName) {
+        if (!getMembers().stream().anyMatch(member -> member.getName().equals(assigneeName))) {
+            throw new IllegalArgumentException("No assignee with this name");
+        }
+    }
+
+    @Override
+    public List<Bug> getBugsByAssignee(String assigneeName) {
+        return getBugs()
+                .stream()
+                .filter(bug -> bug.getAssignee().equals(assigneeName))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public void checkForBugStatus(String status) {
+        if (!status.equalsIgnoreCase("Active")
+                && (!status.equalsIgnoreCase("Fixed"))){
+            throw new IllegalArgumentException("Status is not valid. Please choose between Active and Fixed or cancel if you want to exit:");
+        }
+    }
+
+    @Override
+    public List<Bug> getBugsByStatus(String status) {
+        return getBugs()
+                .stream()
+                .filter(bug -> bug.getStatus().equalsIgnoreCase(status))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Bug> getBugsByStatusAndAssignee(String status, String assignee) {
+        return getBugs()
+                .stream()
+                .filter(bug -> bug.getStatus().equalsIgnoreCase(status))
+                .collect(Collectors.toList())
+                .stream()
+                .filter(bug -> bug.getAssignee().equalsIgnoreCase(assignee))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public void checkForFeedbackStatus(String status) {
+        if (!status.equalsIgnoreCase("New")
+                && (!status.equalsIgnoreCase("Unscheduled"))
+                && (!status.equalsIgnoreCase("Scheduled"))
+                && (!status.equalsIgnoreCase("Done"))){
+            throw new IllegalArgumentException("Status is not valid. Please choose between New, Unscheduled, Scheduled and Done or cancel if you want to exit:");
+        }
+    }
+
+    @Override
+    public List<Feedback> getFeedbacksByStatus(String status) {
+        return getFeedback()
+                .stream()
+                .filter(feedback -> feedback.getStatus().equalsIgnoreCase(status))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Story> getStoriesByAssignee(String assignee) {
+        return getStories()
+                .stream()
+                .filter(story -> story.getAssignee().equals(assignee))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public void checkForStoryStatus(String status) {
+        if (!status.equalsIgnoreCase("NotDone")
+                && (!status.equalsIgnoreCase("InProgress"))
+                && (!status.equalsIgnoreCase("Done"))){
+            throw new IllegalArgumentException("Status is not valid. Please choose between NotDone, InProgress and Done or cancel if you want to exit:");
+        }
+    }
+
+    @Override
+    public List<Story> getStoriesByStatus(String status) {
+        return getStories()
+                .stream()
+                .filter(story -> story.getStatus().equalsIgnoreCase(status))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Story> getStoriesByStatusAndAssignee(String status, String assignee) {
+        return getStories()
+                .stream()
+                .filter(story -> story.getStatus().equalsIgnoreCase(status))
+                .collect(Collectors.toList())
+                .stream()
+                .filter(story -> story.getAssignee().equalsIgnoreCase(assignee))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public void checkForTaskTitle(String title) {
+        if (!getTasks().stream().anyMatch(task -> task.getTitle().equals(title))){
+            throw new IllegalArgumentException(
+                    "No task with this title. Please enter a new title or 'cancel' if you want to exit:");
+        }
+    }
+
+    @Override
+    public List<Task> getTasksByTitle(String title) {
+        return getTasks()
+                .stream()
+                .filter(task -> task.getTitle().equals(title))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public void checkForStoryPriority(String priority) {
+        if (!priority.equalsIgnoreCase("low")
+                && (!priority.equalsIgnoreCase("medium"))
+                && (!priority.equalsIgnoreCase("high"))){
+            throw new IllegalArgumentException(MessageHelper.STORY_PRIORITY_NOT_VALID);
+        }
+    }
+
+    @Override
+    public void checkForTaskId(int id) {
+        if (!tasks.stream().anyMatch(task -> task.getId() == id)) {
+            throw new IllegalArgumentException(String.format(MessageHelper.TASK_NOT_FOUND_MESSAGE, id));
+        }
+    }
+
+    @Override
+    public void checkForStorySize(String size) {
+        if (!size.equalsIgnoreCase("small")
+                && (!size.equalsIgnoreCase("medium"))
+                && (!size.equalsIgnoreCase("large"))){
+            throw new IllegalArgumentException(MessageHelper.STORY_SIZE_NOT_VALID);
+        }
+    }
 }

@@ -28,9 +28,8 @@ public class ChangeStoryPriorityCommand implements Command {
     @Override
     public String execute(  List<String> parameters) {
         Scanner scanner = new Scanner(System.in);
-
         boolean idIsValid = false;
-        System.out.println("Please enter story ID or 'cancel' if you want to exit:");
+        MessageHelper.printPromptMessage("story ID");
         while (!idIsValid){
             String input = scanner.nextLine();
             repository.isItCancel(input, MessageHelper.INVALID_INPUT);
@@ -42,9 +41,7 @@ public class ChangeStoryPriorityCommand implements Command {
 
             if (storyId != 0){
                 try{
-                    if (!repository.isTaskAlreadyCreated(storyId)) {
-                        throw new IllegalArgumentException(String.format(MessageHelper.TASK_NOT_FOUND_MESSAGE, storyId));
-                    }
+                    repository.checkForTaskId(storyId);
                 }catch (IllegalArgumentException e){
                     System.out.println(e.getMessage());
                     storyId = 0;
@@ -56,16 +53,12 @@ public class ChangeStoryPriorityCommand implements Command {
             }
         }
         boolean priorityIsValid = false;
-        System.out.println("Please enter the new priority of the story:");
+        MessageHelper.printPromptMessage("new priority");
         while (!priorityIsValid){
             String newPriority = scanner.nextLine();
             repository.isItCancel(newPriority, MessageHelper.INVALID_INPUT);
             try {
-                if (!newPriority.equalsIgnoreCase("low")
-                && (!newPriority.equalsIgnoreCase("medium"))
-                && (!newPriority.equalsIgnoreCase("high"))){
-                    throw new IllegalArgumentException(MessageHelper.STORY_PRIORITY_NOT_VALID);
-                }
+                repository.checkForStoryPriority(newPriority);
             }catch (IllegalArgumentException e){
                 System.out.println(e.getMessage());
                 newPriority = "";

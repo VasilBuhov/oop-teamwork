@@ -1,5 +1,7 @@
 package com.project.oop.task.management.utils;
 
+import java.util.SplittableRandom;
+
 public class MessageHelper {
     public static final String ENTER_TASK_ID_MESSAGE =
             "Please enter a valid Task ID or 'cancel' if you want to exit:";
@@ -109,6 +111,13 @@ public class MessageHelper {
     public static void printPromptMessage(String type){
         System.out.println(String.format(PROMPT_MESSAGE, type));
     }
+
+    public static final String NO_BUGS_ASSIGNED_TO_ASSIGNEE = "No bugs assigned to this person.";
+    public static final String NO_BUGS_WITH_THIS_STATUS = "No bugs with this status";
+    public static final String NO_FEEDBACK_WITH_THIS_STATUS = "No feedbacks with this status";
+    public static final String NO_STORY_WITH_THIS_STATUS = "No stories with this status";
+    public static final String NO_STORY_ASSIGNED_TO_ASSIGNEE = "No stories assigned to this person.";
+    public static final String NO_FEEDBACK_ASSIGNED_TO_ASSIGNEE = "No stories assigned to this person.";
 
 
 }

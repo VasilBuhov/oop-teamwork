@@ -4,6 +4,7 @@ import com.project.oop.task.management.commands.contracts.Command;
 import com.project.oop.task.management.core.TaskManagementRepositoryImpl;
 import com.project.oop.task.management.models.contracts.Bug;
 import com.project.oop.task.management.utils.ListingHelpers;
+import com.project.oop.task.management.utils.MessageHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,18 +26,14 @@ public class FilterBugsByAssigneeCommand implements Command {
     public String execute(List<String> parameters) {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Please enter assignee name:");
+        MessageHelper.printPromptMessage("assignee name");
         boolean nameIsValid = false;
 
         while (!nameIsValid) {
             assigneeName = scanner.nextLine();
-            if (assigneeName.equals("cancel")) {
-                throw new IllegalArgumentException("Command is terminated. Please enter a new command:");
-            }
+            repository.isItCancel(assigneeName, MessageHelper.INVALID_INPUT);
             try {
-                if (!repository.getMembers().stream().anyMatch(member -> member.getName().equals(assigneeName))) {
-                    throw new IllegalArgumentException("No assignee with this name");
-                }
+                repository.checkForAssignee(assigneeName);
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
                 assigneeName = "";
@@ -44,9 +41,9 @@ public class FilterBugsByAssigneeCommand implements Command {
 
             if (!assigneeName.equals("")) {
                 nameIsValid = true;
-                filteredBugs = repository.getBugs().stream().filter(bug -> bug.getAssignee().equals(assigneeName)).collect(Collectors.toList());
+                filteredBugs = repository.getBugsByAssignee(assigneeName);
                 if (filteredBugs.size() == 0) {
-                    return String.format("No bugs assigned to this person.");
+                    return MessageHelper.NO_BUGS_ASSIGNED_TO_ASSIGNEE;
                 }
             }
         }

@@ -211,7 +211,7 @@ public class FilterBugsByStatusAndAssigneeCommandTests {
         //Act
         String filteredBugs = command1.execute(params).trim();
 
-        String result = String.format("No bugs assigned to this person");
+        String result = String.format("No bugs assigned to this person.");
 
         //Assert
         Assertions.assertEquals(result, filteredBugs);

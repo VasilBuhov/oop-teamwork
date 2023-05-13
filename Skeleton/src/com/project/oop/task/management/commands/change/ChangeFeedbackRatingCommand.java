@@ -24,7 +24,7 @@ public class ChangeFeedbackRatingCommand implements Command {
     public String execute(List<String> parameters) {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println(MessageHelper.ENTER_TASK_ID_MESSAGE);
+        MessageHelper.printPromptMessage("feedback ID");
         boolean isValidId = false;
         while (!isValidId) {
             String input = scanner.nextLine();
@@ -42,7 +42,7 @@ public class ChangeFeedbackRatingCommand implements Command {
             }
         }
 
-        System.out.println(MessageHelper.ENTER_RATING_MESSAGE);
+        MessageHelper.printPromptMessage("new rating");
         boolean isValidRating = false;
         while (!isValidRating) {
             String input = scanner.nextLine();

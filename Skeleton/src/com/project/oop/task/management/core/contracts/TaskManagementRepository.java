@@ -1,11 +1,9 @@
 package com.project.oop.task.management.core.contracts;
 
-import com.project.oop.task.management.models.FeedbackImpl;
 import com.project.oop.task.management.models.StoryImpl;
 import com.project.oop.task.management.models.contracts.*;
 import com.project.oop.task.management.models.enums.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public interface TaskManagementRepository {
@@ -65,6 +63,8 @@ public interface TaskManagementRepository {
     public void checkForTaskTitle(String title);
     public void checkForTaskId(int id);
     public void checkForStorySize(String size);
-
+    boolean isItNotMember(String name);
+    boolean isItMember(String name);
+    boolean isItValidTaskID(int id);
 }
 

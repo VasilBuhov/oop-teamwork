@@ -26,11 +26,11 @@ public class AddPersonToTeamCommand implements Command {
     public String execute(List<String> parameters) {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println(MessageHelper.ENTER_PERSON_NAME_MESSAGE);
+        MessageHelper.printPromptMessage("person name");
         boolean nameIsValid = false;
         while (!nameIsValid) {
             personName = scanner.nextLine();
-            if (repository.getNotMembers().stream().anyMatch(member -> member.getName().equals(personName))) {
+            if (repository.isItNotMember(personName)) {
                 nameIsValid = true;
                 parameters.add(personName);
             } else {
@@ -39,11 +39,11 @@ public class AddPersonToTeamCommand implements Command {
             }
         }
 
-        System.out.println(MessageHelper.ENTER_TEAM_NAME_MESSAGE);
+        MessageHelper.printPromptMessage("team name");
         boolean teamIsValid = false;
         while (!teamIsValid) {
             teamName = scanner.nextLine();
-            if (repository.getTeams().stream().anyMatch(team1 -> team1.getName().equals(teamName))) {
+            if (repository.isTeamAlreadyCreated(teamName)) {
                 teamIsValid = true;
                 parameters.add(teamName);
             } else {

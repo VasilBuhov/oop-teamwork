@@ -8,6 +8,7 @@ import com.project.oop.task.management.utils.MessageHelper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class TaskManagementRepositoryImpl implements TaskManagementRepository {
@@ -410,4 +411,21 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
             throw new IllegalArgumentException(MessageHelper.STORY_SIZE_NOT_VALID);
         }
     }
+
+    @Override
+    public boolean isItNotMember(String name) {
+        return (getNotMembers().stream().anyMatch(member -> member.getName().equals(name)));
+    }
+
+    @Override
+    public boolean isItMember(String name) {
+        return (getMembers().stream().anyMatch(member -> member.getName().equals(name)));
+    }
+
+    @Override
+    public boolean isItValidTaskID(int id) {
+        return (getTasks().stream().anyMatch(task -> task.getId() == id));
+    }
+
+
 }

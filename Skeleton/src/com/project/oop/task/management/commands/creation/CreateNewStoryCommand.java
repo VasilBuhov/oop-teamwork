@@ -1,7 +1,6 @@
 package com.project.oop.task.management.commands.creation;
 
 import com.project.oop.task.management.commands.contracts.Command;
-import com.project.oop.task.management.core.TaskManagementRepositoryImpl;
 import com.project.oop.task.management.core.contracts.TaskManagementRepository;
 import com.project.oop.task.management.models.StoryImpl;
 import com.project.oop.task.management.models.TaskImpl;
@@ -35,11 +34,11 @@ public class CreateNewStoryCommand implements Command {
     public String execute(List<String> parameters) {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println(MessageHelper.ENTER_TEAM_NAME_MESSAGE);
+        MessageHelper.printPromptMessage("team name");
         boolean teamIsValid = false;
         while (!teamIsValid) {
             team = scanner.nextLine();
-            if (repository.getTeams().stream().anyMatch(team1 -> team1.getName().equals(team))) {
+            if (repository.isTeamAlreadyCreated(team)) {
                 teamIsValid = true;
                 parameters.add(team);
             } else {
@@ -49,15 +48,11 @@ public class CreateNewStoryCommand implements Command {
         }
 
         Board board1 = null;
-        System.out.println(MessageHelper.ENTER_BOARD_NAME_MESSAGE);
+        MessageHelper.printPromptMessage("board name");
         boolean boardIsValid = false;
         while (!boardIsValid) {
             targetBoard = scanner.nextLine();
-            if (repository
-                    .findTeamByName(team)
-                    .getBoards()
-                    .stream()
-                    .anyMatch(board -> board.getName().equals(targetBoard))) {
+            if (repository.isBoardAlreadyCreated(team, targetBoard)) {
                 boardIsValid = true;
                 board1 = repository.findBoardByName(targetBoard, team);
                 parameters.add(targetBoard);
@@ -67,7 +62,7 @@ public class CreateNewStoryCommand implements Command {
             }
         }
 
-        System.out.println(MessageHelper.ENTER_ASSIGNEE_MESSAGE);
+        MessageHelper.printPromptMessage("assignee");
         boolean assigneeIsValid = false;
         while (!assigneeIsValid) {
             assignee = scanner.nextLine();
@@ -80,7 +75,7 @@ public class CreateNewStoryCommand implements Command {
             }
         }
 
-        System.out.println(MessageHelper.ENTER_TITLE_MESSAGE);
+        MessageHelper.printPromptMessage("story title");
         boolean isValidTitle = false;
         while (!isValidTitle) {
             title = scanner.nextLine();
@@ -98,7 +93,7 @@ public class CreateNewStoryCommand implements Command {
         }
 
 
-        System.out.println(MessageHelper.ENTER_DESCRIPTION_MESSAGE);
+        MessageHelper.printPromptMessage("story description");
         boolean isValidDescription = false;
         while (!isValidDescription) {
             description = scanner.nextLine();
@@ -115,7 +110,7 @@ public class CreateNewStoryCommand implements Command {
             }
         }
 
-        System.out.println(MessageHelper.ENTER_PRIORITY_MESSAGE);
+        MessageHelper.printPromptMessage("story priority");
         boolean isValidPriority = false;
         while (!isValidPriority) {
             String input = scanner.nextLine();
@@ -133,7 +128,7 @@ public class CreateNewStoryCommand implements Command {
             }
         }
 
-        System.out.println(MessageHelper.ENTER_SIZE_MESSAGE);
+        MessageHelper.printPromptMessage("story size");
         boolean isValidSize = false;
         while (!isValidSize) {
             String input = scanner.nextLine();

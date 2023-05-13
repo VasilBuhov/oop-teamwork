@@ -3,6 +3,7 @@ package com.project.oop.task.management.commands.show;
 import com.project.oop.task.management.commands.contracts.Command;
 import com.project.oop.task.management.core.TaskManagementRepositoryImpl;
 import com.project.oop.task.management.models.contracts.Board;
+import com.project.oop.task.management.utils.MessageHelper;
 
 import java.util.List;
 import java.util.Scanner;
@@ -21,19 +22,14 @@ public class ShowBoardActivityCommand implements Command {
     @Override
     public String execute(List<String> parameters) {
         Scanner scanner = new Scanner(System.in);
-
-        System.out.println("Please enter the team name the board belongs to:");
+        MessageHelper.printPromptMessage("team name the board belongs to:");
         boolean teamNameIsValid = false;
 
         while (!teamNameIsValid) {
             teamName = scanner.nextLine();
-            if (teamName.equals("cancel")) {
-                throw new IllegalArgumentException("Command is terminated. Please enter a new command:");
-            }
+            repository.isItCancel(teamName, MessageHelper.INVALID_INPUT);
             try {
-                if (!repository.getTeams().stream().anyMatch(team -> team.getName().equals(teamName))) {
-                    throw new IllegalArgumentException("No team with this name in the Task management system");
-                }
+                repository.checkForTeam(teamName);
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
                 teamName = "";
@@ -44,19 +40,14 @@ public class ShowBoardActivityCommand implements Command {
             }
         }
 
-        System.out.println("Please enter board name:");
+        MessageHelper.printPromptMessage("board name");
         boolean boardNameIsValid = false;
 
         while (!boardNameIsValid) {
             boardName = scanner.nextLine();
-            if (boardName.equals("cancel")) {
-                throw new IllegalArgumentException("Command is terminated. Please enter a new command:");
-            }
+            repository.isItCancel(boardName, MessageHelper.INVALID_INPUT);
             try {
-                if (!repository.getTeams().stream().filter(team -> team.getName().equalsIgnoreCase(teamName)).collect(Collectors.toList()).get(0)
-                        .getBoards().stream().anyMatch(board -> board.getName().equalsIgnoreCase(boardName))) {
-                    throw new IllegalArgumentException("No board with this name found");
-                }
+                repository.checkForBoard(teamName, boardName);
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
                 boardName = "";
@@ -64,15 +55,10 @@ public class ShowBoardActivityCommand implements Command {
 
             if (!boardName.equals("")) {
                 boardNameIsValid = true;
-                board = repository.getTeams().stream().filter(team -> team.getName().equalsIgnoreCase(teamName)).collect(Collectors.toList()).get(0)
-                        .getBoards().stream().filter(board -> board.getName().equalsIgnoreCase(boardName)).collect(Collectors.toList()).get(0);
+                board = repository.findBoardByName(boardName, teamName);
 
             }
         }
-
-
-
-
         return board.getActivity();
     }
 }

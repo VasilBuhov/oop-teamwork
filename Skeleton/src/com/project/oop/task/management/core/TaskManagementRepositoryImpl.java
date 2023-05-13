@@ -410,4 +410,19 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
             throw new IllegalArgumentException(MessageHelper.STORY_SIZE_NOT_VALID);
         }
     }
+
+    @Override
+    public void checkForTeam(String teamName) {
+        if (!getTeams().stream().anyMatch(team -> team.getName().equals(teamName))) {
+            throw new IllegalArgumentException("No team with this name in the Task management system");
+        }
+    }
+
+    @Override
+    public void checkForBoard(String teamName, String boardName) {
+        if (!getTeams().stream().filter(team -> team.getName().equalsIgnoreCase(teamName)).collect(Collectors.toList()).get(0)
+                .getBoards().stream().anyMatch(board -> board.getName().equalsIgnoreCase(boardName))) {
+            throw new IllegalArgumentException("No board with this name found");
+        }
+    }
 }

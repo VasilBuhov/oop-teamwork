@@ -3,6 +3,8 @@ package com.project.oop.task.management.commands.change;
 import com.project.oop.task.management.commands.contracts.Command;
 import com.project.oop.task.management.core.TaskManagementRepositoryImpl;
 import com.project.oop.task.management.core.contracts.TaskManagementRepository;
+import com.project.oop.task.management.models.contracts.Board;
+import com.project.oop.task.management.models.contracts.Story;
 import com.project.oop.task.management.models.enums.Priority;
 import com.project.oop.task.management.utils.MessageHelper;
 import com.project.oop.task.management.utils.ParsingHelpers;

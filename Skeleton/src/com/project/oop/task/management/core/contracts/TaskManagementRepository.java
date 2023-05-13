@@ -65,6 +65,8 @@ public interface TaskManagementRepository {
     public void checkForTaskTitle(String title);
     public void checkForTaskId(int id);
     public void checkForStorySize(String size);
+    public void checkForTeam(String teamName);
+    public void checkForBoard(String teamName, String boardName);
 
 }
 

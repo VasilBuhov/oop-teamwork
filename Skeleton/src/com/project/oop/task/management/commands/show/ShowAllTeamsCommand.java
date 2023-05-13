@@ -22,28 +22,8 @@ public class ShowAllTeamsCommand implements Command {
         if (repository.getTeams().size() == 0){
             throw new IllegalArgumentException("There are no teams to display.");
         }
-        int index = 1;
-        stringBuilder.append(String.format("======================%n"));
         for (Team team : repository.getTeams()) {
-            stringBuilder.append(String.format("%d. Team name: %s%n", index, team.getName()));
-            stringBuilder.append(String.format("Team members: %n"));
-            if (team.getMembers().size() == 0){
-                stringBuilder.append(String.format("No members added to this team%n"));
-            }else {
-                for (Member member : team.getMembers()) {
-                    stringBuilder.append(String.format("%s%n", member.getName()));
-                }
-            }
-            stringBuilder.append(String.format("Team boards: %n"));
-            if (team.getBoards().size() == 0){
-                stringBuilder.append(String.format("No boards created for this team%n"));
-            }else {
-                for (Board board : team.getBoards()) {
-                    stringBuilder.append(String.format("%s%n", board.getName()));
-                }
-            }
-            stringBuilder.append(String.format("======================%n"));
-            index ++;
+            stringBuilder.append(team.getAsString());
         }
 
         return stringBuilder.toString().trim();

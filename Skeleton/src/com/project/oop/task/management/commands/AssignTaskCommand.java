@@ -12,7 +12,6 @@ public class AssignTaskCommand implements Command {
     public static int EXPECTED_NUMBER_OF_ARGUMENTS = 2;
     private int id;
     private String name;
-
     private final TaskManagementRepositoryImpl repository;
 
     public AssignTaskCommand(TaskManagementRepositoryImpl repository) {
@@ -23,14 +22,14 @@ public class AssignTaskCommand implements Command {
     public String execute(List<String> parameters) {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println(MessageHelper.ENTER_TASK_ID_MESSAGE);
+        MessageHelper.printPromptMessage("task ID");
         boolean isValidId = false;
         while (!isValidId) {
             String input = scanner.nextLine();
             repository.isItCancel(input, MessageHelper.INVALID_INPUT);
             try {
                 id = ParsingHelpers.tryParseInt(input, MessageHelper.PARSING_ERROR_MESSAGE);
-                if (repository.getTasks().stream().anyMatch(task -> task.getId() == id)) {
+                if (repository.isItValidTaskID(id)) {
                     if (repository.getAssignedTasks().contains(repository.findTaskById(id))) {
                         System.out.printf((MessageHelper.TASK_ALREADY_ASSIGNED) + "%n", id);
                     } else {
@@ -45,11 +44,11 @@ public class AssignTaskCommand implements Command {
             }
         }
 
-        System.out.println(MessageHelper.ENTER_PERSON_NAME_MESSAGE);
+        MessageHelper.printPromptMessage("person name");
         boolean nameIsValid = false;
         while (!nameIsValid) {
             name = scanner.nextLine();
-            if (repository.getMembers().stream().anyMatch(member -> member.getName().equals(name))) {
+            if (repository.isItMember(name)) {
                 nameIsValid = true;
                 parameters.add(name);
             } else {

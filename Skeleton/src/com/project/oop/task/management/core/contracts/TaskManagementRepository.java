@@ -68,5 +68,8 @@ public interface TaskManagementRepository {
     public void checkForTeam(String teamName);
     public void checkForBoard(String teamName, String boardName);
 
+    boolean isItNotMember(String name);
+    boolean isItMember(String name);
+    boolean isItValidTaskID(int id);
 }
 

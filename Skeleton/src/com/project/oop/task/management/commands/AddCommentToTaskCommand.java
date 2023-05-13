@@ -27,14 +27,14 @@ public class AddCommentToTaskCommand implements Command {
     public String execute(List<String> parameters) {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println(MessageHelper.ENTER_TASK_ID_MESSAGE);
+        MessageHelper.printPromptMessage("task ID");
         boolean isValidId = false;
         while (!isValidId) {
             String input = scanner.nextLine();
             repository.isItCancel(input, MessageHelper.INVALID_INPUT);
             try {
                 id = ParsingHelpers.tryParseInt(input, MessageHelper.PARSING_ERROR_MESSAGE);
-                if (repository.getTasks().stream().anyMatch(task -> task.getId() == id)) {
+                if (repository.isItValidTaskID(id)) {
                     isValidId = true;
                     parameters.add(String.valueOf(id));
                 } else {
@@ -45,30 +45,29 @@ public class AddCommentToTaskCommand implements Command {
             }
         }
 
-        System.out.println(MessageHelper.ENTER_PERSON_NAME_MESSAGE);
+        MessageHelper.printPromptMessage("author");
         boolean nameIsValid = false;
         while (!nameIsValid) {
             author = scanner.nextLine();
-            if (repository.getMembers().stream().anyMatch(member -> member.getName().equals(author))) {
+            repository.isItCancel(author, MessageHelper.INVALID_INPUT);
+            if (repository.isItMember(author)) {
                 nameIsValid = true;
                 parameters.add(author);
             } else {
-                repository.isItCancel(author, MessageHelper.INVALID_INPUT);
                 System.out.println(MessageHelper.PERSON_IS_NOT_FOUND_MESSAGE);
             }
         }
 
-        System.out.println(MessageHelper.ENTER_COMMENT_MESSAGE);
+        MessageHelper.printPromptMessage("comment");
         comment = scanner.nextLine();
-        if (comment.equalsIgnoreCase("cancel")) {
-            repository.isItCancel(comment, MessageHelper.INVALID_INPUT);
-        } else {
-            parameters.add(comment);
-        }
+        repository.isItCancel(comment, MessageHelper.INVALID_INPUT);
+        parameters.add(comment);
 
         Comment comment1 = new CommentImpl(comment, author);
         repository.addCommentToTask(id, comment1);
 
         return String.format(MessageHelper.COMMENT_ADDED_MESSAGE, comment1.toString(), id);
     }
+
+
 }

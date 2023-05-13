@@ -30,7 +30,7 @@ public class ChangeFeedbackStatusCommand implements Command {
     public String execute(List<String> parameters) {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println(MessageHelper.ENTER_TASK_ID_MESSAGE);
+        MessageHelper.printPromptMessage("feedback ID");
         boolean isValidId = false;
         while (!isValidId) {
             String input = scanner.nextLine();

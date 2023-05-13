@@ -425,4 +425,21 @@ public class TaskManagementRepositoryImpl implements TaskManagementRepository {
             throw new IllegalArgumentException("No board with this name found");
         }
     }
+
+    @Override
+    public boolean isItNotMember(String name) {
+        return (getNotMembers().stream().anyMatch(member -> member.getName().equals(name)));
+    }
+
+    @Override
+    public boolean isItMember(String name) {
+        return (getMembers().stream().anyMatch(member -> member.getName().equals(name)));
+    }
+
+    @Override
+    public boolean isItValidTaskID(int id) {
+        return (getTasks().stream().anyMatch(task -> task.getId() == id));
+    }
+
+
 }

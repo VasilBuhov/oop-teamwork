@@ -27,25 +27,36 @@ public class FilterBugsByStatusCommandTests {
         this.command2 = new CreateNewBoardCommand(repository);
         this.command3 = new CreateNewBugCommand(repository);
 
+        List<String> params = new ArrayList<>();
+        String teamName = "Team1";
+        String boardName = "Board1";
+        String personName1 = "Margarita";
+        String personName2 = "Ivaylo";
+        repository.createNewTeam(teamName);
+        repository.createBoard(boardName);
+        repository.createNewPerson(personName1);
+        repository.createNewPerson(personName2);
+        repository.addNewPersonToTeam(personName1, teamName);
+        repository.addNewPersonToTeam(personName2, teamName);
+
+        String inputDataBoard = "Team1\nBoard1\n";
+        InputStream in1 = new ByteArrayInputStream((inputDataBoard).getBytes());
+        System.setIn(in1);
+        command2.execute(params);
+
+        String inputDataBug = "Team1\nBoard1\nLongBugTitle1\nLongBugDescription1\nlow\nminor\nMargarita\n";
+        InputStream in2 = new ByteArrayInputStream((inputDataBug).getBytes());
+        System.setIn(in2);
+        command3.execute(params);
     }
 
     @Test
     public void execute_Should_ThrowException_When_InputIsEqualToCancel() {
         //Arrange
         List<String> params = new ArrayList<>();
-        repository.createNewTeam("Team1");
-        repository.createBoard("Board1");
-        repository.createNewPerson("Margarita");
-        repository.addNewPersonToTeam("Margarita", "Team1");
-        InputStream in1 = new ByteArrayInputStream(("Team1\nBoard1\n").getBytes());
-        System.setIn(in1);
-        command2.execute(params);
 
-        InputStream in2 = new ByteArrayInputStream(("Team1\nBoard1\nLongBugTitle1\nLongBugDescription1\nlow\nminor\nMargarita\n").getBytes());
-        System.setIn(in2);
-        command3.execute(params);
-
-        InputStream in3 = new ByteArrayInputStream(("cancel").getBytes());
+        String commandInput = "cancel";
+        InputStream in3 = new ByteArrayInputStream((commandInput).getBytes());
         System.setIn(in3);
 
         //Act, Assert
@@ -56,19 +67,9 @@ public class FilterBugsByStatusCommandTests {
     public void execute_Should_ThrowException_When_EnteredStatusNotValid() {
         //Arrange
         List<String> params = new ArrayList<>();
-        repository.createNewTeam("Team1");
-        repository.createBoard("Board1");
-        repository.createNewPerson("Margarita");
-        repository.addNewPersonToTeam("Margarita", "Team1");
-        InputStream in1 = new ByteArrayInputStream(("Team1\nBoard1\n").getBytes());
-        System.setIn(in1);
-        command2.execute(params);
 
-        InputStream in2 = new ByteArrayInputStream(("Team1\nBoard1\nLongBugTitle1\nLongBugDescription1\nlow\nminor\nMargarita\n").getBytes());
-        System.setIn(in2);
-        command3.execute(params);
-
-        InputStream in3 = new ByteArrayInputStream(("notDone").getBytes());
+        String commandInput = "notDone";
+        InputStream in3 = new ByteArrayInputStream((commandInput).getBytes());
         System.setIn(in3);
 
         //Act, Assert
@@ -79,19 +80,9 @@ public class FilterBugsByStatusCommandTests {
     public void execute_Should_DisplayFilteredTasks_When_ValidTitleEntered() {
         //Arrange
         List<String> params = new ArrayList<>();
-        repository.createNewTeam("Team1");
-        repository.createBoard("Board1");
-        repository.createNewPerson("Margarita");
-        repository.addNewPersonToTeam("Margarita", "Team1");
-        InputStream in1 = new ByteArrayInputStream(("Team1\nBoard1\n").getBytes());
-        System.setIn(in1);
-        command2.execute(params);
 
-        InputStream in2 = new ByteArrayInputStream(("Team1\nBoard1\nLongBugTitle1\nLongBugDescription1\nlow\nminor\nMargarita\n").getBytes());
-        System.setIn(in2);
-        command3.execute(params);
-
-        InputStream in3 = new ByteArrayInputStream(("Active").getBytes());
+        String commandInput = "Active";
+        InputStream in3 = new ByteArrayInputStream((commandInput).getBytes());
         System.setIn(in3);
 
         //Act
@@ -116,19 +107,10 @@ public class FilterBugsByStatusCommandTests {
     public void execute_Should_DisplayNoBug_When_NoBugsWithEnteredStatusExist() {
         //Arrange
         List<String> params = new ArrayList<>();
-        repository.createNewTeam("Team1");
-        repository.createBoard("Board1");
-        repository.createNewPerson("Margarita");
-        repository.addNewPersonToTeam("Margarita", "Team1");
-        InputStream in1 = new ByteArrayInputStream(("Team1\nBoard1\n").getBytes());
-        System.setIn(in1);
-        command2.execute(params);
 
-        InputStream in2 = new ByteArrayInputStream(("Team1\nBoard1\nLongBugTitle1\nLongBugDescription1\nlow\nminor\nMargarita\n").getBytes());
-        System.setIn(in2);
-        command3.execute(params);
 
-        InputStream in3 = new ByteArrayInputStream(("Fixed").getBytes());
+        String commandInput = "Fixed";
+        InputStream in3 = new ByteArrayInputStream((commandInput).getBytes());
         System.setIn(in3);
 
         //Act

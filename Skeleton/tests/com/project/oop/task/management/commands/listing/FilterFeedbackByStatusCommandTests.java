@@ -27,23 +27,30 @@ public class FilterFeedbackByStatusCommandTests {
         this.command2 = new CreateNewBoardCommand(repository);
         this.command3 = new CreateNewFeedbackCommand(repository);
 
+        List<String> params = new ArrayList<>();
+        String teamName = "Team1";
+        String boardName = "Board1";
+        repository.createNewTeam(teamName);
+        repository.createBoard(boardName);
+
+        String inputDataBoard = "Team1\nBoard1\n";
+        InputStream in1 = new ByteArrayInputStream((inputDataBoard).getBytes());
+        System.setIn(in1);
+        command2.execute(params);
+
+        String inputDataFeedback = "Team1\nBoard1\nFeedbackTitle\nFeedbackDescription\n1\n";
+        InputStream in2 = new ByteArrayInputStream((inputDataFeedback).getBytes());
+        System.setIn(in2);
+        command3.execute(params);
     }
 
     @Test
     public void execute_Should_ThrowException_When_InputIsEqualToCancel() {
         //Arrange
         List<String> params = new ArrayList<>();
-        repository.createNewTeam("Team1");
-        repository.createBoard("Board1");
-        InputStream in1 = new ByteArrayInputStream(("Team1\nBoard1\n").getBytes());
-        System.setIn(in1);
-        command2.execute(params);
 
-        InputStream in2 = new ByteArrayInputStream(("Team1\nBoard1\nFeedbackTitle\nFeedbackDescription\n1\n").getBytes());
-        System.setIn(in2);
-        command3.execute(params);
-
-        InputStream in3 = new ByteArrayInputStream(("cancel").getBytes());
+        String commandInput = "cancel";
+        InputStream in3 = new ByteArrayInputStream((commandInput).getBytes());
         System.setIn(in3);
 
         //Act, Assert
@@ -54,17 +61,9 @@ public class FilterFeedbackByStatusCommandTests {
     public void execute_Should_ThrowException_When_EnteredStatusNotValid() {
         //Arrange
         List<String> params = new ArrayList<>();
-        repository.createNewTeam("Team1");
-        repository.createBoard("Board1");
-        InputStream in1 = new ByteArrayInputStream(("Team1\nBoard1\n").getBytes());
-        System.setIn(in1);
-        command2.execute(params);
 
-        InputStream in2 = new ByteArrayInputStream(("Team1\nBoard1\nFeedbackTitle\nFeedbackDescription\n1\n").getBytes());
-        System.setIn(in2);
-        command3.execute(params);
-
-        InputStream in3 = new ByteArrayInputStream(("notDone").getBytes());
+        String commandInput = "notDone";
+        InputStream in3 = new ByteArrayInputStream((commandInput).getBytes());
         System.setIn(in3);
 
         //Act, Assert
@@ -75,17 +74,9 @@ public class FilterFeedbackByStatusCommandTests {
     public void execute_Should_DisplayFilteredFeedbacks_When_ValidStatusEntered() {
         //Arrange
         List<String> params = new ArrayList<>();
-        repository.createNewTeam("Team1");
-        repository.createBoard("Board1");
-        InputStream in1 = new ByteArrayInputStream(("Team1\nBoard1\n").getBytes());
-        System.setIn(in1);
-        command2.execute(params);
 
-        InputStream in2 = new ByteArrayInputStream(("Team1\nBoard1\nFeedbackTitle\nFeedbackDescription\n1\n").getBytes());
-        System.setIn(in2);
-        command3.execute(params);
-
-        InputStream in3 = new ByteArrayInputStream(("New").getBytes());
+        String commandInput = "New";
+        InputStream in3 = new ByteArrayInputStream((commandInput).getBytes());
         System.setIn(in3);
 
         //Act
@@ -108,14 +99,9 @@ public class FilterFeedbackByStatusCommandTests {
     public void execute_Should_DisplayNoFeedback_When_NoFeedbacksWithEnteredStatusExist() {
         //Arrange
         List<String> params = new ArrayList<>();
-        repository.createNewTeam("Team1");
-        repository.createBoard("Board1");
-        InputStream in1 = new ByteArrayInputStream(("Team1\nBoard1\n").getBytes());
-        System.setIn(in1);
-        command2.execute(params);
 
-
-        InputStream in3 = new ByteArrayInputStream(("New").getBytes());
+        String commandInput = "Done";
+        InputStream in3 = new ByteArrayInputStream((commandInput).getBytes());
         System.setIn(in3);
 
         //Act

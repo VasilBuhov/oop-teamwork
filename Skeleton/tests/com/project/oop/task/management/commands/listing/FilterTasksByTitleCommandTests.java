@@ -30,25 +30,36 @@ public class FilterTasksByTitleCommandTests {
         this.command3 = new CreateNewBugCommand(repository);
         this.command4 = new CreateNewFeedbackCommand(repository);
 
+        List<String> params = new ArrayList<>();
+        String teamName = "Team1";
+        String boardName = "Board1";
+        String personName1 = "Margarita";
+        String personName2 = "Ivaylo";
+        repository.createNewTeam(teamName);
+        repository.createBoard(boardName);
+        repository.createNewPerson(personName1);
+        repository.createNewPerson(personName2);
+        repository.addNewPersonToTeam(personName1, teamName);
+        repository.addNewPersonToTeam(personName2, teamName);
+
+        String inputDataBoard = "Team1\nBoard1\n";
+        InputStream in1 = new ByteArrayInputStream((inputDataBoard).getBytes());
+        System.setIn(in1);
+        command2.execute(params);
+
+        String inputDataBug = "Team1\nBoard1\nLongTaskTitle1\nLongBugDescription1\nlow\nminor\nMargarita\n";
+        InputStream in2 = new ByteArrayInputStream((inputDataBug).getBytes());
+        System.setIn(in2);
+        command3.execute(params);
     }
 
     @Test
     public void execute_Should_ThrowException_When_InputIsEqualToCancel() {
         //Arrange
         List<String> params = new ArrayList<>();
-        repository.createNewTeam("Team1");
-        repository.createBoard("Board1");
-        repository.createNewPerson("Margarita");
-        repository.addNewPersonToTeam("Margarita", "Team1");
-        InputStream in1 = new ByteArrayInputStream(("Team1\nBoard1\n").getBytes());
-        System.setIn(in1);
-        command2.execute(params);
 
-        InputStream in2 = new ByteArrayInputStream(("Team1\nBoard1\nLongBugTitle1\nLongBugDescription1\nlow\nminor\nMargarita\n").getBytes());
-        System.setIn(in2);
-        command3.execute(params);
-
-        InputStream in3 = new ByteArrayInputStream(("cancel").getBytes());
+        String commandInput = "cancel";
+        InputStream in3 = new ByteArrayInputStream((commandInput).getBytes());
         System.setIn(in3);
 
         //Act, Assert
@@ -60,24 +71,14 @@ public class FilterTasksByTitleCommandTests {
     public void execute_Should_DisplayFilteredTasks_When_TasksWithEnteredTitleEntered() {
         //Arrange
         List<String> params = new ArrayList<>();
-        repository.createNewTeam("Team1");
-        repository.createBoard("Board1");
-        repository.createNewPerson("Margarita");
-        repository.addNewPersonToTeam("Margarita", "Team1");
-        InputStream in1 = new ByteArrayInputStream(("Team1\nBoard1\n").getBytes());
-        System.setIn(in1);
-        command2.execute(params);
 
-        InputStream in2 = new ByteArrayInputStream(("Team1\nBoard1\nTaskTitle1\nLongBugDescription1\nlow\nminor\nMargarita\n").getBytes());
-        System.setIn(in2);
-        command3.execute(params);
-
-
-        InputStream in3 = new ByteArrayInputStream(("Team1\nBoard1\nTaskTitle1\nFeedbackDescription\n1\n").getBytes());
+        String inputDataFeedback = "Team1\nBoard1\nLongTaskTitle1\nFeedbackDescription\n1\n";
+        InputStream in3 = new ByteArrayInputStream((inputDataFeedback).getBytes());
         System.setIn(in3);
         command4.execute(params).trim();
 
-        InputStream in4 = new ByteArrayInputStream(("TaskTitle1").getBytes());
+        String commandInput = "LongTaskTitle1";
+        InputStream in4 = new ByteArrayInputStream((commandInput).getBytes());
         System.setIn(in4);
 
         //Act
@@ -85,7 +86,7 @@ public class FilterTasksByTitleCommandTests {
 
         String result = String.format("*********************%n" +
                 "Bug:%n" +
-                "Title: TaskTitle1%n" +
+                "Title: LongTaskTitle1%n" +
                 "Description: LongBugDescription1%n" +
                 "Comments: %n" +
                 "Status: Active%n" +
@@ -96,7 +97,7 @@ public class FilterTasksByTitleCommandTests {
                 "*********************%n" +
                 "*********************%n" +
                 "Feedback:%n" +
-                "Title: TaskTitle1%n" +
+                "Title: LongTaskTitle1%n" +
                 "Description: FeedbackDescription%n" +
                 "Comments: %n" +
                 "Status: New%n" +
@@ -111,19 +112,9 @@ public class FilterTasksByTitleCommandTests {
     public void execute_Should_ThrowException_When_NoTasksWithEnteredTitleExist() {
         //Arrange
         List<String> params = new ArrayList<>();
-        repository.createNewTeam("Team1");
-        repository.createBoard("Board1");
-        repository.createNewPerson("Margarita");
-        repository.addNewPersonToTeam("Margarita", "Team1");
-        InputStream in1 = new ByteArrayInputStream(("Team1\nBoard1\n").getBytes());
-        System.setIn(in1);
-        command2.execute(params);
 
-        InputStream in2 = new ByteArrayInputStream(("Team1\nBoard1\nLongBugTitle1\nLongBugDescription1\nlow\nminor\nMargarita\n").getBytes());
-        System.setIn(in2);
-        command3.execute(params);
-
-        InputStream in3 = new ByteArrayInputStream(("NewBugTitle").getBytes());
+        String commandInput = "NewBugTitle";
+        InputStream in3 = new ByteArrayInputStream((commandInput).getBytes());
         System.setIn(in3);
 
         //Act, Assert

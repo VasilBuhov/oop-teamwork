@@ -32,6 +32,32 @@ public class ShowBoardActivityCommandTests {
         this.command2 = new CreateNewBoardCommand(repository);
         this.command3 = new CreateNewFeedbackCommand(repository);
         this.command4 = new CreateNewStoryCommand(repository);
+
+        List<String> params = new ArrayList<>();
+        String teamName = "Team1";
+        String boardName = "Board1";
+        String personName = "Margarita";
+        repository.createNewTeam(teamName);
+        repository.createBoard(boardName);
+        repository.createNewPerson(personName);
+        repository.addNewPersonToTeam(personName, teamName);
+
+        String inputDataBoard = "Team1\nBoard1\n";
+        InputStream in1 = new ByteArrayInputStream((inputDataBoard).getBytes());
+        System.setIn(in1);
+        command2.execute(params);
+        params.remove(0);
+
+        String inputDataFeedback = "Team1\nBoard1\nFeedbackTitle\nFeedbackDescription\n1\n";
+        InputStream in2 = new ByteArrayInputStream((inputDataFeedback).getBytes());
+        System.setIn(in2);
+        command3.execute(params);
+        params.clear();
+
+        String inputDataStory= "Team1\nBoard1\nMargarita\nStoryTitle1\nStoryDescription1\nlow\nsmall\n";
+        InputStream in3 = new ByteArrayInputStream((inputDataStory).getBytes());
+        System.setIn(in3);
+        command4.execute(params);
     }
 
 
@@ -39,25 +65,9 @@ public class ShowBoardActivityCommandTests {
     public void execute_Should_ThrowException_When_CancelEnteredInsteadOfTeamName() {
         //Arrange
         List<String> params = new ArrayList<>();
-        repository.createNewTeam("Team1");
-        repository.createBoard("Board1");
-        repository.createNewPerson("Margarita");
-        repository.addNewPersonToTeam("Margarita", "Team1");
-        InputStream in1 = new ByteArrayInputStream(("Team1\nBoard1\n").getBytes());
-        System.setIn(in1);
-        command2.execute(params);
-        params.remove(0);
 
-        InputStream in2 = new ByteArrayInputStream(("Team1\nBoard1\nFeedbackTitle\nFeedbackDescription\n1\n").getBytes());
-        System.setIn(in2);
-        command3.execute(params);
-        params.clear();
-
-        InputStream in3 = new ByteArrayInputStream(("Team1\nBoard1\nMargarita\nStoryTitle1\nStoryDescription1\nlow\nsmall\n").getBytes());
-        System.setIn(in3);
-        command4.execute(params);
-
-        InputStream in4 = new ByteArrayInputStream(("cancel\nBoard1\n").getBytes());
+        String commandInput = "cancel\nBoard1\n";
+        InputStream in4 = new ByteArrayInputStream((commandInput).getBytes());
         System.setIn(in4);
 
         //Act, Assert
@@ -69,25 +79,9 @@ public class ShowBoardActivityCommandTests {
     public void execute_Should_ThrowException_When_CancelEnteredInsteadOfBoardName() {
         //Arrange
         List<String> params = new ArrayList<>();
-        repository.createNewTeam("Team1");
-        repository.createBoard("Board1");
-        repository.createNewPerson("Margarita");
-        repository.addNewPersonToTeam("Margarita", "Team1");
-        InputStream in1 = new ByteArrayInputStream(("Team1\nBoard1\n").getBytes());
-        System.setIn(in1);
-        command2.execute(params);
-        params.remove(0);
 
-        InputStream in2 = new ByteArrayInputStream(("Team1\nBoard1\nFeedbackTitle\nFeedbackDescription\n1\n").getBytes());
-        System.setIn(in2);
-        command3.execute(params);
-        params.clear();
-
-        InputStream in3 = new ByteArrayInputStream(("Team1\nBoard1\nMargarita\nStoryTitle1\nStoryDescription1\nlow\nsmall\n").getBytes());
-        System.setIn(in3);
-        command4.execute(params);
-
-        InputStream in4 = new ByteArrayInputStream(("Team1\ncancel\n").getBytes());
+        String commandInput = "Team1\ncancel\n";
+        InputStream in4 = new ByteArrayInputStream((commandInput).getBytes());
         System.setIn(in4);
 
         //Act, Assert
@@ -98,25 +92,9 @@ public class ShowBoardActivityCommandTests {
     public void execute_Should_ThrowException_When_EnteredTeamNotExist() {
         //Arrange
         List<String> params = new ArrayList<>();
-        repository.createNewTeam("Team1");
-        repository.createBoard("Board1");
-        repository.createNewPerson("Margarita");
-        repository.addNewPersonToTeam("Margarita", "Team1");
-        InputStream in1 = new ByteArrayInputStream(("Team1\nBoard1\n").getBytes());
-        System.setIn(in1);
-        command2.execute(params);
-        params.remove(0);
 
-        InputStream in2 = new ByteArrayInputStream(("Team1\nBoard1\nFeedbackTitle\nFeedbackDescription\n1\n").getBytes());
-        System.setIn(in2);
-        command3.execute(params);
-        params.clear();
-
-        InputStream in3 = new ByteArrayInputStream(("Team1\nBoard1\nMargarita\nStoryTitle1\nStoryDescription1\nlow\nsmall\n").getBytes());
-        System.setIn(in3);
-        command4.execute(params);
-
-        InputStream in4 = new ByteArrayInputStream(("Team2\nBoard1\n").getBytes());
+        String commandInput = "Team2\nBoard1\n";
+        InputStream in4 = new ByteArrayInputStream((commandInput).getBytes());
         System.setIn(in4);
 
         //Act, Assert
@@ -127,25 +105,9 @@ public class ShowBoardActivityCommandTests {
     public void execute_Should_ThrowException_When_EnteredBoardNotExist() {
         //Arrange
         List<String> params = new ArrayList<>();
-        repository.createNewTeam("Team1");
-        repository.createBoard("Board1");
-        repository.createNewPerson("Margarita");
-        repository.addNewPersonToTeam("Margarita", "Team1");
-        InputStream in1 = new ByteArrayInputStream(("Team1\nBoard1\n").getBytes());
-        System.setIn(in1);
-        command2.execute(params);
-        params.remove(0);
 
-        InputStream in2 = new ByteArrayInputStream(("Team1\nBoard1\nFeedbackTitle\nFeedbackDescription\n1\n").getBytes());
-        System.setIn(in2);
-        command3.execute(params);
-        params.clear();
-
-        InputStream in3 = new ByteArrayInputStream(("Team1\nBoard1\nMargarita\nStoryTitle1\nStoryDescription1\nlow\nsmall\n").getBytes());
-        System.setIn(in3);
-        command4.execute(params);
-
-        InputStream in4 = new ByteArrayInputStream(("Team1\nBoard2\n").getBytes());
+        String commandInput = "Team1\nBoard2\n";
+        InputStream in4 = new ByteArrayInputStream((commandInput).getBytes());
         System.setIn(in4);
 
         //Act, Assert
@@ -156,27 +118,11 @@ public class ShowBoardActivityCommandTests {
     public void should_DisplayBoardActivity() {
         //Arrange
         List<String> params = new ArrayList<>();
-        repository.createNewTeam("Team1");
-        repository.createBoard("Board1");
-        repository.createNewPerson("Margarita");
-        repository.addNewPersonToTeam("Margarita", "Team1");
-        InputStream in1 = new ByteArrayInputStream(("Team1\nBoard1\n").getBytes());
-        System.setIn(in1);
-        command2.execute(params);
-        params.remove(0);
 
-        InputStream in2 = new ByteArrayInputStream(("Team1\nBoard1\nFeedbackTitle1\nFeedbackDescription\n1\n").getBytes());
-        System.setIn(in2);
-        command3.execute(params);
-        params.clear();
-
-        InputStream in3 = new ByteArrayInputStream(("Team1\nBoard1\nMargarita\nStoryTitle1\nStoryDescription1\nlow\nsmall\n").getBytes());
-        System.setIn(in3);
-        command4.execute(params);
-
-        //Act
-        InputStream in4 = new ByteArrayInputStream(("Team1\nBoard1\n").getBytes());
+        String commandInput = "Team1\nBoard1\n";
+        InputStream in4 = new ByteArrayInputStream((commandInput).getBytes());
         System.setIn(in4);
+        //Act
         String actualResult = command1.execute(params);
 
         LocalDateTime currentLocalDateTime = LocalDateTime.now();
@@ -185,7 +131,7 @@ public class ShowBoardActivityCommandTests {
         String expectedResult = String.format("Board: Board1%n" +
                 "Activity:%n" +
                 "[%s] Board with name Board1 was created!%n" +
-                "[%s] Task: FeedbackTitle1 is added to board: Board1!%n" +
+                "[%s] Task: FeedbackTitle is added to board: Board1!%n" +
                 "[%s] Task: StoryTitle1 is added to board: Board1!%n" +
                 "======================%n", formattedDateTime, formattedDateTime, formattedDateTime);
 

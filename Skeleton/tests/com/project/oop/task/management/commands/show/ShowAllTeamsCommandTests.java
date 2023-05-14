@@ -63,25 +63,51 @@ public class ShowAllTeamsCommandTests {
         params.remove(0);
 
         String expectedResult = String.format("======================%n" +
-                "1. Team name: Team1%n" +
-                "Team members: %n" +
-                "Margarita%n" +
-                "Ivaylo%n" +
-                "Team boards: %n" +
-                "Board1%n" +
+                "Team: Team1%n" +
+                "---------------------%n" +
+                "MEMBERS:%n" +
+                "1. ======================%n" +
+                "Member: Margarita%n" +
+                "Tasks:%n" +
+                "Margarita still does not have any task%n" +
                 "======================%n" +
-                "2. Team name: Team2%n" +
-                "Team members: %n" +
-                "George%n" +
-                "Monika%n" +
-                "Team boards: %n" +
-                "Board2%n" +
+                "1. ======================%n" +
+                "Member: Ivaylo%n" +
+                "Tasks:%n" +
+                "Ivaylo still does not have any task%n" +
                 "======================%n" +
-                "3. Team name: Team3%n" +
-                "Team members: %n" +
-                "No members added to this team%n" +
-                "Team boards: %n" +
-                "No boards created for this team%n" +
+                "---------------------%n" +
+                "BOARDS:%n" +
+                "1. *********************%n" +
+                "Board: Board1%n" +
+                "*********************%n" +
+                "============================================%n" +
+                "Team: Team2%n" +
+                "---------------------%n" +
+                "MEMBERS:%n" +
+                "1. ======================%n" +
+                "Member: George%n" +
+                "Tasks:%n" +
+                "George still does not have any task%n" +
+                "======================%n" +
+                "1. ======================%n" +
+                "Member: Monika%n" +
+                "Tasks:%n" +
+                "Monika still does not have any task%n" +
+                "======================%n" +
+                "---------------------%n" +
+                "BOARDS:%n" +
+                "1. *********************%n" +
+                "Board: Board2%n" +
+                "*********************%n" +
+                "============================================%n" +
+                "Team: Team3%n" +
+                "---------------------%n" +
+                "MEMBERS:%n" +
+                "There are no members in this team.%n" +
+                "---------------------%n" +
+                "BOARDS:%n" +
+                "There are no boards in this team.%n" +
                 "======================"
         );
 

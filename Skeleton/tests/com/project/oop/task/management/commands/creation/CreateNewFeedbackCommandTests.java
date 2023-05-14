@@ -22,20 +22,24 @@ public class CreateNewFeedbackCommandTests {
         this.repository = new TaskManagementRepositoryImpl();
         this.command = new CreateNewFeedbackCommand(repository);
         this.command2 = new CreateNewBoardCommand(repository);
+        List<String> params = new ArrayList<>();
+        String teamName = "Team1";
+        String boardName = "Board1";
+        repository.createNewTeam(teamName);
+        repository.createBoard(boardName);
+        String inputDataBoard = "Team1\nBoard1\n";
+        InputStream in1 = new ByteArrayInputStream((inputDataBoard).getBytes());
+        System.setIn(in1);
+        command2.execute(params);
     }
 
     @Test
     public void execute_Should_ThrowException_When_TitleLengthNotValid() {
         //Arrange
         List<String> params = new ArrayList<>();
-        repository.createNewTeam("Team1");
-        repository.createBoard("Board1");
-        InputStream in1 = new ByteArrayInputStream(("Team1\nBoard1\n").getBytes());
-        System.setIn(in1);
 
-        command2.execute(params);
-
-        InputStream in2 = new ByteArrayInputStream(("Team1\nBoard1\nShortTit\nLongFeedbackDescription1\n1\n").getBytes());
+        String inputDataFeedback = "Team1\nBoard1\nShortTit\nLongFeedbackDescription1\n1\n";
+        InputStream in2 = new ByteArrayInputStream((inputDataFeedback).getBytes());
         System.setIn(in2);
 
         //Act, Assert
@@ -46,13 +50,9 @@ public class CreateNewFeedbackCommandTests {
     public void execute_Should_ThrowException_When_DescriptionLengthNotValid() {
         //Arrange
         List<String> params = new ArrayList<>();
-        repository.createNewTeam("Team1");
-        repository.createBoard("Board1");
-        InputStream in1 = new ByteArrayInputStream(("Team1\nBoard1\n").getBytes());
-        System.setIn(in1);
-        command2.execute(params);
 
-        InputStream in2 = new ByteArrayInputStream(("Team1\nBoard1\nLongFeedbackTitle\nShortDesc\n1\n").getBytes());
+        String inputDataFeedback = "Team1\nBoard1\nLongFeedbackTitle\nShortDesc\n1\n";
+        InputStream in2 = new ByteArrayInputStream((inputDataFeedback).getBytes());
         System.setIn(in2);
 
         //Act, Assert
@@ -63,13 +63,9 @@ public class CreateNewFeedbackCommandTests {
     public void execute_Should_ThrowException_When_RatingNotNumber() {
         //Arrange
         List<String> params = new ArrayList<>();
-        repository.createNewTeam("Team1");
-        repository.createBoard("Board1");
-        InputStream in1 = new ByteArrayInputStream(("Team1\nBoard1\n").getBytes());
-        System.setIn(in1);
-        command2.execute(params);
 
-        InputStream in2 = new ByteArrayInputStream(("Team1\nBoard1\nLongFeedbackTitle\nLongFeedbackDescription\nabc\n").getBytes());
+        String inputDataFeedback = "Team1\nBoard1\nLongFeedbackTitle\nLongFeedbackDescription\nabc\n";
+        InputStream in2 = new ByteArrayInputStream((inputDataFeedback).getBytes());
         System.setIn(in2);
 
         //Act, Assert
@@ -80,13 +76,9 @@ public class CreateNewFeedbackCommandTests {
     public void execute_Should_CreateNewFeedback_When_AllParametersValid() {
         //Arrange
         List<String> params = new ArrayList<>();
-        repository.createNewTeam("Team1");
-        repository.createBoard("Board1");
-        InputStream in1 = new ByteArrayInputStream(("Team1\nBoard1\n").getBytes());
-        System.setIn(in1);
-        command2.execute(params);
 
-        InputStream in2 = new ByteArrayInputStream(("Team1\nBoard1\nLongFeedbackTitle1\nLongFeedbackDescription1\n1\n").getBytes());
+        String inputDataFeedback = "Team1\nBoard1\nLongFeedbackTitle1\nLongFeedbackDescription1\n1\n";
+        InputStream in2 = new ByteArrayInputStream((inputDataFeedback).getBytes());
         System.setIn(in2);
         command.execute(params);
 
@@ -98,13 +90,9 @@ public class CreateNewFeedbackCommandTests {
     public void execute_Should_ThrowException_When_EnteredTeamNameNotExit() {
         //Arrange
         List<String> params = new ArrayList<>();
-        repository.createNewTeam("Team1");
-        repository.createBoard("Board1");
-        InputStream in1 = new ByteArrayInputStream(("Team1\nBoard1\n").getBytes());
-        System.setIn(in1);
-        command2.execute(params);
 
-        InputStream in2 = new ByteArrayInputStream(("Team2\nBoard1\nLongFeedbackTitle1\nLongFeedbackDescription1\n1\n").getBytes());
+        String inputDataFeedback = "Team2\nBoard1\nLongFeedbackTitle1\nLongFeedbackDescription1\n1\n";
+        InputStream in2 = new ByteArrayInputStream((inputDataFeedback).getBytes());
         System.setIn(in2);
 
         //Act, Assert
@@ -115,13 +103,9 @@ public class CreateNewFeedbackCommandTests {
     public void execute_Should_ThrowException_When_EnteredBoardNameNotExit() {
         //Arrange
         List<String> params = new ArrayList<>();
-        repository.createNewTeam("Team1");
-        repository.createBoard("Board1");
-        InputStream in1 = new ByteArrayInputStream(("Team1\nBoard1\n").getBytes());
-        System.setIn(in1);
-        command2.execute(params);
 
-        InputStream in2 = new ByteArrayInputStream(("Team1\nBoard2\nLongFeedbackTitle1\nLongFeedbackDescription1\n1\n").getBytes());
+        String inputDataFeedback = "Team1\nBoard2\nLongFeedbackTitle1\nLongFeedbackDescription1\n1\n";
+        InputStream in2 = new ByteArrayInputStream((inputDataFeedback).getBytes());
         System.setIn(in2);
 
         //Act, Assert

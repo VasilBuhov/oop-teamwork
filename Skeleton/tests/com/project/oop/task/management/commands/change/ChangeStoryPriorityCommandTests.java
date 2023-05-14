@@ -31,26 +31,34 @@ public class ChangeStoryPriorityCommandTests {
         this.command3 = new CreateNewStoryCommand(repository);
         this.command4 = new FilterStoriesByStatusCommand(repository);
 
+        List<String> params = new ArrayList<>();
+        String teamName = "Team1";
+        String boardName = "Board1";
+        String personName = "Margarita";
+        repository.createNewTeam(teamName);
+        repository.createBoard(boardName);
+        repository.createNewPerson(personName);
+        repository.addNewPersonToTeam(personName, teamName);
+
+        String inputDataBoard = "Team1\nBoard1\n";
+        InputStream in1 = new ByteArrayInputStream((inputDataBoard).getBytes());
+        System.setIn(in1);
+        command2.execute(params);
+        params.remove(0);
+
+        String inputDataStory = "Team1\nBoard1\nMargarita\nStoryTitle1\nStoryDescription1\nlow\nsmall\n";
+        InputStream in2 = new ByteArrayInputStream((inputDataStory).getBytes());
+        System.setIn(in2);
+        command3.execute(params);
     }
 
     @Test
     public void execute_Should_ThrowException_When_CancelEnteredInsteadOfId(){
         //Arrange
         List<String> params = new ArrayList<>();
-        repository.createNewTeam("Team1");
-        repository.createBoard("Board1");
-        repository.createNewPerson("Margarita");
-        repository.addNewPersonToTeam("Margarita", "Team1");
-        InputStream in1 = new ByteArrayInputStream(("Team1\nBoard1\n").getBytes());
-        System.setIn(in1);
-        command2.execute(params);
-        params.remove(0);
 
-        InputStream in2 = new ByteArrayInputStream(("Team1\nBoard1\nMargarita\nStoryTitle1\nStoryDescription1\nlow\nsmall\n").getBytes());
-        System.setIn(in2);
-        command3.execute(params);
-
-        InputStream in3 = new ByteArrayInputStream(("cancel\nhigh\n").getBytes());
+        String commandInput = "cancel\nhigh\n";
+        InputStream in3 = new ByteArrayInputStream((commandInput).getBytes());
         System.setIn(in3);
 
         //Act, Assert
@@ -61,20 +69,9 @@ public class ChangeStoryPriorityCommandTests {
     public void execute_Should_ThrowException_When_CancelEnteredInsteadOfPriority(){
         //Arrange
         List<String> params = new ArrayList<>();
-        repository.createNewTeam("Team1");
-        repository.createBoard("Board1");
-        repository.createNewPerson("Margarita");
-        repository.addNewPersonToTeam("Margarita", "Team1");
-        InputStream in1 = new ByteArrayInputStream(("Team1\nBoard1\n").getBytes());
-        System.setIn(in1);
-        command2.execute(params);
-        params.remove(0);
 
-        InputStream in2 = new ByteArrayInputStream(("Team1\nBoard1\nMargarita\nStoryTitle1\nStoryDescription1\nlow\nsmall\n").getBytes());
-        System.setIn(in2);
-        command3.execute(params);
-
-        InputStream in3 = new ByteArrayInputStream(("1\ncancel\n").getBytes());
+        String commandInput = "1\ncancel\n";
+        InputStream in3 = new ByteArrayInputStream((commandInput).getBytes());
         System.setIn(in3);
 
         //Act, Assert
@@ -85,20 +82,9 @@ public class ChangeStoryPriorityCommandTests {
     public void execute_Should_ThrowException_When_EnteredIdNotExist(){
         //Arrange
         List<String> params = new ArrayList<>();
-        repository.createNewTeam("Team1");
-        repository.createBoard("Board1");
-        repository.createNewPerson("Margarita");
-        repository.addNewPersonToTeam("Margarita", "Team1");
-        InputStream in1 = new ByteArrayInputStream(("Team1\nBoard1\n").getBytes());
-        System.setIn(in1);
-        command2.execute(params);
-        params.remove(0);
 
-        InputStream in2 = new ByteArrayInputStream(("Team1\nBoard1\nMargarita\nStoryTitle1\nStoryDescription1\nlow\nsmall\n").getBytes());
-        System.setIn(in2);
-        command3.execute(params);
-
-        InputStream in3 = new ByteArrayInputStream(("2\nhigh\n").getBytes());
+        String commandInput = "2\nhigh\n";
+        InputStream in3 = new ByteArrayInputStream((commandInput).getBytes());
         System.setIn(in3);
 
         //Act, Assert
@@ -110,20 +96,9 @@ public class ChangeStoryPriorityCommandTests {
     public void execute_Should_ThrowException_When_EnteredNewPriorityNotExist(){
         //Arrange
         List<String> params = new ArrayList<>();
-        repository.createNewTeam("Team1");
-        repository.createBoard("Board1");
-        repository.createNewPerson("Margarita");
-        repository.addNewPersonToTeam("Margarita", "Team1");
-        InputStream in1 = new ByteArrayInputStream(("Team1\nBoard1\n").getBytes());
-        System.setIn(in1);
-        command2.execute(params);
-        params.remove(0);
 
-        InputStream in2 = new ByteArrayInputStream(("Team1\nBoard1\nMargarita\nStoryTitle1\nStoryDescription1\nlow\nsmall\n").getBytes());
-        System.setIn(in2);
-        command3.execute(params);
-
-        InputStream in3 = new ByteArrayInputStream(("1\nlarge\n").getBytes());
+        String commandInput = "1\nlarge\n";
+        InputStream in3 = new ByteArrayInputStream((commandInput).getBytes());
         System.setIn(in3);
 
         //Act, Assert
@@ -134,25 +109,16 @@ public class ChangeStoryPriorityCommandTests {
     public void execute_Should_ChangePriority_When_CorrectIdAndPriorityEntered(){
         //Arrange
         List<String> params = new ArrayList<>();
-        repository.createNewTeam("Team1");
-        repository.createBoard("Board1");
-        repository.createNewPerson("Margarita");
-        repository.addNewPersonToTeam("Margarita", "Team1");
-        InputStream in1 = new ByteArrayInputStream(("Team1\nBoard1\n").getBytes());
-        System.setIn(in1);
-        command2.execute(params);
-        params.remove(0);
 
-        InputStream in2 = new ByteArrayInputStream(("Team1\nBoard1\nMargarita\nStoryTitle1\nStoryDescription1\nlow\nsmall\n").getBytes());
-        System.setIn(in2);
-        command3.execute(params);
 
-        InputStream in3 = new ByteArrayInputStream(("1\nhigh\n").getBytes());
+        String commandInput = "1\nhigh\n";
+        InputStream in3 = new ByteArrayInputStream((commandInput).getBytes());
         System.setIn(in3);
         command1.execute(params);
 
 
-        InputStream in4 = new ByteArrayInputStream(("notDone").getBytes());
+        String inputForFilterCommand = "notDone";
+        InputStream in4 = new ByteArrayInputStream((inputForFilterCommand).getBytes());
         System.setIn(in4);
         String storyDetails = command4.execute(params);
         String expectedResult = String.format("*********************%n" +

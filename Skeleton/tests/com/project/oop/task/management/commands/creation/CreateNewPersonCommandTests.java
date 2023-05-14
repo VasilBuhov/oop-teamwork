@@ -54,11 +54,11 @@ public class CreateNewPersonCommandTests {
     @Test
     public void execute_Should_ThrowException_When_NameAlreadyExists() {
         //Arrange
-        Member person = new MemberImpl("IvanIvanov");
+        String name = "IvanIvanov";
+        Member person = new MemberImpl(name);
         repository.createNewPerson(person.getName());
         List<String> params = new ArrayList<>();
         params.add(person.getName());
-        String name = "IvanIvanov";
         InputStream in = new ByteArrayInputStream(name.getBytes());
         System.setIn(in);
 

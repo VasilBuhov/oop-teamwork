@@ -17,6 +17,7 @@ public class AddCommentToTaskCommandTests {
     private Command command;
     private Command createTask;
     private TaskManagementRepositoryImpl repository;
+    private List<String> params;
 
     @BeforeEach
     public void before() {
@@ -27,21 +28,20 @@ public class AddCommentToTaskCommandTests {
         repository.createNewPerson("Valid");
         repository.addNewPersonToTeam("Valid", "Team1");
         this.createTask = new CreateNewStoryCommand(repository);
+        params = new ArrayList<>();
     }
 
     @Test
     public void execute_Should_AddComment_When_AllParametersValid() {
         //Arrange
-        List<String> params = new ArrayList<>();
         InputStream in = new ByteArrayInputStream
                 (("Team1\nBoard1\nValid\nValidTitle\nValidDescription\nHigh\nLarge\n").getBytes());
         System.setIn(in);
         createTask.execute(params);
 
-        List<String> params1 = new ArrayList<>();
         InputStream in1 = new ByteArrayInputStream(("1\nValid\nTest\n").getBytes());
         System.setIn(in1);
-        command.execute(params1);
+        command.execute(params);
 
         //Act, Assert
         Assertions.assertEquals(1, repository.getTasks().get(0).getComments().size());
@@ -50,69 +50,61 @@ public class AddCommentToTaskCommandTests {
     @Test
     public void execute_Should_ThrowException_When_EnteredIDNotExit() {
         //Arrange
-        List<String> params = new ArrayList<>();
         InputStream in = new ByteArrayInputStream
                 (("Team1\nBoard1\nValid\nValidTitle\nValidDescription\nHigh\nLarge\n").getBytes());
         System.setIn(in);
         createTask.execute(params);
 
-        List<String> params1 = new ArrayList<>();
         InputStream in1 = new ByteArrayInputStream(("2\nValid\nTest\n").getBytes());
         System.setIn(in1);
 
         //Act, Assert
-        Assertions.assertThrows(NoSuchElementException.class, () -> command.execute(params1));
+        Assertions.assertThrows(NoSuchElementException.class, () -> command.execute(params));
     }
 
     @Test
     public void execute_Should_ThrowException_When_IDEqualsCancel() {
         //Arrange
-        List<String> params = new ArrayList<>();
         InputStream in = new ByteArrayInputStream
                 (("Team1\nBoard1\nValid\nValidTitle\nValidDescription\nHigh\nLarge\n").getBytes());
         System.setIn(in);
         createTask.execute(params);
 
-        List<String> params1 = new ArrayList<>();
         InputStream in1 = new ByteArrayInputStream(("cancel\nValid\nTest\n").getBytes());
         System.setIn(in1);
 
         //Act, Assert
-        Assertions.assertThrows(IllegalArgumentException.class, () -> command.execute(params1));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> command.execute(params));
     }
 
     @Test
     public void execute_Should_ThrowException_When_AuthorNotExist() {
         //Arrange
-        List<String> params = new ArrayList<>();
         InputStream in = new ByteArrayInputStream
                 (("Team1\nBoard1\nValid\nValidTitle\nValidDescription\nHigh\nLarge\n").getBytes());
         System.setIn(in);
         createTask.execute(params);
 
-        List<String> params1 = new ArrayList<>();
         InputStream in1 = new ByteArrayInputStream(("1\nNotValid\nTest\n").getBytes());
         System.setIn(in1);
 
         //Act, Assert
-        Assertions.assertThrows(NoSuchElementException.class, () -> command.execute(params1));
+        Assertions.assertThrows(NoSuchElementException.class, () -> command.execute(params));
     }
 
     @Test
     public void execute_Should_ThrowException_When_CommentEqualsCancel() {
         //Arrange
-        List<String> params = new ArrayList<>();
         InputStream in = new ByteArrayInputStream
                 (("Team1\nBoard1\nValid\nValidTitle\nValidDescription\nHigh\nLarge\n").getBytes());
         System.setIn(in);
         createTask.execute(params);
 
-        List<String> params1 = new ArrayList<>();
         InputStream in1 = new ByteArrayInputStream(("1\nValid\ncancel\n").getBytes());
         System.setIn(in1);
 
         //Act, Assert
-        Assertions.assertThrows(IllegalArgumentException.class, () -> command.execute(params1));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> command.execute(params));
     }
 
 

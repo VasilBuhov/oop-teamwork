@@ -1,9 +1,9 @@
 package com.project.oop.task.management.commands.listing;
 
-import com.project.oop.task.management.commands.AddPersonToTeamCommand;
 import com.project.oop.task.management.commands.contracts.Command;
 import com.project.oop.task.management.commands.creation.*;
 import com.project.oop.task.management.core.TaskManagementRepositoryImpl;
+import com.project.oop.task.management.models.BoardImpl;
 import com.project.oop.task.management.models.enums.BugStatus;
 import com.project.oop.task.management.models.enums.FeedbackStatus;
 import com.project.oop.task.management.models.enums.StoryStatus;
@@ -19,66 +19,41 @@ import java.util.List;
 public class SortTasksByTitleCommandTests {
     private TaskManagementRepositoryImpl repository;
     private Command command;
-    private Command createTeam;
     private Command createBug;
-
     private Command createStory;
     private Command createFeedback;
-    private Command createBoard;
-    private Command createPerson;
-    private Command addPersonToTeam;
 
     @BeforeEach
     public void before() {
         this.repository = new TaskManagementRepositoryImpl();
         this.command = new SortTasksByTitleCommand(repository);
-        this.createTeam = new CreateNewTeamCommand(repository);
         this.createBug = new CreateNewBugCommand(repository);
         this.createFeedback = new CreateNewFeedbackCommand(repository);
         this.createStory = new CreateNewStoryCommand(repository);
-        this.createBoard = new CreateNewBoardCommand(repository);
-        this.createPerson = new CreateNewPersonCommand(repository);
-        this.addPersonToTeam = new AddPersonToTeamCommand(repository);
+        repository.createNewTeam("Team1");
+        repository.findTeamByName("Team1").addBoard(new BoardImpl("Board1"));
+        repository.createNewPerson("Valid");
+        repository.addNewPersonToTeam("Valid", "Team1");
     }
 
     @Test
     public void execute_Should_DisplayAllTasks_SortedByTitle_OrderedAlphabetically() {
         //Arrange
         List<String> params = new ArrayList<>();
-
-        InputStream in = new ByteArrayInputStream(("Valid\n").getBytes());
-        System.setIn(in);
-        createPerson.execute(params);
-
-        List<String> params1 = new ArrayList<>();
-        InputStream in1 = new ByteArrayInputStream(("Team1\n").getBytes());
-        System.setIn(in1);
-        createTeam.execute(params1);
-
-        List<String> params2 = new ArrayList<>();
-        InputStream in2 = new ByteArrayInputStream(("Team1\nBoard1\n").getBytes());
-        System.setIn(in2);
-        createBoard.execute(params2);
-
-        List<String> params3 = new ArrayList<>();
-        InputStream in3 = new ByteArrayInputStream(("Valid\nTeam1\n").getBytes());
-        System.setIn(in3);
-        addPersonToTeam.execute(params3);
-
-        List<String> params4 = new ArrayList<>();
-        InputStream in4 = new ByteArrayInputStream(("Team1\nBoard1\nC.ValidTitle\nValidDescription\nHigh\nMinor\nValid\n").getBytes());
+        InputStream in4 = new ByteArrayInputStream
+                (("Team1\nBoard1\nC.ValidTitle\nValidDescription\nHigh\nMinor\nValid\n").getBytes());
         System.setIn(in4);
-        createBug.execute(params4);
+        createBug.execute(params);
 
-        List<String> params5 = new ArrayList<>();
-        InputStream in5 = new ByteArrayInputStream(("Team1\nBoard1\nValid\nA.ValidTitle\nValidDescription\nHigh\nLarge\n").getBytes());
+        InputStream in5 = new ByteArrayInputStream
+                (("Team1\nBoard1\nValid\nA.ValidTitle\nValidDescription\nHigh\nLarge\n").getBytes());
         System.setIn(in5);
-        createStory.execute(params5);
+        createStory.execute(params);
 
-        List<String> params6 = new ArrayList<>();
-        InputStream in6 = new ByteArrayInputStream(("Team1\nBoard1\nB.ValidTitle\nValidDescription\n1\n").getBytes());
+        InputStream in6 = new ByteArrayInputStream
+                (("Team1\nBoard1\nB.ValidTitle\nValidDescription\n1\n").getBytes());
         System.setIn(in6);
-        createFeedback.execute(params6);
+        createFeedback.execute(params);
 
         String sb = String.format("*********************%n" +
                 "Story:%n") +

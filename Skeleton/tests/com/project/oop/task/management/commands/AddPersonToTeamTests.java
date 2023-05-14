@@ -16,6 +16,7 @@ import java.util.NoSuchElementException;
 public class AddPersonToTeamTests {
     private Command command;
     private TaskManagementRepositoryImpl repository;
+    private List<String> params;
 
     @BeforeEach
     public void before() {
@@ -23,12 +24,12 @@ public class AddPersonToTeamTests {
         this.command = new CreateNewBugCommand(repository);
         repository.createNewTeam("Team1");
         repository.createNewPerson("Valid");
+        params = new ArrayList<>();
     }
 
     @Test
     public void execute_Should_ThrowException_When_NameEqualsCancel() {
         //Arrange
-        List<String> params = new ArrayList<>();
         InputStream in2 = new ByteArrayInputStream(("cancel\nTeam1").getBytes());
         System.setIn(in2);
 
@@ -39,7 +40,6 @@ public class AddPersonToTeamTests {
     @Test
     public void execute_Should_ThrowException_When_TeamEqualsCancel() {
         //Arrange
-        List<String> params = new ArrayList<>();
         InputStream in2 = new ByteArrayInputStream(("Valid\ncancel").getBytes());
         System.setIn(in2);
 
@@ -50,7 +50,6 @@ public class AddPersonToTeamTests {
     @Test
     public void execute_Should_ThrowException_When_TeamIsNotFound() {
         //Arrange
-        List<String> params = new ArrayList<>();
         InputStream in2 = new ByteArrayInputStream(("Valid\nTeam2").getBytes());
         System.setIn(in2);
 
@@ -61,7 +60,6 @@ public class AddPersonToTeamTests {
     @Test
     public void execute_Should_ThrowException_When_NameIsNotFound() {
         //Arrange
-        List<String> params = new ArrayList<>();
         InputStream in2 = new ByteArrayInputStream(("InValid\nTeam1").getBytes());
         System.setIn(in2);
 

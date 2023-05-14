@@ -18,18 +18,18 @@ import java.util.NoSuchElementException;
 public class CreateNewTeamCommandTests {
     private Command command;
     private TaskManagementRepositoryImpl repository;
+    private List<String> params;
 
     @BeforeEach
     public void before() {
         this.repository = new TaskManagementRepositoryImpl();
         this.command = new CreateNewTeamCommand(repository);
+        params = new ArrayList<>();
     }
 
     @Test
     public void execute_Should_ThrowException_When_NameLengthNotValid() {
-        List<String> params = new ArrayList<>();
         String name = "Test";
-
         InputStream in = new ByteArrayInputStream(name.getBytes());
         System.setIn(in);
 
@@ -38,9 +38,7 @@ public class CreateNewTeamCommandTests {
 
     @Test
     public void execute_Should_ThrowException_When_InputIsEqualToCancel() {
-        List<String> params = new ArrayList<>();
         String name = "cancel";
-
         InputStream in = new ByteArrayInputStream(name.getBytes());
         System.setIn(in);
 
@@ -51,8 +49,8 @@ public class CreateNewTeamCommandTests {
     public void execute_Should_ThrowException_When_NameAlreadyExists() {
         Team team = new TeamImpl("IntelliNinjas");
         repository.createNewTeam(team.getName());
-        List<String> params = new ArrayList<>();
         params.add(team.getName());
+
         String name = "IntelliNinjas";
         InputStream in = new ByteArrayInputStream(name.getBytes());
         System.setIn(in);
@@ -62,7 +60,6 @@ public class CreateNewTeamCommandTests {
 
     @Test
     public void execute_Should_CreatePerson_When_NameIsValid() {
-        List<String> params = new ArrayList<>();
         String teamName = "IntelliNinjas";
         InputStream in = new ByteArrayInputStream(teamName.getBytes());
         System.setIn(in);

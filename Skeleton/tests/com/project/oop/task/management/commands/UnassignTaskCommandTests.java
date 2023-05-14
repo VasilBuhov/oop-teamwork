@@ -17,6 +17,7 @@ public class UnassignTaskCommandTests {
     private Command command;
     private Command createStory;
     private TaskManagementRepositoryImpl repository;
+    private List<String> params;
 
     @BeforeEach
     public void before() {
@@ -27,21 +28,20 @@ public class UnassignTaskCommandTests {
         repository.findTeamByName("Team1").addBoard(repository.createBoard("Board1"));
         repository.createNewPerson("Valid");
         repository.addNewPersonToTeam("Valid", "Team1");
+        params = new ArrayList<>();
     }
 
     @Test
     public void execute_Should_UnassignTask_When_AllParametersValid() {
         //Arrange
-        List<String> params = new ArrayList<>();
         InputStream in = new ByteArrayInputStream
                 (("Team1\nBoard1\nValid\nValidTitle\nValidDescription\nHigh\nLarge\n").getBytes());
         System.setIn(in);
         createStory.execute(params);
 
-        List<String> params1 = new ArrayList<>();
         InputStream in1 = new ByteArrayInputStream(("1\nValid\n").getBytes());
         System.setIn(in1);
-        command.execute(params1);
+        command.execute(params);
 
         //Act, Assert
         Assertions.assertEquals(0, repository.getAssignedTasks().size());
@@ -50,17 +50,15 @@ public class UnassignTaskCommandTests {
     @Test
     public void execute_Should_ThrowException_When_InvalidID() {
         //Arrange
-        List<String> params = new ArrayList<>();
         InputStream in = new ByteArrayInputStream
                 (("Team1\nBoard1\nValid\nValidTitle\nValidDescription\nHigh\nLarge\n").getBytes());
         System.setIn(in);
         createStory.execute(params);
 
-        List<String> params1 = new ArrayList<>();
         InputStream in1 = new ByteArrayInputStream(("2\nValid\n").getBytes());
         System.setIn(in1);
 
         //Act, Assert
-        Assertions.assertThrows(NoSuchElementException.class, () -> command.execute(params1));
+        Assertions.assertThrows(NoSuchElementException.class, () -> command.execute(params));
     }
 }

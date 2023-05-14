@@ -16,6 +16,7 @@ import java.util.NoSuchElementException;
 public class CreateNewStoryCommandTests {
     private Command command;
     private TaskManagementRepositoryImpl repository;
+    private List<String> params;
 
     @BeforeEach
     public void before() {
@@ -25,12 +26,12 @@ public class CreateNewStoryCommandTests {
         repository.findTeamByName("Team1").addBoard(repository.createBoard("Board1"));
         repository.createNewPerson("Valid");
         repository.addNewPersonToTeam("Valid", "Team1");
+        params = new ArrayList<>();
     }
 
     @Test
     public void execute_Should_ThrowException_When_TitleLengthNotValid() {
         //Arrange
-        List<String> params = new ArrayList<>();
         InputStream in = new ByteArrayInputStream
                 (("Team1\nBoard1\nValid\nShort\nValidDescription\nHigh\nLarge\n").getBytes());
         System.setIn(in);
@@ -42,7 +43,6 @@ public class CreateNewStoryCommandTests {
     @Test
     public void execute_Should_CreateNewStory_When_AllParametersValid() {
         //Arrange
-        List<String> params = new ArrayList<>();
         InputStream in = new ByteArrayInputStream
                 (("Team1\nBoard1\nValid\nValidTitle\nValidDescription\nHigh\nLarge\n").getBytes());
         System.setIn(in);
@@ -55,7 +55,6 @@ public class CreateNewStoryCommandTests {
     @Test
     public void execute_Should_ThrowException_When_AssigneeIsNotValid() {
         //Arrange
-        List<String> params = new ArrayList<>();
         InputStream in = new ByteArrayInputStream
                 (("Team1\nBoard1\nNikol\nValidTitle\nValidDescription\nHigh\nLarge\n").getBytes());
         System.setIn(in);
@@ -67,7 +66,6 @@ public class CreateNewStoryCommandTests {
     @Test
     public void execute_Should_ThrowException_When_PriorityNotValid() {
         //Arrange
-        List<String> params = new ArrayList<>();
         InputStream in = new ByteArrayInputStream
                 (("Team1\nBoard1\nValid\nValidTitle\nValidDescription\nInvalid\nLarge\n").getBytes());
         System.setIn(in);
@@ -79,7 +77,6 @@ public class CreateNewStoryCommandTests {
     @Test
     public void execute_Should_ThrowException_When_SizeNotValid() {
         //Arrange
-        List<String> params = new ArrayList<>();
         InputStream in = new ByteArrayInputStream
                 (("Team1\nBoard1\nValid\nValidTitle\nValidDescription\nHigh\nInvalid\n").getBytes());
         System.setIn(in);
@@ -91,7 +88,6 @@ public class CreateNewStoryCommandTests {
     @Test
     public void execute_Should_ThrowException_When_EnteredTeamNameNotExit() {
         //Arrange
-        List<String> params = new ArrayList<>();
         InputStream in = new ByteArrayInputStream
                 (("Team2\nBoard1\nValid\nValidTitle\nValidDescription\nHigh\nLarge\n").getBytes());
         System.setIn(in);
@@ -103,7 +99,6 @@ public class CreateNewStoryCommandTests {
     @Test
     public void execute_Should_ThrowException_When_EnteredBoardNameNotExit() {
         //Arrange
-        List<String> params = new ArrayList<>();
         InputStream in = new ByteArrayInputStream
                 (("Team1\nBoard2\nValid\nValidTitle\nValidDescription\nHigh\nLarge\n").getBytes());
         System.setIn(in);

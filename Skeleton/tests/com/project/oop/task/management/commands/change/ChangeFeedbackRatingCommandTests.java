@@ -15,6 +15,7 @@ import java.util.NoSuchElementException;
 public class ChangeFeedbackRatingCommandTests {
     private Command command;
     private TaskManagementRepositoryImpl repository;
+    private List<String> params;
 
     @BeforeEach
     public void before() {
@@ -23,12 +24,12 @@ public class ChangeFeedbackRatingCommandTests {
         repository.createNewTeam("Team1");
         repository.createBoard("Board1");
         repository.createFeedback("ValidTitle", "ValidDescription", 1);
+        params = new ArrayList<>();
     }
 
     @Test
     public void execute_Should_ChangeTheStatus_When_AllParametersValid() {
         //Arrange
-        List<String> params = new ArrayList<>();
         InputStream in = new ByteArrayInputStream(("1\n2\n").getBytes());
         System.setIn(in);
         command.execute(params);
@@ -51,7 +52,6 @@ public class ChangeFeedbackRatingCommandTests {
     @Test
     public void execute_Should_ThrowException_When_InvalidNewRating() {
         //Arrange
-        List<String> params = new ArrayList<>();
         InputStream in = new ByteArrayInputStream(("1\nInvalid\n").getBytes());
         System.setIn(in);
 
@@ -62,7 +62,6 @@ public class ChangeFeedbackRatingCommandTests {
     @Test
     public void execute_Should_ThrowException_When_InvalidID() {
         //Arrange
-        List<String> params = new ArrayList<>();
         InputStream in = new ByteArrayInputStream(("Invalid\n2\n").getBytes());
         System.setIn(in);
 

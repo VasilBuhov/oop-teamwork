@@ -17,6 +17,7 @@ public class AddCommentToTaskCommandTests {
     private Command command;
     private Command createTask;
     private TaskManagementRepositoryImpl repository;
+    private List<String> params;
 
     @BeforeEach
     public void before() {
@@ -27,12 +28,12 @@ public class AddCommentToTaskCommandTests {
         repository.createNewPerson("Valid");
         repository.addNewPersonToTeam("Valid", "Team1");
         this.createTask = new CreateNewStoryCommand(repository);
+        params = new ArrayList<>();
     }
 
     @Test
     public void execute_Should_AddComment_When_AllParametersValid() {
         //Arrange
-        List<String> params = new ArrayList<>();
         InputStream in = new ByteArrayInputStream
                 (("Team1\nBoard1\nValid\nValidTitle\nValidDescription\nHigh\nLarge\n").getBytes());
         System.setIn(in);
@@ -49,7 +50,6 @@ public class AddCommentToTaskCommandTests {
     @Test
     public void execute_Should_ThrowException_When_EnteredIDNotExit() {
         //Arrange
-        List<String> params = new ArrayList<>();
         InputStream in = new ByteArrayInputStream
                 (("Team1\nBoard1\nValid\nValidTitle\nValidDescription\nHigh\nLarge\n").getBytes());
         System.setIn(in);
@@ -65,7 +65,6 @@ public class AddCommentToTaskCommandTests {
     @Test
     public void execute_Should_ThrowException_When_IDEqualsCancel() {
         //Arrange
-        List<String> params = new ArrayList<>();
         InputStream in = new ByteArrayInputStream
                 (("Team1\nBoard1\nValid\nValidTitle\nValidDescription\nHigh\nLarge\n").getBytes());
         System.setIn(in);
@@ -81,7 +80,6 @@ public class AddCommentToTaskCommandTests {
     @Test
     public void execute_Should_ThrowException_When_AuthorNotExist() {
         //Arrange
-        List<String> params = new ArrayList<>();
         InputStream in = new ByteArrayInputStream
                 (("Team1\nBoard1\nValid\nValidTitle\nValidDescription\nHigh\nLarge\n").getBytes());
         System.setIn(in);
@@ -97,7 +95,6 @@ public class AddCommentToTaskCommandTests {
     @Test
     public void execute_Should_ThrowException_When_CommentEqualsCancel() {
         //Arrange
-        List<String> params = new ArrayList<>();
         InputStream in = new ByteArrayInputStream
                 (("Team1\nBoard1\nValid\nValidTitle\nValidDescription\nHigh\nLarge\n").getBytes());
         System.setIn(in);

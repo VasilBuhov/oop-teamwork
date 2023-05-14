@@ -17,6 +17,7 @@ public class UnassignTaskCommandTests {
     private Command command;
     private Command createStory;
     private TaskManagementRepositoryImpl repository;
+    private List<String> params;
 
     @BeforeEach
     public void before() {
@@ -27,12 +28,12 @@ public class UnassignTaskCommandTests {
         repository.findTeamByName("Team1").addBoard(repository.createBoard("Board1"));
         repository.createNewPerson("Valid");
         repository.addNewPersonToTeam("Valid", "Team1");
+        params = new ArrayList<>();
     }
 
     @Test
     public void execute_Should_UnassignTask_When_AllParametersValid() {
         //Arrange
-        List<String> params = new ArrayList<>();
         InputStream in = new ByteArrayInputStream
                 (("Team1\nBoard1\nValid\nValidTitle\nValidDescription\nHigh\nLarge\n").getBytes());
         System.setIn(in);
@@ -49,7 +50,6 @@ public class UnassignTaskCommandTests {
     @Test
     public void execute_Should_ThrowException_When_InvalidID() {
         //Arrange
-        List<String> params = new ArrayList<>();
         InputStream in = new ByteArrayInputStream
                 (("Team1\nBoard1\nValid\nValidTitle\nValidDescription\nHigh\nLarge\n").getBytes());
         System.setIn(in);

@@ -16,6 +16,7 @@ import java.util.NoSuchElementException;
 public class ChangeFeedbackStatusCommandTests {
     private Command command;
     private TaskManagementRepositoryImpl repository;
+    private List<String> params;
 
     @BeforeEach
     public void before() {
@@ -24,12 +25,12 @@ public class ChangeFeedbackStatusCommandTests {
         repository.createNewTeam("Team1");
         repository.createBoard("Board1");
         repository.createFeedback("ValidTitle", "ValidDescription", 1);
+        params = new ArrayList<>();
     }
 
     @Test
     public void execute_Should_AdvanceTheStatus_When_AllParametersValid() {
         //Arrange
-        List<String> params = new ArrayList<>();
         InputStream in = new ByteArrayInputStream(("1\nadvance\n").getBytes());
         System.setIn(in);
         command.execute(params);
@@ -43,7 +44,6 @@ public class ChangeFeedbackStatusCommandTests {
     @Test
     public void execute_Should_RevertTheStatus_When_AllParametersValid() {
         //Arrange
-        List<String> params = new ArrayList<>();
         InputStream in = new ByteArrayInputStream(("1\nrevert\n").getBytes());
         System.setIn(in);
         command.execute(params);
@@ -56,7 +56,6 @@ public class ChangeFeedbackStatusCommandTests {
     @Test
     public void execute_Should_ThrowException_When_CannotChangeTheStatus() {
         //Arrange
-        List<String> params = new ArrayList<>();
         InputStream in4 = new ByteArrayInputStream(("1\nadvance\n").getBytes());
         System.setIn(in4);
         command.execute(params);
@@ -77,7 +76,6 @@ public class ChangeFeedbackStatusCommandTests {
     @Test
     public void execute_Should_ThrowException_When_IdDoNotExist() {
         //Arrange
-        List<String> params = new ArrayList<>();
         InputStream in = new ByteArrayInputStream(("2\nadvance\n").getBytes());
         System.setIn(in);
 
@@ -88,7 +86,6 @@ public class ChangeFeedbackStatusCommandTests {
     @Test
     public void execute_Should_ThrowException_When_DirectionEqualsCancel() {
         //Arrange
-        List<String> params = new ArrayList<>();
         InputStream in = new ByteArrayInputStream(("1\nInvalid\n").getBytes());
         System.setIn(in);
 

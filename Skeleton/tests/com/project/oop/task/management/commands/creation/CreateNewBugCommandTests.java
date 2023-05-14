@@ -15,6 +15,7 @@ import java.util.NoSuchElementException;
 public class CreateNewBugCommandTests {
     private Command command;
     private TaskManagementRepositoryImpl repository;
+    private List<String> params;
 
     @BeforeEach
     public void before() {
@@ -24,12 +25,12 @@ public class CreateNewBugCommandTests {
         repository.findTeamByName("Team1").addBoard(repository.createBoard("Board1"));
         repository.createNewPerson("Valid");
         repository.addNewPersonToTeam("Valid", "Team1");
+        params = new ArrayList<>();
     }
 
     @Test
     public void execute_Should_ThrowException_When_TitleLengthNotValid() {
         //Arrange
-        List<String> params = new ArrayList<>();
         InputStream in = new ByteArrayInputStream(("Team1\nBoard1\nShort\nValidDescription\nHigh\nMinor\nValid\n").getBytes());
         System.setIn(in);
 
@@ -40,7 +41,6 @@ public class CreateNewBugCommandTests {
     @Test
     public void execute_Should_CreateNewBug_When_AllParametersValid() {
         //Arrange
-        List<String> params = new ArrayList<>();
         InputStream in = new ByteArrayInputStream(("Team1\nBoard1\nValidTitle\nValidDescription\nHigh\nMinor\nValid\n").getBytes());
         System.setIn(in);
         command.execute(params);
@@ -52,7 +52,6 @@ public class CreateNewBugCommandTests {
     @Test
     public void execute_Should_ThrowException_When_AssigneeIsNotValid() {
         //Arrange
-        List<String> params = new ArrayList<>();
         InputStream in = new ByteArrayInputStream(("Team1\nBoard1\nValidTitle\nValidDescription\nHigh\nMinor\nNikol\n").getBytes());
         System.setIn(in);
 
@@ -63,7 +62,6 @@ public class CreateNewBugCommandTests {
     @Test
     public void execute_Should_ThrowException_When_PriorityNotValid() {
         //Arrange
-        List<String> params = new ArrayList<>();
         InputStream in = new ByteArrayInputStream(("Team1\nBoard1\nValidTitle\nValidDescription\nInvalid\nMinor\nValid\n").getBytes());
         System.setIn(in);
 
@@ -74,7 +72,6 @@ public class CreateNewBugCommandTests {
     @Test
     public void execute_Should_ThrowException_When_SeverityNotValid() {
         //Arrange
-        List<String> params = new ArrayList<>();
         InputStream in = new ByteArrayInputStream(("Team1\nBoard1\nValidTitle\nValidDescription\nHigh\nInvalid\nValid\n").getBytes());
         System.setIn(in);
 
@@ -85,7 +82,6 @@ public class CreateNewBugCommandTests {
     @Test
     public void execute_Should_ThrowException_When_EnteredTeamNameNotExit() {
         //Arrange
-        List<String> params = new ArrayList<>();
         InputStream in = new ByteArrayInputStream(("Team2\nBoard1\nValidTitle\nValidDescription\nHigh\nMinor\nValid\n").getBytes());
         System.setIn(in);
 
@@ -96,7 +92,6 @@ public class CreateNewBugCommandTests {
     @Test
     public void execute_Should_ThrowException_When_EnteredBoardNameNotExit() {
         //Arrange
-        List<String> params = new ArrayList<>();
         InputStream in = new ByteArrayInputStream(("Team1\nBoard2\nValidTitle\nValidDescription\nHigh\nMinor\nValid\n").getBytes());
         System.setIn(in);
 
@@ -107,7 +102,6 @@ public class CreateNewBugCommandTests {
     @Test
     public void execute_Should_ThrowException_When_BoardEqualsCancel() {
         //Arrange
-        List<String> params = new ArrayList<>();
         InputStream in = new ByteArrayInputStream(("Team1\ncancel\nValidTitle\nValidDescription\nHigh\nMinor\nValid\n").getBytes());
         System.setIn(in);
 
@@ -118,7 +112,6 @@ public class CreateNewBugCommandTests {
     @Test
     public void execute_Should_ThrowException_When_TeamEqualsCancel() {
         //Arrange
-        List<String> params = new ArrayList<>();
         InputStream in = new ByteArrayInputStream(("cancel\nBoard1\nValidTitle\nValidDescription\nHigh\nMinor\nValid\n").getBytes());
         System.setIn(in);
 
@@ -129,7 +122,6 @@ public class CreateNewBugCommandTests {
     @Test
     public void execute_Should_ThrowException_When_TitleEqualsCancel() {
         //Arrange
-        List<String> params = new ArrayList<>();
         InputStream in = new ByteArrayInputStream(("Team1\nBoard1\ncancel\nValidDescription\nHigh\nMinor\nValid\n").getBytes());
         System.setIn(in);
 
@@ -140,7 +132,6 @@ public class CreateNewBugCommandTests {
     @Test
     public void execute_Should_ThrowException_When_DescriptionEqualsCancel() {
         //Arrange
-        List<String> params = new ArrayList<>();
         InputStream in = new ByteArrayInputStream(("Team1\nBoard1\nValidTitle\ncancel\nHigh\nMinor\nValid\n").getBytes());
         System.setIn(in);
 
@@ -151,7 +142,6 @@ public class CreateNewBugCommandTests {
     @Test
     public void execute_Should_ThrowException_When_AssigneeEqualsCancel() {
         //Arrange
-        List<String> params = new ArrayList<>();
         InputStream in = new ByteArrayInputStream(("Team1\nBoard1\nValidTitle\nValidDescription\nHigh\nMinor\ncancel\n").getBytes());
         System.setIn(in);
 
@@ -162,7 +152,6 @@ public class CreateNewBugCommandTests {
     @Test
     public void execute_Should_ThrowException_When_PriorityEqualsCancel() {
         //Arrange
-        List<String> params = new ArrayList<>();
         InputStream in = new ByteArrayInputStream(("Team1\nBoard1\nValidTitle\nValidDescription\ncancel\nMinor\nValid\n").getBytes());
         System.setIn(in);
 
@@ -173,7 +162,6 @@ public class CreateNewBugCommandTests {
     @Test
     public void execute_Should_ThrowException_When_SeverityEqualsCancel() {
         //Arrange
-        List<String> params = new ArrayList<>();
         InputStream in = new ByteArrayInputStream(("Team1\nBoard1\nValidTitle\nValidDescription\nHigh\ncancel\nValid\n").getBytes());
         System.setIn(in);
 

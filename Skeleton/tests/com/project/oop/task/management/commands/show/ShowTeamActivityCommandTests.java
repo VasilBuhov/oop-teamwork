@@ -15,18 +15,19 @@ import java.util.NoSuchElementException;
 public class ShowTeamActivityCommandTests {
     private Command command;
     private TaskManagementRepositoryImpl repository;
+    private List<String> params;
 
     @BeforeEach
     public void before() {
         this.repository = new TaskManagementRepositoryImpl();
         this.command = new ShowTeamActivityCommand(repository);
         repository.createNewTeam("Team1");
+        params = new ArrayList<>();
     }
 
     @Test
     public void execute_Should_ShowTeamActivity_When_ArgumentsAreValid() {
         //Arrange
-        List<String> params = new ArrayList<>();
         InputStream in2 = new ByteArrayInputStream(("Team1\n").getBytes());
         System.setIn(in2);
 
@@ -50,7 +51,6 @@ public class ShowTeamActivityCommandTests {
     @Test
     public void execute_Should_ThrowException_When_TeamEqualsCancel() {
         //Arrange
-        List<String> params = new ArrayList<>();
         InputStream in2 = new ByteArrayInputStream(("cancel\n").getBytes());
         System.setIn(in2);
 
@@ -61,7 +61,6 @@ public class ShowTeamActivityCommandTests {
     @Test
     public void execute_Should_ThrowException_When_TeamNotFound() {
         //Arrange
-        List<String> params = new ArrayList<>();
         InputStream in2 = new ByteArrayInputStream(("Invalid\n").getBytes());
         System.setIn(in2);
 

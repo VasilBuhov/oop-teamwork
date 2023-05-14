@@ -36,7 +36,6 @@ public class AddCommentToTaskCommand implements Command {
                 id = ParsingHelpers.tryParseInt(input, MessageHelper.PARSING_ERROR_MESSAGE);
                 if (repository.isItValidTaskID(id)) {
                     isValidId = true;
-                    parameters.add(String.valueOf(id));
                 } else {
                     System.out.printf((MessageHelper.TASK_NOT_FOUND_MESSAGE) + "%n", id);
                 }
@@ -52,7 +51,6 @@ public class AddCommentToTaskCommand implements Command {
             repository.isItCancel(author, MessageHelper.INVALID_INPUT);
             if (repository.isItMember(author)) {
                 nameIsValid = true;
-                parameters.add(author);
             } else {
                 System.out.println(MessageHelper.PERSON_IS_NOT_FOUND_MESSAGE);
             }
@@ -61,7 +59,6 @@ public class AddCommentToTaskCommand implements Command {
         MessageHelper.printPromptMessage("comment");
         comment = scanner.nextLine();
         repository.isItCancel(comment, MessageHelper.INVALID_INPUT);
-        parameters.add(comment);
 
         Comment comment1 = new CommentImpl(comment, author);
         repository.addCommentToTask(id, comment1);

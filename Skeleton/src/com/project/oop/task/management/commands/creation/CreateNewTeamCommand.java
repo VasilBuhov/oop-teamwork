@@ -4,14 +4,11 @@ import com.project.oop.task.management.commands.contracts.Command;
 import com.project.oop.task.management.core.TaskManagementRepositoryImpl;
 import com.project.oop.task.management.models.TeamImpl;
 import com.project.oop.task.management.utils.MessageHelper;
-import com.project.oop.task.management.utils.ValidationHelper;
 
 import java.util.List;
 import java.util.Scanner;
 
 public class CreateNewTeamCommand implements Command {
-
-    public static int EXPECTED_NUMBER_OF_ARGUMENTS = 1;
     private final TaskManagementRepositoryImpl repository;
     private String name;
 
@@ -43,8 +40,6 @@ public class CreateNewTeamCommand implements Command {
             }
             if (!name.equals("")) {
                 teamIsValid = true;
-                parameters.add(name);
-                ValidationHelper.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
                 repository.createNewTeam(name);
             }
         } else {

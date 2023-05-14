@@ -2,10 +2,7 @@ package com.project.oop.task.management.commands.show;
 
 import com.project.oop.task.management.commands.contracts.Command;
 import com.project.oop.task.management.core.contracts.TaskManagementRepository;
-import com.project.oop.task.management.models.contracts.Member;
-import com.project.oop.task.management.models.contracts.Team;
 import com.project.oop.task.management.utils.MessageHelper;
-import com.project.oop.task.management.utils.ValidationHelper;
 
 import java.util.List;
 import java.util.Scanner;
@@ -30,14 +27,11 @@ public class ShowPersonActivityCommand implements Command {
             personName = scanner.nextLine();
             if (repository.getAllPeople().stream().anyMatch(person -> person.getName().equals(personName))) {
                 nameIsValid = true;
-                parameters.add(personName);
             } else {
                 repository.isItCancel(personName, MessageHelper.INVALID_INPUT);
                 System.out.println(MessageHelper.PERSON_IS_NOT_FOUND_MESSAGE);
             }
         }
-
-        ValidationHelper.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
         return repository.findPersonByName(personName).getActivity();
     }
 }

@@ -31,7 +31,6 @@ public class UnassignTaskCommand implements Command {
                 id = ParsingHelpers.tryParseInt(input, MessageHelper.PARSING_ERROR_MESSAGE);
                 if (repository.isItValidTaskID(id)) {
                     isValidId = true;
-                    parameters.add(String.valueOf(id));
                 } else {
                     System.out.printf((MessageHelper.TASK_NOT_FOUND_MESSAGE) + "%n", id);
                 }
@@ -46,7 +45,6 @@ public class UnassignTaskCommand implements Command {
             name = scanner.nextLine();
             if (repository.isItMember(name)) {
                 nameIsValid = true;
-                parameters.add(name);
             } else {
                 repository.isItCancel(name, MessageHelper.INVALID_INPUT);
                 System.out.println(MessageHelper.PERSON_IS_NOT_FOUND_MESSAGE);

@@ -9,14 +9,11 @@ import com.project.oop.task.management.models.enums.Priority;
 import com.project.oop.task.management.models.enums.Size;
 import com.project.oop.task.management.utils.MessageHelper;
 import com.project.oop.task.management.utils.ParsingHelpers;
-import com.project.oop.task.management.utils.ValidationHelper;
 
 import java.util.List;
 import java.util.Scanner;
 
 public class CreateNewStoryCommand implements Command {
-
-    public static int EXPECTED_NUMBER_OF_ARGUMENTS = 7;
     private final TaskManagementRepository repository;
     private String team;
     private String title;
@@ -40,7 +37,6 @@ public class CreateNewStoryCommand implements Command {
             team = scanner.nextLine();
             if (repository.isTeamAlreadyCreated(team)) {
                 teamIsValid = true;
-                parameters.add(team);
             } else {
                 repository.isItCancel(team, MessageHelper.INVALID_INPUT);
                 System.out.println(MessageHelper.TEAM_IS_NOT_FOUNDED);
@@ -55,7 +51,6 @@ public class CreateNewStoryCommand implements Command {
             if (repository.isBoardAlreadyCreated(team, targetBoard)) {
                 boardIsValid = true;
                 board1 = repository.findBoardByName(targetBoard, team);
-                parameters.add(targetBoard);
             } else {
                 repository.isItCancel(targetBoard, MessageHelper.INVALID_INPUT);
                 System.out.println(MessageHelper.BOARD_IS_NOT_FOUNDED);
@@ -68,7 +63,6 @@ public class CreateNewStoryCommand implements Command {
             assignee = scanner.nextLine();
             if (repository.isAssigneeMemberOfTheTeam(assignee, team)) {
                 assigneeIsValid = true;
-                parameters.add(assignee);
             } else {
                 repository.isItCancel(assignee, MessageHelper.INVALID_INPUT);
                 System.out.println(MessageHelper.CANNOT_ASSIGN_STORY);
@@ -88,7 +82,6 @@ public class CreateNewStoryCommand implements Command {
             }
             if (!title.isBlank()) {
                 isValidTitle = true;
-                parameters.add(title);
             }
         }
 
@@ -106,7 +99,6 @@ public class CreateNewStoryCommand implements Command {
             }
             if (!description.isBlank()) {
                 isValidDescription = true;
-                parameters.add(description);
             }
         }
 
@@ -124,7 +116,6 @@ public class CreateNewStoryCommand implements Command {
             }
             if (priority != null) {
                 isValidPriority = true;
-                parameters.add(priority.toString());
             }
         }
 
@@ -142,11 +133,8 @@ public class CreateNewStoryCommand implements Command {
             }
             if (size != null) {
                 isValidSize = true;
-                parameters.add(size.toString());
             }
         }
-
-        ValidationHelper.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
 
         StoryImpl story = repository.createNewStory(title, description, priority, size, assignee);
         board1.addTask(story);

@@ -38,10 +38,9 @@ public class AddCommentToTaskCommandTests {
         System.setIn(in);
         createTask.execute(params);
 
-        List<String> params1 = new ArrayList<>();
         InputStream in1 = new ByteArrayInputStream(("1\nValid\nTest\n").getBytes());
         System.setIn(in1);
-        command.execute(params1);
+        command.execute(params);
 
         //Act, Assert
         Assertions.assertEquals(1, repository.getTasks().get(0).getComments().size());
@@ -56,12 +55,11 @@ public class AddCommentToTaskCommandTests {
         System.setIn(in);
         createTask.execute(params);
 
-        List<String> params1 = new ArrayList<>();
         InputStream in1 = new ByteArrayInputStream(("2\nValid\nTest\n").getBytes());
         System.setIn(in1);
 
         //Act, Assert
-        Assertions.assertThrows(NoSuchElementException.class, () -> command.execute(params1));
+        Assertions.assertThrows(NoSuchElementException.class, () -> command.execute(params));
     }
 
     @Test
@@ -73,12 +71,11 @@ public class AddCommentToTaskCommandTests {
         System.setIn(in);
         createTask.execute(params);
 
-        List<String> params1 = new ArrayList<>();
         InputStream in1 = new ByteArrayInputStream(("cancel\nValid\nTest\n").getBytes());
         System.setIn(in1);
 
         //Act, Assert
-        Assertions.assertThrows(IllegalArgumentException.class, () -> command.execute(params1));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> command.execute(params));
     }
 
     @Test
@@ -90,12 +87,11 @@ public class AddCommentToTaskCommandTests {
         System.setIn(in);
         createTask.execute(params);
 
-        List<String> params1 = new ArrayList<>();
         InputStream in1 = new ByteArrayInputStream(("1\nNotValid\nTest\n").getBytes());
         System.setIn(in1);
 
         //Act, Assert
-        Assertions.assertThrows(NoSuchElementException.class, () -> command.execute(params1));
+        Assertions.assertThrows(NoSuchElementException.class, () -> command.execute(params));
     }
 
     @Test
@@ -107,12 +103,11 @@ public class AddCommentToTaskCommandTests {
         System.setIn(in);
         createTask.execute(params);
 
-        List<String> params1 = new ArrayList<>();
         InputStream in1 = new ByteArrayInputStream(("1\nValid\ncancel\n").getBytes());
         System.setIn(in1);
 
         //Act, Assert
-        Assertions.assertThrows(IllegalArgumentException.class, () -> command.execute(params1));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> command.execute(params));
     }
 
 

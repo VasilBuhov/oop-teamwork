@@ -38,10 +38,9 @@ public class AssignTaskCommandTests {
         System.setIn(in);
         createFeedback.execute(params);
 
-        List<String> params1 = new ArrayList<>();
         InputStream in1 = new ByteArrayInputStream(("1\nValid\n").getBytes());
         System.setIn(in1);
-        command.execute(params1);
+        command.execute(params);
 
         //Act, Assert
         Assertions.assertEquals(1, repository.getAssignedTasks().size());
@@ -56,12 +55,11 @@ public class AssignTaskCommandTests {
         System.setIn(in);
         createFeedback.execute(params);
 
-        List<String> params1 = new ArrayList<>();
         InputStream in1 = new ByteArrayInputStream(("2\nValid\n").getBytes());
         System.setIn(in1);
 
         //Act, Assert
-        Assertions.assertThrows(NoSuchElementException.class, () -> command.execute(params1));
+        Assertions.assertThrows(NoSuchElementException.class, () -> command.execute(params));
     }
 
     @Test
@@ -73,11 +71,10 @@ public class AssignTaskCommandTests {
         System.setIn(in);
         createFeedback.execute(params);
 
-        List<String> params1 = new ArrayList<>();
         InputStream in1 = new ByteArrayInputStream(("1\nInvalid\n").getBytes());
         System.setIn(in1);
 
         //Act, Assert
-        Assertions.assertThrows(NoSuchElementException.class, () -> command.execute(params1));
+        Assertions.assertThrows(NoSuchElementException.class, () -> command.execute(params));
     }
 }

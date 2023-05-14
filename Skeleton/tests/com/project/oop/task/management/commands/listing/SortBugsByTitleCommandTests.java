@@ -1,14 +1,10 @@
 package com.project.oop.task.management.commands.listing;
 
-import com.project.oop.task.management.commands.AddPersonToTeamCommand;
 import com.project.oop.task.management.commands.contracts.Command;
-import com.project.oop.task.management.commands.creation.CreateNewBoardCommand;
 import com.project.oop.task.management.commands.creation.CreateNewBugCommand;
-import com.project.oop.task.management.commands.creation.CreateNewPersonCommand;
-import com.project.oop.task.management.commands.creation.CreateNewTeamCommand;
 import com.project.oop.task.management.core.TaskManagementRepositoryImpl;
+import com.project.oop.task.management.models.BoardImpl;
 import com.project.oop.task.management.models.enums.BugStatus;
-import com.project.oop.task.management.models.enums.Severity;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,21 +18,17 @@ import java.util.List;
 public class SortBugsByTitleCommandTests {
     private TaskManagementRepositoryImpl repository;
     private Command command;
-    private Command createTeam;
     private Command createBug;
-    private Command createBoard;
-    private Command createPerson;
-    private Command addPersonToTeam;
 
     @BeforeEach
     public void before() {
         this.repository = new TaskManagementRepositoryImpl();
         this.command = new SortBugsByTitleCommand(repository);
-        this.createTeam = new CreateNewTeamCommand(repository);
         this.createBug = new CreateNewBugCommand(repository);
-        this.createBoard = new CreateNewBoardCommand(repository);
-        this.createPerson = new CreateNewPersonCommand(repository);
-        this.addPersonToTeam = new AddPersonToTeamCommand(repository);
+        repository.createNewTeam("Team1");
+        repository.findTeamByName("Team1").addBoard(new BoardImpl("Board1"));
+        repository.createNewPerson("Valid");
+        repository.addNewPersonToTeam("Valid", "Team1");
     }
 
     @Test
@@ -44,30 +36,13 @@ public class SortBugsByTitleCommandTests {
         //Arrange
         List<String> params = new ArrayList<>();
 
-        InputStream in = new ByteArrayInputStream(("Valid\n").getBytes());
-        System.setIn(in);
-        createPerson.execute(params);
-
-        List<String> params1 = new ArrayList<>();
-        InputStream in1 = new ByteArrayInputStream(("Team1\n").getBytes());
-        System.setIn(in1);
-        createTeam.execute(params1);
-
-        List<String> params2 = new ArrayList<>();
-        InputStream in2 = new ByteArrayInputStream(("Team1\nBoard1\n").getBytes());
-        System.setIn(in2);
-        createBoard.execute(params2);
-
-        List<String> params3 = new ArrayList<>();
-        InputStream in3 = new ByteArrayInputStream(("Valid\nTeam1\n").getBytes());
-        System.setIn(in3);
-        addPersonToTeam.execute(params3);
-
-        InputStream in4 = new ByteArrayInputStream(("Team1\nBoard1\nA.ValidTitle\nValidDescription\nHigh\nMinor\nValid\n").getBytes());
+        InputStream in4 = new ByteArrayInputStream
+                (("Team1\nBoard1\nA.ValidTitle\nValidDescription\nHigh\nMinor\nValid\n").getBytes());
         System.setIn(in4);
         createBug.execute(params);
 
-        InputStream in5 = new ByteArrayInputStream(("Team1\nBoard1\nB.ValidTitle\nValidDescription\nHigh\nMinor\nValid\n").getBytes());
+        InputStream in5 = new ByteArrayInputStream
+                (("Team1\nBoard1\nB.ValidTitle\nValidDescription\nHigh\nMinor\nValid\n").getBytes());
         System.setIn(in5);
         createBug.execute(params);
 

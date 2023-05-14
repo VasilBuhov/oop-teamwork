@@ -34,7 +34,6 @@ public class AssignTaskCommand implements Command {
                         System.out.printf((MessageHelper.TASK_ALREADY_ASSIGNED) + "%n", id);
                     } else {
                         isValidId = true;
-                        parameters.add(String.valueOf(id));
                     }
                 } else {
                     System.out.printf((MessageHelper.TASK_NOT_FOUND_MESSAGE) + "%n", id);
@@ -50,7 +49,6 @@ public class AssignTaskCommand implements Command {
             name = scanner.nextLine();
             if (repository.isItMember(name)) {
                 nameIsValid = true;
-                parameters.add(name);
             } else {
                 repository.isItCancel(name, MessageHelper.INVALID_INPUT);
                 System.out.println(MessageHelper.PERSON_IS_NOT_FOUND_MESSAGE);

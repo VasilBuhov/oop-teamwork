@@ -68,17 +68,20 @@ public class BoardImpl implements Board {
     @Override
     public String getAsString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(String.format("*********************%n"));
         sb.append(String.format("Board: %s%n", getName()));
-        for (Task task : tasks) {
-            sb.append(task.viewInfo());
+        if (tasks.size() == 0){
+            sb.append(String.format("No tasks created in this board.%n"));
+        }else {
+            for (Task task : tasks) {
+                sb.append("### ").append(task.viewInfo());
+            }
         }
+
         sb.append(String.format("*********************%n"));
         return sb.toString();
     }
     public String getActivity() {
         StringBuilder sb = new StringBuilder();
-//        sb.append(String.format("======================%n"));
         sb.append(String.format("Board: %s%n", getName()));
         sb.append(String.format("Activity:%n"));
         if (history.isEmpty()) {

@@ -84,7 +84,7 @@ public class FilterTasksByTitleCommandTests {
         //Act
         String filteredBugs = command1.execute(params).trim();
 
-        String result = String.format("*********************%n" +
+        String result = String.format(
                 "Bug:%n" +
                 "Title: LongTaskTitle1%n" +
                 "Description: LongBugDescription1%n" +
@@ -93,7 +93,6 @@ public class FilterTasksByTitleCommandTests {
                 "Priority: Low%n" +
                 "Severity: Minor%n" +
                 "Assignee: Margarita%n" +
-                "*********************%n" +
                 "*********************%n" +
                 "*********************%n" +
                 "Feedback:%n" +

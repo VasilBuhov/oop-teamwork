@@ -72,14 +72,13 @@ public class TeamImpl implements Team {
     @Override
     public String getAsString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(String.format("======================%n"));
         sb.append(String.format("Team: %s%n", getName()));
-        sb.append(String.format("---------------------%n"));
         sb.append(String.format("MEMBERS:%n"));
         if (!members.isEmpty()) {
             int counter = 1;
             for (Member member : members) {
                 sb.append(counter).append(". ").append(member.getAsString());
+                counter ++;
             }
         } else {
             sb.append(String.format("There are no members in this team.%n"));
@@ -90,11 +89,12 @@ public class TeamImpl implements Team {
             int counter = 1;
             for (Board board : boards) {
                 sb.append(counter).append(". ").append(board.getAsString());
+                counter ++;
             }
         } else {
             sb.append(String.format("There are no boards in this team.%n"));
         }
-        sb.append("======================");
+        sb.append(String.format("======================%n"));
         return sb.toString();
     }
 

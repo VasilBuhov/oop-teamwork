@@ -86,8 +86,7 @@ public class BugImpl extends TaskImpl implements Bug {
     @Override
     public String viewInfo() {
         StringBuilder sb = new StringBuilder();
-        sb.append(String.format("*********************%n" +
-                "Bug:%n"));
+        sb.append(String.format("Bug:%n"));
         sb.append(super.viewInfo());
         sb.append(String.format("Status: %s%n" +
                         "Priority: %s%n" +

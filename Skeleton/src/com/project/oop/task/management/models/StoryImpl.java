@@ -109,8 +109,7 @@ public class StoryImpl extends TaskImpl implements Story {
     @Override
     public String viewInfo() {
         StringBuilder sb = new StringBuilder();
-        sb.append(String.format("*********************%n" +
-                        "Story:%n"));
+        sb.append(String.format("Story:%n"));
         sb.append(super.viewInfo());
         sb.append(String.format("Status: %s%n" +
                         "Priority: %s%n" +

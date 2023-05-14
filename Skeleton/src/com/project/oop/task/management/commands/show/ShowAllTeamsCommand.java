@@ -21,10 +21,13 @@ public class ShowAllTeamsCommand implements Command {
         StringBuilder stringBuilder = new StringBuilder();
         if (repository.getTeams().size() == 0){
             throw new IllegalArgumentException("There are no teams to display.");
+        }else {
+            stringBuilder.append(String.format("======================%n"));
+            for (Team team : repository.getTeams()) {
+                stringBuilder.append(team.getAsString()).append('\n');
+            }
         }
-        for (Team team : repository.getTeams()) {
-            stringBuilder.append(team.getAsString());
-        }
+
 
         return stringBuilder.toString().trim();
     }

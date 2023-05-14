@@ -63,8 +63,7 @@ public class FeedbackImpl extends TaskImpl implements Feedback {
     @Override
     public String viewInfo() {
         StringBuilder sb = new StringBuilder();
-        sb.append(String.format("*********************%n" +
-                "Feedback:%n"));
+        sb.append(String.format("Feedback:%n"));
         sb.append(super.viewInfo());
         sb.append(String.format("Status: %s%n" +
                         "Rating: %d%n" +

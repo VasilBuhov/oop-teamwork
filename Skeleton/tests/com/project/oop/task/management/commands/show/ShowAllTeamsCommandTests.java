@@ -2,6 +2,7 @@ package com.project.oop.task.management.commands.show;
 
 import com.project.oop.task.management.commands.contracts.Command;
 import com.project.oop.task.management.commands.creation.CreateNewBoardCommand;
+import com.project.oop.task.management.commands.creation.CreateNewFeedbackCommand;
 import com.project.oop.task.management.core.TaskManagementRepositoryImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,6 +25,7 @@ public class ShowAllTeamsCommandTests {
         this.repository = new TaskManagementRepositoryImpl();
         this.command1 = new ShowAllTeamsCommand(repository);
         this.command2 = new CreateNewBoardCommand(repository);
+        this.command3 = new CreateNewFeedbackCommand(repository);
     }
 
     @Test
@@ -39,75 +41,42 @@ public class ShowAllTeamsCommandTests {
     public void should_DisplayTeamInfo() {
 
         //Arrange
-        repository.createNewTeam("Team1");
-        repository.createNewTeam("Team2");
-        repository.createNewTeam("Team3");
-        repository.createNewPerson("Margarita");
-        repository.createNewPerson("Ivaylo");
-        repository.createNewPerson("George");
-        repository.createNewPerson("Monika");
-        repository.addNewPersonToTeam("Margarita", "Team1");
-        repository.addNewPersonToTeam("Ivaylo", "Team1");
-        repository.addNewPersonToTeam("George", "Team2");
-        repository.addNewPersonToTeam("Monika", "Team2");
+        String teamName = "Team1";
+        String boardName = "Board1";
+        String personName = "Margarita";
+        repository.createNewTeam(teamName);
+        repository.createNewPerson(personName);
+        repository.addNewPersonToTeam(personName, teamName);
 
         List<String> params = new ArrayList<>();
-        InputStream in1 = new ByteArrayInputStream(("Team1\nBoard1\n").getBytes());
+        String inputDataBoard = "Team1\nBoard1\n";
+        InputStream in1 = new ByteArrayInputStream((inputDataBoard).getBytes());
         System.setIn(in1);
         command2.execute(params);
-        params.remove(0);
+        params.clear();
 
-        InputStream in2 = new ByteArrayInputStream(("Team2\nBoard2\n").getBytes());
+        String inputDataFeedback = "Team1\nBoard1\nShortTitle\nLongFeedbackDescription1\n1\n";
+        InputStream in2 = new ByteArrayInputStream((inputDataFeedback).getBytes());
         System.setIn(in2);
-        command2.execute(params);
-        params.remove(0);
+        command3.execute(params);
 
         String expectedResult = String.format("======================%n" +
                 "Team: Team1%n" +
-                "---------------------%n" +
                 "MEMBERS:%n" +
-                "1. ======================%n" +
-                "Member: Margarita%n" +
+                "1. Member: Margarita%n" +
                 "Tasks:%n" +
                 "Margarita still does not have any task%n" +
-                "======================%n" +
-                "1. ======================%n" +
-                "Member: Ivaylo%n" +
-                "Tasks:%n" +
-                "Ivaylo still does not have any task%n" +
-                "======================%n" +
                 "---------------------%n" +
                 "BOARDS:%n" +
-                "1. *********************%n" +
-                "Board: Board1%n" +
+                "1. Board: Board1%n" +
+                "### Feedback:%n" +
+                "Title: ShortTitle%n" +
+                "Description: LongFeedbackDescription1%n" +
+                "Comments: %n" +
+                "Status: New%n" +
+                "Rating: 1%n" +
                 "*********************%n" +
-                "============================================%n" +
-                "Team: Team2%n" +
-                "---------------------%n" +
-                "MEMBERS:%n" +
-                "1. ======================%n" +
-                "Member: George%n" +
-                "Tasks:%n" +
-                "George still does not have any task%n" +
-                "======================%n" +
-                "1. ======================%n" +
-                "Member: Monika%n" +
-                "Tasks:%n" +
-                "Monika still does not have any task%n" +
-                "======================%n" +
-                "---------------------%n" +
-                "BOARDS:%n" +
-                "1. *********************%n" +
-                "Board: Board2%n" +
                 "*********************%n" +
-                "============================================%n" +
-                "Team: Team3%n" +
-                "---------------------%n" +
-                "MEMBERS:%n" +
-                "There are no members in this team.%n" +
-                "---------------------%n" +
-                "BOARDS:%n" +
-                "There are no boards in this team.%n" +
                 "======================"
         );
 

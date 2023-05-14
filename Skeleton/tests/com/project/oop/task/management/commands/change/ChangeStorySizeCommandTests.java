@@ -121,7 +121,7 @@ public class ChangeStorySizeCommandTests {
         InputStream in4 = new ByteArrayInputStream((inputForFilterCommand).getBytes());
         System.setIn(in4);
         String storyDetails = command4.execute(params);
-        String expectedResult = String.format("*********************%n" +
+        String expectedResult = String.format(
                 "Story:%n" +
                 "Title: StoryTitle1%n" +
                 "Description: StoryDescription1%n" +

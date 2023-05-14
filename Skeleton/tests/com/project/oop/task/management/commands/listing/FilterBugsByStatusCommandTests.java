@@ -88,7 +88,7 @@ public class FilterBugsByStatusCommandTests {
         //Act
         String filteredBugs = command1.execute(params).trim();
 
-        String result = String.format("*********************%n" +
+        String result = String.format(
                 "Bug:%n" +
                 "Title: LongBugTitle1%n" +
                 "Description: LongBugDescription1%n" +

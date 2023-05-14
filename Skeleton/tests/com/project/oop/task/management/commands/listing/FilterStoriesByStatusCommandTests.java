@@ -89,7 +89,7 @@ public class FilterStoriesByStatusCommandTests {
         //Act
         String filteredStories = command1.execute(params).trim();
 
-        String result = String.format("*********************%n" +
+        String result = String.format(
                 "Story:%n" +
                 "Title: StoryTitle1%n" +
                 "Description: StoryDescription1%n" +

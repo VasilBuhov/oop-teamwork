@@ -82,7 +82,7 @@ public class FilterFeedbackByStatusCommandTests {
         //Act
         String filteredFeedbacks = command1.execute(params).trim();
 
-        String result = String.format("*********************%n" +
+        String result = String.format(
                 "Feedback:%n" +
                 "Title: FeedbackTitle%n" +
                 "Description: FeedbackDescription%n" +

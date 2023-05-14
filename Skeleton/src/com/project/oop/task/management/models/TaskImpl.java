@@ -98,7 +98,6 @@ public abstract class TaskImpl implements Task{
     }
     public String getActivity() {
         StringBuilder sb = new StringBuilder();
-//        sb.append(String.format("======================%n"));
         sb.append(String.format("Task: %s%n", getTitle()));
         sb.append(String.format("Activity:%n"));
         if (history.isEmpty()) {

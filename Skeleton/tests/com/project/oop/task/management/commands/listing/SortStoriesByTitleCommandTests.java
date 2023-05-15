@@ -50,8 +50,7 @@ public class SortStoriesByTitleCommandTests {
         System.setIn(in6);
         createStory.execute(params);
 
-        String sb = String.format("*********************%n" +
-                "Story:%n") +
+        String sb = String.format("Story:%n") +
                 String.format("Title: %s%n" +
                         "Description: %s%n" +
                         "Comments: %n", "A.ValidTitle", "ValidDescription") +
@@ -64,8 +63,7 @@ public class SortStoriesByTitleCommandTests {
                         "High",
                         "Large",
                         "Valid") +
-                String.format("*********************%n" +
-                        "Story:%n") +
+                String.format("Story:%n") +
                 String.format("Title: %s%n" +
                         "Description: %s%n" +
                         "Comments: %n", "B.ValidTitle", "ValidDescription") +
@@ -78,8 +76,7 @@ public class SortStoriesByTitleCommandTests {
                         "High",
                         "Large",
                         "Valid") +
-                String.format("*********************%n" +
-                        "Story:%n") +
+                String.format("Story:%n") +
                 String.format("Title: %s%n" +
                         "Description: %s%n" +
                         "Comments: %n", "C.ValidTitle", "ValidDescription") +

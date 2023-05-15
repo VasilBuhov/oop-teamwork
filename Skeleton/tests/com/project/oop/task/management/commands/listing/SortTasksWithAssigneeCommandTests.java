@@ -47,8 +47,7 @@ public class SortTasksWithAssigneeCommandTests {
         System.setIn(in5);
         createStory.execute(params);
 
-        String sb = String.format("*********************%n" +
-                "Story:%n") +
+        String sb = String.format("Story:%n") +
                 String.format("Title: %s%n" +
                         "Description: %s%n" +
                         "Comments: %n", "A.ValidTitle", "ValidDescription") +
@@ -61,8 +60,7 @@ public class SortTasksWithAssigneeCommandTests {
                         "High",
                         "Large",
                         "Valid") +
-                String.format("*********************%n" +
-                        "Bug:%n") +
+                String.format("Bug:%n") +
                 String.format("Title: %s%n" +
                         "Description: %s%n" +
                         "Comments: %n", "C.ValidTitle", "ValidDescription") +

@@ -41,8 +41,7 @@ public class SortFeedbackByRatingCommandTests {
         System.setIn(in5);
         createFeedback.execute(params);
 
-        String sb = String.format("*********************%n" +
-                "Feedback:%n") +
+        String sb = String.format("Feedback:%n") +
                 String.format("Title: %s%n" +
                         "Description: %s%n" +
                         "Comments: %n", "ValidTitle", "ValidDescription") +
@@ -51,8 +50,7 @@ public class SortFeedbackByRatingCommandTests {
                                 "*********************%n",
                         FeedbackStatus.NEW,
                         1) +
-                String.format("*********************%n" +
-                        "Feedback:%n") +
+                String.format("Feedback:%n") +
                 String.format("Title: %s%n" +
                         "Description: %s%n" +
                         "Comments: %n", "ValidTitle", "ValidDescription") +

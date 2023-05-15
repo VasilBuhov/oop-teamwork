@@ -1,5 +1,6 @@
-package com.project.oop.task.management.models;
+package com.project.oop.task.management.commands.show.models;
 
+import com.project.oop.task.management.models.BugImpl;
 import com.project.oop.task.management.models.enums.*;
 import org.junit.jupiter.api.Test;
 
@@ -81,8 +82,7 @@ public class BugImplTests {
 
         //Act
         StringBuilder sb = new StringBuilder();
-        sb.append(String.format("*********************%n" +
-                "Bug:%n" +
+        sb.append(String.format("Bug:%n" +
                 "Title: %s%n" +
                 "Description: %s%n" +
                 "Comments: %n", bug.getTitle(), bug.getDescription()));

@@ -1,5 +1,6 @@
-package com.project.oop.task.management.models;
+package com.project.oop.task.management.commands.show.models;
 
+import com.project.oop.task.management.models.EventLogImpl;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

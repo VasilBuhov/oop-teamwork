@@ -1,5 +1,7 @@
-package com.project.oop.task.management.models;
+package com.project.oop.task.management.commands.show.models;
 
+import com.project.oop.task.management.models.MemberImpl;
+import com.project.oop.task.management.models.StoryImpl;
 import com.project.oop.task.management.models.contracts.Task;
 import com.project.oop.task.management.models.enums.Priority;
 import com.project.oop.task.management.models.enums.Size;

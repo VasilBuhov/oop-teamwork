@@ -1,5 +1,6 @@
-package com.project.oop.task.management.models;
+package com.project.oop.task.management.commands.show.models;
 
+import com.project.oop.task.management.models.StoryImpl;
 import com.project.oop.task.management.models.enums.Priority;
 import com.project.oop.task.management.models.enums.Size;
 import com.project.oop.task.management.models.enums.StoryStatus;
@@ -102,8 +103,7 @@ public class StoryImplTests {
 
         //Act
         StringBuilder sb = new StringBuilder();
-        sb.append(String.format("*********************%n" +
-                "Story:%n" +
+        sb.append(String.format("Story:%n" +
                 "Title: %s%n" +
                 "Description: %s%n" +
                 "Comments: %n", story.getTitle(), story.getDescription()));

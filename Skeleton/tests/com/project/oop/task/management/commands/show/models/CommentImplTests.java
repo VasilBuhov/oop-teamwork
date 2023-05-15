@@ -1,5 +1,6 @@
-package com.project.oop.task.management.models;
+package com.project.oop.task.management.commands.show.models;
 
+import com.project.oop.task.management.models.CommentImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

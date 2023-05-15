@@ -1,5 +1,9 @@
-package com.project.oop.task.management.models;
+package com.project.oop.task.management.commands.show.models;
 
+import com.project.oop.task.management.models.BoardImpl;
+import com.project.oop.task.management.models.MemberImpl;
+import com.project.oop.task.management.models.StoryImpl;
+import com.project.oop.task.management.models.TeamImpl;
 import com.project.oop.task.management.models.contracts.Board;
 import com.project.oop.task.management.models.contracts.Member;
 import com.project.oop.task.management.models.contracts.Task;
@@ -128,9 +132,7 @@ public class TeamImplTests {
         team.addMember(member);
 
         StringBuilder sb = new StringBuilder();
-        sb.append(String.format("======================%n"));
         sb.append(String.format("Team: %s%n", team.getName()));
-        sb.append(String.format("---------------------%n"));
         sb.append(String.format("MEMBERS:%n"));
         if (!team.getMembers().isEmpty()) {
             int counter = 1;
@@ -150,7 +152,7 @@ public class TeamImplTests {
         } else {
             sb.append(String.format("There are no boards in this team.%n"));
         }
-        sb.append("======================");
+        sb.append(String.format("======================%n"));
 
         // Assert
         assertEquals(sb.toString(), team.getAsString());

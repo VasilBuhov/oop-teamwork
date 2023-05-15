@@ -1,5 +1,6 @@
-package com.project.oop.task.management.models;
+package com.project.oop.task.management.commands.show.models;
 
+import com.project.oop.task.management.models.FeedbackImpl;
 import com.project.oop.task.management.models.enums.FeedbackStatus;
 import org.junit.jupiter.api.Test;
 
@@ -80,8 +81,7 @@ public class FeedbackImplTests {
 
         //Act
         StringBuilder sb = new StringBuilder();
-        sb.append(String.format("*********************%n" +
-                "Feedback:%n" +
+        sb.append(String.format("Feedback:%n" +
                 "Title: %s%n" +
                 "Description: %s%n" +
                 "Comments: %n", feedback.getTitle(), feedback.getDescription()));

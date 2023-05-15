@@ -46,8 +46,7 @@ public class SortBugsByTitleCommandTests {
         System.setIn(in5);
         createBug.execute(params);
 
-        String sb = String.format("*********************%n" +
-                "Bug:%n") +
+        String sb = String.format("Bug:%n") +
                 String.format("Title: %s%n" +
                         "Description: %s%n" +
                         "Comments: %n", "A.ValidTitle", "ValidDescription") +
@@ -60,8 +59,7 @@ public class SortBugsByTitleCommandTests {
                         "High",
                         "Minor",
                         "Valid") +
-                String.format("*********************%n" +
-                        "Bug:%n") +
+                String.format("Bug:%n") +
                 String.format("Title: %s%n" +
                         "Description: %s%n" +
                         "Comments: %n", "B.ValidTitle", "ValidDescription") +

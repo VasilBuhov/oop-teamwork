@@ -18,6 +18,7 @@ public class SortFeedbackByTitleCommandTests {
     private Command command;
     private Command createFeedback;
     private TaskManagementRepositoryImpl repository;
+    private List<String> params;
 
     @BeforeEach
     public void before() {
@@ -26,13 +27,12 @@ public class SortFeedbackByTitleCommandTests {
         this.createFeedback = new CreateNewFeedbackCommand(repository);
         repository.createNewTeam("Team1");
         repository.findTeamByName("Team1").addBoard(new BoardImpl("Board1"));
+        params = new ArrayList<>();
     }
 
     @Test
     public void execute_Should_DisplayAllFeedback_SortedByTitle() {
         //Arrange
-        List<String> params = new ArrayList<>();
-
         InputStream in4 = new ByteArrayInputStream
                 (("Team1\nBoard1\nA.ValidTitle\nValidDescription\n1\n").getBytes());
         System.setIn(in4);
@@ -69,7 +69,6 @@ public class SortFeedbackByTitleCommandTests {
     @Test
     public void execute_DisplayNoFeedbackMessage_WhenListIsEmpty() {
         //Arrange
-        List<String> params = new ArrayList<>();
         String expected = "No feedback created yet.";
 
         //Act, Assert

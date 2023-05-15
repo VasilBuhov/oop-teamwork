@@ -22,6 +22,7 @@ public class SortTasksByTitleCommandTests {
     private Command createBug;
     private Command createStory;
     private Command createFeedback;
+    List<String> params;
 
     @BeforeEach
     public void before() {
@@ -34,12 +35,12 @@ public class SortTasksByTitleCommandTests {
         repository.findTeamByName("Team1").addBoard(new BoardImpl("Board1"));
         repository.createNewPerson("Valid");
         repository.addNewPersonToTeam("Valid", "Team1");
+        params = new ArrayList<>();
     }
 
     @Test
     public void execute_Should_DisplayAllTasks_SortedByTitle_OrderedAlphabetically() {
         //Arrange
-        List<String> params = new ArrayList<>();
         InputStream in4 = new ByteArrayInputStream
                 (("Team1\nBoard1\nC.ValidTitle\nValidDescription\nHigh\nMinor\nValid\n").getBytes());
         System.setIn(in4);
@@ -99,7 +100,6 @@ public class SortTasksByTitleCommandTests {
     @Test
     public void execute_DisplayNoTaskMessage_WhenListIsEmpty() {
         //Arrange
-        List<String> params = new ArrayList<>();
         String expected = "No task created yet.";
 
         //Act, Assert

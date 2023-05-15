@@ -15,18 +15,19 @@ import java.util.NoSuchElementException;
 public class CreateNewBoardCommandTests {
     private Command command;
     private TaskManagementRepositoryImpl repository;
+    private List<String> params;
 
     @BeforeEach
     public void before() {
         this.repository = new TaskManagementRepositoryImpl();
         this.command = new CreateNewBoardCommand(repository);
         repository.createNewTeam("Team1");
+        params = new ArrayList<>();
     }
 
     @Test
     public void execute_Should_ThrowException_When_NameLengthNotValid() {
         //Arrange
-        List<String> params = new ArrayList<>();
         InputStream in = new ByteArrayInputStream(("Team1\nB\n").getBytes());
         System.setIn(in);
 
@@ -37,7 +38,6 @@ public class CreateNewBoardCommandTests {
     @Test
     public void execute_Should_ThrowException_When_NameEqualsCancel() {
         //Arrange
-        List<String> params = new ArrayList<>();
         InputStream in = new ByteArrayInputStream(("Team1\ncancel\n").getBytes());
         System.setIn(in);
 
@@ -48,7 +48,6 @@ public class CreateNewBoardCommandTests {
     @Test
     public void execute_Should_ThrowException_When_TeamEqualsCancel() {
         //Arrange
-        List<String> params = new ArrayList<>();
         InputStream in = new ByteArrayInputStream(("cancel\nBoard1\n").getBytes());
         System.setIn(in);
 
@@ -59,7 +58,6 @@ public class CreateNewBoardCommandTests {
     @Test
     public void execute_Should_ThrowException_When_TeamNotExist() {
         //Arrange
-        List<String> params = new ArrayList<>();
         InputStream in = new ByteArrayInputStream(("Team2\nBoard1\n").getBytes());
         System.setIn(in);
 
@@ -70,7 +68,6 @@ public class CreateNewBoardCommandTests {
     @Test
     public void execute_Should_CreateNewBug_When_AllParametersValid() {
         //Arrange
-        List<String> params = new ArrayList<>();
         InputStream in = new ByteArrayInputStream(("Team1\nBoard1\n").getBytes());
         System.setIn(in);
         command.execute(params);

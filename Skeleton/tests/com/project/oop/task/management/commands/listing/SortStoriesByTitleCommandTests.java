@@ -18,6 +18,7 @@ public class SortStoriesByTitleCommandTests {
     private TaskManagementRepositoryImpl repository;
     private Command command;
     private Command createStory;
+    private List<String> params;
 
     @BeforeEach
     public void before() {
@@ -28,13 +29,13 @@ public class SortStoriesByTitleCommandTests {
         repository.findTeamByName("Team1").addBoard(new BoardImpl("Board1"));
         repository.createNewPerson("Valid");
         repository.addNewPersonToTeam("Valid", "Team1");
+        params = new ArrayList<>();
 
     }
 
     @Test
     public void execute_Should_DisplayAllStories_SortedByTitle() {
         //Arrange
-        List<String> params = new ArrayList<>();
         InputStream in4 = new ByteArrayInputStream
                 (("Team1\nBoard1\nValid\nA.ValidTitle\nValidDescription\nHigh\nLarge\n").getBytes());
         System.setIn(in4);
@@ -98,7 +99,6 @@ public class SortStoriesByTitleCommandTests {
     @Test
     public void execute_DisplayNoStoriesMessage_WhenListIsEmpty() {
         //Arrange
-        List<String> params = new ArrayList<>();
         String expected = "No story created yet.";
 
         //Act, Assert

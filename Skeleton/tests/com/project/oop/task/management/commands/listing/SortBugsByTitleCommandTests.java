@@ -19,6 +19,7 @@ public class SortBugsByTitleCommandTests {
     private TaskManagementRepositoryImpl repository;
     private Command command;
     private Command createBug;
+    private List<String> params;
 
     @BeforeEach
     public void before() {
@@ -29,13 +30,12 @@ public class SortBugsByTitleCommandTests {
         repository.findTeamByName("Team1").addBoard(new BoardImpl("Board1"));
         repository.createNewPerson("Valid");
         repository.addNewPersonToTeam("Valid", "Team1");
+        params = new ArrayList<>();
     }
 
     @Test
     public void execute_Should_DisplayAllBugs_SortedByTitle_OrderedAlphabetically() {
         //Arrange
-        List<String> params = new ArrayList<>();
-
         InputStream in4 = new ByteArrayInputStream
                 (("Team1\nBoard1\nA.ValidTitle\nValidDescription\nHigh\nMinor\nValid\n").getBytes());
         System.setIn(in4);
@@ -73,7 +73,6 @@ public class SortBugsByTitleCommandTests {
                         "Minor",
                         "Valid");
 
-
         //Act, Assert
         Assertions.assertEquals(sb, command.execute(params));
     }
@@ -81,7 +80,6 @@ public class SortBugsByTitleCommandTests {
     @Test
     public void execute_DisplayNoBugsMessage_WhenListIsEmpty() {
         //Arrange
-        List<String> params = new ArrayList<>();
         String expected = "No bugs created yet.";
 
         //Act, Assert
